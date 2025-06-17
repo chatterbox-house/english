@@ -1,0 +1,1718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Big Ben's Vocab Bonanza</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bangers&family=Short+Stack&display=swap">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Short Stack', cursive;
+            background: linear-gradient(135deg, #1a237e, #0d47a1);
+            color: #fff;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        #game-container {
+            max-width: 900px;
+            width: 100%;
+            background: rgba(13, 71, 161, 0.9);
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
+            overflow: hidden;
+            position: relative;
+            border: 6px solid #ffc107;
+        }
+        
+        .screen {
+            display: none;
+            padding: 30px 20px;
+            min-height: 600px;
+        }
+        
+        .active {
+            display: block;
+        }
+        
+        h1, h2, h3 {
+            text-align: center;
+            margin-bottom: 25px;
+            text-shadow: 0 3px 6px rgba(0, 0, 0, 0.7);
+            font-weight: bold;
+            line-height: 1.3;
+        }
+        
+        h1 {
+            font-family: 'Bangers', cursive;
+            font-size: 3.5rem;
+            margin: 25px 0 15px;
+            letter-spacing: 4px;
+            color: #ffc107;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, #ff5722, #ffc107, #4caf50);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 15px rgba(255, 193, 7, 0.5);
+        }
+        
+        h2 {
+            font-size: 2.5rem;
+            margin: 20px 0;
+            color: #ffc107;
+        }
+        
+        h3 {
+            font-size: 1.8rem;
+            margin: 15px 0;
+            color: #4caf50;
+        }
+        
+        button {
+            background: linear-gradient(145deg, #ff5722, #ff7043);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            padding: 18px 35px;
+            font-size: 1.5rem;
+            font-family: 'Bangers', cursive;
+            cursor: pointer;
+            margin: 15px;
+            transition: all 0.2s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+            text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.6);
+            position: relative;
+            overflow: hidden;
+            border: 3px solid #e64a19;
+            letter-spacing: 1px;
+        }
+        
+        button:hover {
+            transform: translateY(-4px);
+            background: linear-gradient(145deg, #ff7043, #ff5722);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+        }
+        
+        button:active {
+            transform: translateY(1px);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 25px 0;
+        }
+        
+        .mode-btn {
+            min-width: 220px;
+            margin: 12px;
+            padding: 20px;
+            font-size: 1.5rem;
+            border-radius: 20px;
+        }
+        
+        .mode-btn.easy { 
+            background: linear-gradient(145deg, #4caf50, #8bc34a); 
+            border: 3px solid #2e7d32;
+        }
+        .mode-btn.medium { 
+            background: linear-gradient(145deg, #2196f3, #42a5f5); 
+            border: 3px solid #1565c0;
+        }
+        .mode-btn.hard { 
+            background: linear-gradient(145deg, #f44336, #ef5350); 
+            border: 3px solid #c62828;
+        }
+        
+        #start-screen {
+            background: radial-gradient(circle at center, #1a237e, #0d47a1);
+            text-align: center;
+        }
+        
+        .username-container {
+            max-width: 500px;
+            margin: 20px auto;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            border: 3px solid #4caf50;
+        }
+        
+        #username-input {
+            width: 100%;
+            padding: 18px;
+            font-size: 1.5rem;
+            font-family: inherit;
+            border: 3px solid #ff5722;
+            border-radius: 15px;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            text-align: center;
+            margin: 15px 0;
+        }
+        
+        #user-select {
+            width: 100%;
+            padding: 18px;
+            font-size: 1.5rem;
+            font-family: inherit;
+            border: 3px solid #ff5722;
+            border-radius: 15px;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            margin: 15px 0;
+        }
+        
+        .language-selector {
+            margin: 20px auto;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            border: 3px solid #ffc107;
+            max-width: 500px;
+        }
+        
+        .language-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .language-btn {
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            border-radius: 10px;
+            background: #2196f3;
+            border: 2px solid #0d47a1;
+        }
+        
+        .language-btn.selected {
+            background: #ffc107;
+            color: #000;
+            border: 2px solid #ff9800;
+        }
+        
+        .avatar-container {
+            display: flex;
+            justify-content: center;
+            margin: 25px 0;
+            flex-wrap: wrap;
+        }
+        
+        .avatar {
+            font-size: 5rem;
+            margin: 10px 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.2);
+            border: 3px solid transparent;
+            animation: avatarPulse 2s infinite ease-in-out;
+        }
+        
+        .avatar:hover {
+            transform: scale(1.15);
+            background: rgba(255, 255, 255, 0.1);
+            animation: none;
+        }
+        
+        .avatar.selected {
+            transform: scale(1.25);
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.8);
+            border: 3px solid #ffc107;
+            animation: none;
+        }
+        
+        @keyframes avatarPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .color-picker {
+            display: flex;
+            justify-content: center;
+            margin: 25px 0;
+            flex-wrap: wrap;
+        }
+        
+        .color-option {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            margin: 0 12px;
+            cursor: pointer;
+            border: 3px solid #555;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+        }
+        
+        .color-option:hover {
+            transform: scale(1.1);
+        }
+        
+        .color-option.selected {
+            transform: scale(1.25);
+            border: 4px solid white;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+        }
+        
+        #game-screen {
+            background: radial-gradient(circle at center, #1a237e, #0d47a1);
+        }
+        
+        .game-header {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 3px solid #ffc107;
+        }
+        
+        .game-header div {
+            font-size: 1.4rem;
+            text-align: center;
+            padding: 10px 5px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 10px;
+            border: 2px solid #4caf50;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .player-info {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .player-avatar {
+            font-size: 2.5rem;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+        
+        .game-header .progress-container {
+            grid-column: 1 / span 2;
+            width: 100%;
+            margin: 10px 0 0;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            height: 35px;
+            border: 2px solid #ffc107;
+            overflow: hidden;
+            padding: 0;
+            box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #ff5722, #ffc107, #4caf50);
+            width: 0%;
+            transition: width 0.5s ease;
+            position: relative;
+        }
+        
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.2rem;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+        }
+        
+        .game-board {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+            min-height: 400px;
+            gap: 10px;
+        }
+        
+        .column {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            min-width: 45%;
+        }
+        
+        .card {
+            background: rgba(30, 40, 70, 0.8);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 150px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+            border: 3px solid rgba(100, 100, 200, 0.3);
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            background: rgba(40, 50, 90, 0.9);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+            border-color: rgba(100, 200, 255, 0.5);
+        }
+        
+        .card.selected {
+            background: rgba(100, 200, 255, 0.3);
+            box-shadow: 0 0 20px rgba(100, 200, 255, 0.6);
+            border: 3px solid rgba(100, 200, 255, 0.7);
+        }
+        
+        .card.correct {
+            background: rgba(100, 255, 100, 0.3);
+            animation: pulse 0.5s ease;
+        }
+        
+        .card.incorrect {
+            background: rgba(255, 100, 100, 0.3);
+            animation: shake 0.5s ease;
+        }
+        
+        .card.matched {
+            background: rgba(100, 255, 100, 0.5);
+            border: 3px solid #4caf50;
+            box-shadow: 0 0 15px rgba(100, 255, 100, 0.8);
+            pointer-events: none;
+            cursor: default;
+        }
+        
+        .emoji-card {
+            font-size: 4rem;
+        }
+        
+        .word-card {
+            font-size: 2rem;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            padding: 15px;
+        }
+        
+        #round-complete-screen {
+            background: radial-gradient(circle at center, #2a3a2a, #1a2a1a);
+            text-align: center;
+        }
+        
+        .round-result {
+            font-size: 1.8rem;
+            margin: 30px 0;
+            padding: 25px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+            border: 3px solid #4caf50;
+            max-width: 600px;
+            margin: 30px auto;
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            animation: fall 2s linear forwards;
+        }
+        
+        #trophy-room-screen {
+            background: radial-gradient(circle at center, #2a2a3a, #1a1a2a);
+            text-align: center;
+        }
+        
+        .trophy-container {
+            max-width: 700px;
+            margin: 20px auto;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+            padding: 25px;
+            border: 3px solid #4caf50;
+        }
+        
+        .trophy-item {
+            font-size: 3rem;
+            margin: 15px;
+            display: inline-block;
+            animation: trophySpin 2s infinite linear;
+        }
+        
+        #emoji-store-screen {
+            background: radial-gradient(circle at center, #2a2a3a, #1a1a2a);
+            text-align: center;
+        }
+        
+        .emoji-store-container {
+            max-width: 700px;
+            margin: 20px auto;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+            padding: 25px;
+            border: 3px solid #4caf50;
+        }
+        
+        .emoji-item {
+            display: inline-flex;
+            align-items: center;
+            margin: 10px;
+            padding: 10px;
+            background: rgba(30, 40, 70, 0.8);
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        
+        .emoji-item.purchased {
+            background: rgba(100, 255, 100, 0.5);
+        }
+        
+        #game-over-screen {
+            background: radial-gradient(circle at center, #3a2a2a, #2a1a1a);
+            text-align: center;
+        }
+        
+        .milestone-notification {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: #ffc107;
+            padding: 15px 30px;
+            border-radius: 10px;
+            border: 3px solid #4caf50;
+            font-size: 1.2rem;
+            z-index: 1000;
+            animation: fadeInOut 3s ease forwards;
+        }
+        
+        .error-notification {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 100, 100, 0.8);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 10px;
+            border: 3px solid #ff4757;
+            font-size: 1.2rem;
+            z-index: 1000;
+            animation: fadeInOut 3s ease forwards;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 rgba(100, 255, 100, 0.6); }
+            50% { transform: scale(1.1); box-shadow: 0 0 30px rgba(100, 255, 100, 0.8); }
+            100% { transform: scale(1); box-shadow: 0 0 0 rgba(100, 255, 100, 0.6); }
+        }
+        
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-15px); }
+            50% { transform: translateX(15px); }
+            75% { transform: translateX(-15px); }
+            100% { transform: translateX(0); }
+        }
+        
+        @keyframes fall {
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(800px) rotate(360deg); opacity: 0; }
+        }
+        
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translate(-50%, -20px); }
+            10% { opacity: 1; transform: translate(-50%, 0); }
+            90% { opacity: 1; transform: translate(-50%, 0); }
+            100% { opacity: 0; transform: translate(-50%, -20px); }
+        }
+        
+        @keyframes trophySpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 2rem; }
+            h3 { font-size: 1.5rem; }
+            
+            .game-header {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .game-header div:nth-child(1), .game-header div:nth-child(2) {
+                grid-column: 1 / span 2;
+            }
+            
+            .game-header .progress-container {
+                grid-column: 1 / span 2;
+            }
+            
+            .game-board {
+                flex-direction: row;
+                gap: 10px;
+            }
+            
+            .column {
+                flex: 1;
+                min-width: 45%;
+            }
+            
+            .card {
+                height: 130px;
+                padding: 15px;
+            }
+            
+            .emoji-card { font-size: 3.5rem; }
+            .word-card { font-size: 1.8rem; }
+            
+            button { padding: 15px 25px; font-size: 1.3rem; }
+            .mode-btn { min-width: 180px; padding: 18px; }
+            
+            .avatar { font-size: 4.5rem; margin: 8px; }
+            .player-avatar { font-size: 2rem; }
+        }
+        
+        @media (max-width: 480px) {
+            h1 { font-size: 2rem; letter-spacing: 2px; }
+            h2 { font-size: 1.6rem; }
+            
+            .game-header {
+                grid-template-columns: 1fr 1fr;
+                padding: 10px;
+                gap: 5px;
+            }
+            
+            .game-header div {
+                font-size: 1.2rem;
+                padding: 8px 5px;
+            }
+            
+            .progress-text {
+                font-size: 1rem;
+            }
+            
+            .card {
+                height: 120px;
+                padding: 15px;
+            }
+            
+            .emoji-card { font-size: 3rem; }
+            .word-card { font-size: 1.5rem; }
+            
+            .avatar { font-size: 4rem; }
+            .color-option { width: 60px; height: 60px; margin: 5px; }
+            .player-avatar { font-size: 1.8rem; }
+        }
+        
+        @media (max-width: 360px) {
+            h1 { font-size: 1.8rem; letter-spacing: 1px; }
+            h2 { font-size: 1.4rem; }
+            h3 { font-size: 1.2rem; }
+            .card { height: 110px; }
+            .emoji-card { font-size: 2.8rem; }
+            .word-card { font-size: 1.3rem; }
+            .mode-btn { min-width: 160px; padding: 15px; font-size: 1.2rem; }
+            .avatar { font-size: 3.5rem; }
+            .color-option { width: 55px; height: 55px; }
+            .player-avatar { font-size: 1.5rem; }
+        }
+        
+        .theme-red { background: radial-gradient(circle at center, #3a1a1a, #2a0d0d); }
+        .theme-blue { background: radial-gradient(circle at center, #1a2a3a, #0d1b2a); }
+        .theme-green { background: radial-gradient(circle at center, #1a3a2a, #0d2a1a); }
+        .theme-purple { background: radial-gradient(circle at center, #3a1a3a, #2a0d2a); }
+        .theme-orange { background: radial-gradient(circle at center, #3a2a1a, #2a1a0d); }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <div id="error-notification" class="error-notification" style="display: none;"></div>
+        
+        <div id="start-screen" class="screen active">
+            <h1>Big Ben's Vocab Bonanza</h1>
+            <h2>Learn English Words</h2>
+            
+            <div class="username-container">
+                <h3>Select or Enter Username:</h3>
+                <select id="user-select" aria-label="Select existing user">
+                    <option value="">New User</option>
+                </select>
+                <input type="text" id="username-input" placeholder="Type new username..." maxlength="20" aria-label="Enter new username">
+                <button id="save-username" aria-label="Save username and continue">Save & Continue</button>
+            </div>
+            
+            <div class="language-selector">
+                <h3>Select Language:</h3>
+                <div class="language-buttons">
+                    <button class="language-btn selected" data-lang="en">English</button>
+                    <button class="language-btn" data-lang="ja">日本語</button>
+                </div>
+            </div>
+            
+            <div class="avatar-container">
+                <div class="avatar" data-avatar="👑" role="button" tabindex="0" aria-label="Select avatar: Crown">👑</div>
+                <div class="avatar" data-avatar="🦁" role="button" tabindex="0" aria-label="Select avatar: Lion">🦁</div>
+                <div class="avatar selected" data-avatar="🏰" role="button" tabindex="0" aria-label="Select avatar: Castle">🏰</div>
+                <div class="avatar" data-avatar="🚂" role="button" tabindex="0" aria-label="Select avatar: Train">🚂</div>
+                <div class="avatar" data-avatar="⚽" role="button" tabindex="0" aria-label="Select avatar: Football">⚽</div>
+                <div class="avatar" data-avatar="🫖" role="button" tabindex="0" aria-label="Select avatar: Teapot">🫖</div>
+                <div class="avatar" data-avatar="🎩" role="button" tabindex="0" aria-label="Select avatar: Top Hat">🎩</div>
+                <div class="avatar" data-avatar="🦄" role="button" tabindex="0" aria-label="Select avatar: Unicorn">🦄</div>
+            </div>
+            
+            <div class="color-picker">
+                <div class="color-option selected" style="background: #1a237e;" data-color="blue" role="button" tabindex="0" aria-label="Select blue theme"></div>
+                <div class="color-option" style="background: #c62828;" data-color="red" role="button" tabindex="0" aria-label="Select red theme"></div>
+                <div class="color-option" style="background: #2e7d32;" data-color="green" role="button" tabindex="0" aria-label="Select green theme"></div>
+                <div class="color-option" style="background: #6a1b9a;" data-color="purple" role="button" tabindex="0" aria-label="Select purple theme"></div>
+                <div class="color-option" style="background: #e65100;" data-color="orange" role="button" tabindex="0" aria-label="Select orange theme"></div>
+            </div>
+            
+            <div class="btn-group">
+                <button id="quick-play-btn" aria-label="Quick play as guest">Quick Play</button>
+                <button id="trophy-room-btn" aria-label="View trophy room">Trophy Room</button>
+                <button id="emoji-store-btn" aria-label="Visit emoji store">Emoji Store</button>
+            </div>
+            
+            <h3>Select Game Mode:</h3>
+            <div class="btn-group">
+                <button class="mode-btn easy" data-mode="easy" aria-label="Start easy mode">Easy Mode</button>
+                <button class="mode-btn medium" data-mode="medium" aria-label="Start medium mode">Medium Mode</button>
+                <button class="mode-btn hard" data-mode="hard" aria-label="Start hard mode">Hard Mode</button>
+            </div>
+        </div>
+        
+        <div id="game-screen" class="screen">
+            <div class="game-header">
+                <div class="player-info">
+                    <span class="player-avatar" id="player-avatar">🏰</span>
+                    Player: <span id="player-name">Guest</span>
+                </div>
+                <div>Points: <span id="score">0</span></div>
+                <div>Streak: <span id="streak">0</span></div>
+                <div>Progress: <span id="progress">0</span>/50</div>
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-text"><span id="completed">0</span>/50 (<span id="percent-complete">0</span>%)</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="game-board">
+                <div class="column" id="column-left"></div>
+                <div class="column" id="column-right"></div>
+            </div>
+            
+            <div class="btn-group">
+                <button id="refresh-btn" aria-label="Refresh round">Refresh</button>
+                <button id="quit-btn" aria-label="Quit to main menu">Quit</button>
+            </div>
+        </div>
+        
+        <div id="round-complete-screen" class="screen">
+            <h2>Brilliant!</h2>
+            <div class="round-result" role="alert">
+                Round Points: <span id="round-score">0</span><br>
+                Total Points: <span id="total-score">0</span><br>
+                Words Mastered: <span id="progress-count">0</span>/50<br>
+                Current Streak: <span id="progress-streak">0</span>
+            </div>
+            <div class="trophy-container">
+                <h3>Your Rewards</h3>
+                <div id="trophy-display"></div>
+            </div>
+            <div class="btn-group">
+                <button id="next-round-btn" aria-label="Continue to next round">Next Round</button>
+                <button id="quit-round-btn" aria-label="Quit to main menu">Quit</button>
+                <button id="trophy-room-btn-round" aria-label="View trophy room">Trophy Room</button>
+                <button id="emoji-store-btn-round" aria-label="Visit emoji store">Emoji Store</button>
+            </div>
+        </div>
+        
+        <div id="trophy-room-screen" class="screen">
+            <h2>Trophy Room</h2>
+            <div class="trophy-container">
+                <h3>Your Achievements</h3>
+                <div id="trophy-list"></div>
+            </div>
+            <div class="btn-group">
+                <button id="back-to-menu-btn" aria-label="Return to main menu">Main Menu</button>
+            </div>
+        </div>
+        
+        <div id="emoji-store-screen" class="screen">
+            <h2>Emoji Store</h2>
+            <div class="emoji-store-container">
+                <h3>Your Points: <span id="store-points">0</span></h3>
+                <div id="emoji-list"></div>
+            </div>
+            <div class="btn-group">
+                <button id="back-to-menu-btn-store" aria-label="Return to main menu">Main Menu</button>
+            </div>
+        </div>
+        
+        <div id="game-over-screen" class="screen">
+            <h2>Game Complete!</h2>
+            <div class="round-result" role="alert">
+                Congratulations <span id="final-player">Player</span>!<br>
+                You've mastered 50 English words!<br>
+                Final Points: <span id="final-score">0</span>
+            </div>
+            <div class="trophy-container">
+                <h3>Your Rewards</h3>
+                <div id="final-trophy-display"></div>
+            </div>
+            <div class="btn-group">
+                <button id="play-again-btn" aria-label="Play again">Play Again</button>
+                <button id="main-menu-btn" aria-label="Return to main menu">Main Menu</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="vocab.js"></script>
+    
+    <script>
+        const isMobile = window.innerWidth <= 768;
+        let isProcessingClick = false;
+        let lastTTSTime = 0;
+        const ttsDebounce = 1000;
+        const milestones = [10, 25, 50];
+        let currentLanguage = 'en';
+        
+        const emojiStore = [
+            { emoji: '🇬🇧', points: 50, name: 'UK Flag' },
+            { emoji: '🏆', points: 100, name: 'Trophy' },
+            { emoji: '🚀', points: 200, name: 'Rocket' },
+            { emoji: '🦁', points: 500, name: 'Lion' },
+            { emoji: '👑', points: 1000, name: 'Crown' }
+        ];
+        
+        const defaultVocab = [
+            { word: 'cat', emoji: '🐱', type: 'noun' },
+            { word: 'dog', emoji: '🐶', type: 'noun' },
+            { word: 'sun', emoji: '☀️', type: 'noun' },
+            { word: 'moon', emoji: '🌙', type: 'noun' },
+            { word: 'house', emoji: '🏠', type: 'noun' }
+        ];
+
+        const gameState = {
+            currentScreen: 'start',
+            player: {
+                name: 'Guest',
+                avatar: '🏰',
+                theme: 'blue',
+                emoji: '',
+                points: 0,
+                purchasedEmojis: [],
+                rewards: { easy: { medals: 0, trophies: 0, crowns: 0 }, medium: { medals: 0, trophies: 0, crowns: 0 }, hard: { medals: 0, trophies: 0, crowns: 0 } }
+            },
+            mode: '',
+            streak: 0,
+            completedWords: 0,
+            wordProgress: {},
+            currentRound: { 
+                pairs: [], 
+                leftColumn: [], 
+                rightColumn: [], 
+                selectedLeft: null, 
+                selectedRight: null, 
+                matchedPairs: [], 
+                roundPoints: 0 
+            },
+            leaderboard: []
+        };
+
+        const screens = {
+            start: document.getElementById('start-screen'),
+            game: document.getElementById('game-screen'),
+            roundComplete: document.getElementById('round-complete-screen'),
+            trophyRoom: document.getElementById('trophy-room-screen'),
+            emojiStore: document.getElementById('emoji-store-screen'),
+            gameOver: document.getElementById('game-over-screen')
+        };
+
+        function showError(message) {
+            const notification = document.getElementById('error-notification');
+            notification.textContent = message;
+            notification.style.display = 'block';
+            setTimeout(() => notification.style.display = 'none', 3000);
+        }
+
+        function initGame() {
+            const vocab = window.vocab && window.vocab.length > 0 ? window.vocab : defaultVocab;
+            if (!window.vocab || window.vocab.length === 0) {
+                console.warn("vocab.js not loaded, using default vocab");
+                showError("Oops! Word list didn't load. Using backup words.");
+            }
+            
+            try {
+                const savedLeaderboard = localStorage.getItem('vocabBonanzaLeaderboard');
+                if (savedLeaderboard) {
+                    gameState.leaderboard = JSON.parse(savedLeaderboard);
+                }
+            } catch (e) {
+                console.warn("Error loading leaderboard:", e);
+                showError("Couldn't load leaderboard. Starting fresh!");
+            }
+            
+            populateUserSelect();
+            loadPlayerProgress();
+            setupEventListeners();
+            updatePlayerUI();
+            updateProgressBar();
+        }
+
+        function populateUserSelect() {
+            const userSelect = document.getElementById('user-select');
+            userSelect.innerHTML = '<option value="">New User</option>';
+            Object.keys(localStorage).forEach(key => {
+                if (key.startsWith('vocabBonanzaProgress_')) {
+                    const username = key.replace('vocabBonanzaProgress_', '');
+                    const option = document.createElement('option');
+                    option.value = username;
+                    option.textContent = username;
+                    userSelect.appendChild(option);
+                }
+            });
+            const savedName = localStorage.getItem('vocabBonanzaCurrentPlayer');
+            if (savedName) userSelect.value = savedName;
+        }
+
+        function setupEventListeners() {
+            document.getElementById('save-username').addEventListener('click', saveUsername);
+            document.getElementById('user-select').addEventListener('change', loadSelectedUser);
+            document.getElementById('quick-play-btn').addEventListener('click', quickPlay);
+            document.getElementById('trophy-room-btn').addEventListener('click', showTrophyRoom);
+            document.getElementById('emoji-store-btn').addEventListener('click', showEmojiStore);
+            document.getElementById('trophy-room-btn-round').addEventListener('click', showTrophyRoom);
+            document.getElementById('emoji-store-btn-round').addEventListener('click', showEmojiStore);
+            document.getElementById('back-to-menu-btn').addEventListener('click', quitToMainMenu);
+            document.getElementById('back-to-menu-btn-store').addEventListener('click', quitToMainMenu);
+            
+            document.querySelectorAll('.avatar').forEach(avatar => {
+                avatar.addEventListener('click', selectAvatar.bind(null, avatar));
+                avatar.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') selectAvatar(avatar);
+                });
+            });
+
+            document.querySelectorAll('.color-option').forEach(color => {
+                color.addEventListener('click', selectColor.bind(null, color));
+                color.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') selectColor(color);
+                });
+            });
+
+            document.querySelectorAll('.mode-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    gameState.mode = btn.dataset.mode;
+                    startNewGame();
+                });
+            });
+
+            document.querySelectorAll('.language-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.language-btn').forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    currentLanguage = btn.dataset.lang;
+                    // Here you would add language switching logic
+                });
+            });
+
+            document.getElementById('refresh-btn').addEventListener('click', startNewRound);
+            document.getElementById('quit-btn').addEventListener('click', quitToMainMenu);
+            document.getElementById('next-round-btn').addEventListener('click', startNewRound);
+            document.getElementById('quit-round-btn').addEventListener('click', quitToMainMenu);
+            document.getElementById('play-again-btn').addEventListener('click', startNewGame);
+            document.getElementById('main-menu-btn').addEventListener('click', quitToMainMenu);
+        }
+
+        function selectAvatar(avatar) {
+            document.querySelectorAll('.avatar').forEach(a => a.classList.remove('selected'));
+            avatar.classList.add('selected');
+            gameState.player.avatar = avatar.dataset.avatar;
+            updatePlayerUI();
+        }
+
+        function selectColor(color) {
+            document.querySelectorAll('.color-option').forEach(c => c.classList.remove('selected'));
+            color.classList.add('selected');
+            gameState.player.theme = color.dataset.color;
+        }
+
+        function updatePlayerUI() {
+            const displayName = gameState.player.emoji ? `${gameState.player.name} ${gameState.player.emoji}` : gameState.player.name;
+            document.getElementById('player-name').textContent = displayName;
+            document.getElementById('final-player').textContent = displayName;
+            const avatarElement = document.getElementById('player-avatar');
+            if (avatarElement) avatarElement.textContent = gameState.player.avatar;
+        }
+
+        function loadSelectedUser() {
+            const userSelect = document.getElementById('user-select');
+            const username = userSelect.value;
+            if (username) {
+                gameState.player.name = username;
+                loadPlayerProgress();
+                document.getElementById('username-input').style.display = 'none';
+            } else {
+                document.getElementById('username-input').style.display = 'block';
+                gameState.player.name = 'Guest';
+                gameState.player.avatar = '🏰';
+                gameState.player.theme = 'blue';
+                gameState.player.emoji = '';
+                gameState.player.points = 0;
+                gameState.player.purchasedEmojis = [];
+                gameState.player.rewards = { easy: { medals: 0, trophies: 0, crowns: 0 }, medium: { medals: 0, trophies: 0, crowns: 0 }, hard: { medals: 0, trophies: 0, crowns: 0 } };
+                gameState.streak = 0;
+                gameState.completedWords = 0;
+                gameState.wordProgress = {};
+                updatePlayerUI();
+            }
+        }
+
+        function saveUsername() {
+            const usernameInput = document.getElementById('username-input');
+            const username = usernameInput.value.trim();
+            if (!username) return;
+            
+            const isNewUser = !localStorage.getItem(`vocabBonanzaProgress_${username}`);
+            gameState.player.name = username;
+            
+            if (isNewUser) {
+                gameState.player.points = 0;
+                gameState.player.purchasedEmojis = [];
+                gameState.player.rewards = { easy: { medals: 0, trophies: 0, crowns: 0 }, medium: { medals: 0, trophies: 0, crowns: 0 }, hard: { medals: 0, trophies: 0, crowns: 0 } };
+                gameState.streak = 0;
+                gameState.completedWords = 0;
+                gameState.wordProgress = {};
+                gameState.currentRound = { 
+                    pairs: [], 
+                    leftColumn: [], 
+                    rightColumn: [], 
+                    selectedLeft: null, 
+                    selectedRight: null, 
+                    matchedPairs: [], 
+                    roundPoints: 0 
+                };
+            } else {
+                loadPlayerProgress();
+            }
+            
+            updatePlayerUI();
+            savePlayerProgress();
+            usernameInput.value = '';
+            usernameInput.placeholder = `Welcome, ${username}!`;
+            
+            const btn = document.getElementById('save-username');
+            btn.textContent = isNewUser ? '✓ New User Created!' : '✓ Saved!';
+            setTimeout(() => btn.textContent = 'Save & Continue', 1500);
+            
+            populateUserSelect();
+        }
+
+        function quickPlay() {
+            gameState.player.name = 'Guest';
+            gameState.player.avatar = '🏰';
+            gameState.player.theme = 'blue';
+            gameState.player.emoji = '';
+            gameState.player.points = 0;
+            gameState.player.purchasedEmojis = [];
+            gameState.player.rewards = { easy: { medals: 0, trophies: 0, crowns: 0 }, medium: { medals: 0, trophies: 0, crowns: 0 }, hard: { medals: 0, trophies: 0, crowns: 0 } };
+            gameState.streak = 0;
+            gameState.completedWords = 0;
+            gameState.wordProgress = {};
+            updatePlayerUI();
+            showScreen('start');
+        }
+
+        function savePlayerProgress() {
+            try {
+                const playerData = {
+                    name: gameState.player.name,
+                    avatar: gameState.player.avatar,
+                    theme: gameState.player.theme,
+                    emoji: gameState.player.emoji,
+                    points: gameState.player.points,
+                    purchasedEmojis: gameState.player.purchasedEmojis,
+                    rewards: gameState.player.rewards,
+                    wordProgress: gameState.wordProgress,
+                    completedWords: gameState.completedWords,
+                    streak: gameState.streak,
+                    lastActive: new Date().toISOString()
+                };
+                localStorage.setItem(`vocabBonanzaProgress_${gameState.player.name}`, JSON.stringify(playerData));
+                localStorage.setItem('vocabBonanzaCurrentPlayer', gameState.player.name);
+            } catch (e) {
+                console.warn("Error saving player progress:", e);
+                showError("Couldn't save progress. Try again!");
+            }
+        }
+
+        function loadPlayerProgress() {
+            try {
+                const savedName = localStorage.getItem('vocabBonanzaCurrentPlayer');
+                if (savedName && savedName === gameState.player.name) {
+                    const savedData = localStorage.getItem(`vocabBonanzaProgress_${savedName}`);
+                    if (savedData) {
+                        const playerData = JSON.parse(savedData);
+                        gameState.player.name = playerData.name || 'Guest';
+                        gameState.player.avatar = playerData.avatar || '🏰';
+                        gameState.player.theme = playerData.theme || 'blue';
+                        gameState.player.emoji = playerData.emoji || '';
+                        gameState.player.points = playerData.points || 0;
+                        gameState.player.purchasedEmojis = playerData.purchasedEmojis || [];
+                        gameState.player.rewards = playerData.rewards || { easy: { medals: 0, trophies: 0, crowns: 0 }, medium: { medals: 0, trophies: 0, crowns: 0 }, hard: { medals: 0, trophies: 0, crowns: 0 } };
+                        gameState.wordProgress = playerData.wordProgress || {};
+                        gameState.completedWords = playerData.completedWords || 0;
+                        gameState.streak = playerData.streak || 0;
+                        
+                        document.getElementById('username-input').placeholder = `Welcome back, ${gameState.player.name}!`;
+                        document.querySelectorAll('.avatar').forEach(avatar => {
+                            avatar.classList.toggle('selected', avatar.dataset.avatar === gameState.player.avatar);
+                        });
+                        document.querySelectorAll('.color-option').forEach(color => {
+                            color.classList.toggle('selected', color.dataset.color === gameState.player.theme);
+                        });
+                        updatePlayerUI();
+                        return;
+                    }
+                }
+            } catch (e) {
+                console.warn("Error loading player progress:", e);
+                showError("Couldn't load your progress. Starting fresh!");
+            }
+            gameState.player.name = 'Guest';
+            gameState.player.avatar = '🏰';
+            gameState.player.theme = 'blue';
+            gameState.player.emoji = '';
+            gameState.player.points = 0;
+            gameState.player.purchasedEmojis = [];
+            gameState.player.rewards = { easy: { medals: 0, trophies: 0, crowns: 0 }, medium: { medals: 0, trophies: 0, crowns: 0 }, hard: { medals: 0, trophies: 0, crowns: 0 } };
+            gameState.streak = 0;
+            gameState.completedWords = 0;
+            gameState.wordProgress = {};
+            updatePlayerUI();
+        }
+
+        function startNewGame() {
+            document.getElementById('game-container').className = `theme-${gameState.player.theme}`;
+            startNewRound();
+            savePlayerProgress();
+        }
+
+        function startNewRound() {
+            generateRoundData();
+            updateGameUI();
+            showScreen('game');
+            if (!isMobile) {
+                const roundWords = gameState.currentRound.pairs.map(p => p.word).join(', ');
+                showNotification(`Round Words: ${roundWords}`);
+            }
+        }
+
+        function sanitizePairId(word) {
+            return word.toLowerCase().replace(/[^a-z0-9]/g, '') + '_' + Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
+        }
+
+        function generateRoundData() {
+            gameState.currentRound = {
+                pairs: [],
+                leftColumn: [],
+                rightColumn: [],
+                selectedLeft: null,
+                selectedRight: null,
+                matchedPairs: [],
+                roundPoints: 0
+            };
+            
+            const vocab = window.vocab && window.vocab.length > 0 ? window.vocab : defaultVocab;
+            const newWords = getNewWords(3);
+            const reviewWords = getReviewWords(2);
+            const roundWords = shuffleArray([...newWords, ...reviewWords]);
+            
+            console.log(`Round words: ${roundWords.join(', ')}`);
+            
+            roundWords.forEach(word => {
+                const vocabItem = vocab.find(item => item.word === word);
+                if (vocabItem) {
+                    const pairId = sanitizePairId(word);
+                    gameState.currentRound.pairs.push({
+                        pairId,
+                        word: vocabItem.word,
+                        emoji: vocabItem.emoji,
+                        type: vocabItem.type
+                    });
+                }
+            });
+            
+            gameState.currentRound.pairs = shuffleArray([...gameState.currentRound.pairs]);
+            
+            const emojis = gameState.currentRound.pairs.map(pair => ({
+                pairId: pair.pairId,
+                type: 'emoji',
+                value: pair.emoji
+            }));
+            const words = gameState.currentRound.pairs.map(pair => ({
+                pairId: pair.pairId,
+                type: 'word',
+                value: pair.word
+            }));
+            
+            const shuffledEmojis = shuffleArray([...emojis]);
+            const shuffledWords = shuffleArray([...words]);
+            
+            if (gameState.mode === 'easy') {
+                gameState.currentRound.leftColumn = shuffledEmojis;
+                gameState.currentRound.rightColumn = shuffledWords;
+            } else {
+                gameState.currentRound.leftColumn = shuffledWords;
+                gameState.currentRound.rightColumn = shuffledEmojis;
+            }
+            
+            console.log('Generated pairs:', gameState.currentRound.pairs.map(p => `${p.word} (${p.pairId})`));
+            console.log('Left Column:', gameState.currentRound.leftColumn.map(item => `${item.value} (${item.pairId})`));
+            console.log('Right Column:', gameState.currentRound.rightColumn.map(item => `${item.value} (${item.pairId})`));
+        }
+
+        function getNewWords(count) {
+            const vocab = window.vocab && window.vocab.length > 0 ? window.vocab : defaultVocab;
+            const unseenWords = vocab
+                .filter(item => !gameState.wordProgress[item.word])
+                .map(item => item.word);
+            
+            if (unseenWords.length < count) {
+                const seenWords = Object.keys(gameState.wordProgress).filter(word => gameState.wordProgress[word] < 3);
+                const candidates = [...unseenWords, ...seenWords];
+                return shuffleArray(candidates).slice(0, count);
+            }
+            
+            return shuffleArray(unseenWords).slice(0, count);
+        }
+
+        function getReviewWords(count) {
+            const reviewCandidates = Object.keys(gameState.wordProgress)
+                .filter(word => gameState.wordProgress[word] > 0 && gameState.wordProgress[word] < 3);
+            
+            if (reviewCandidates.length < count) {
+                return getNewWords(count);
+            }
+            
+            return shuffleArray(reviewCandidates).slice(0, count);
+        }
+
+        function updateGameUI() {
+            document.getElementById('score').textContent = gameState.player.points;
+            document.getElementById('streak').textContent = gameState.streak;
+            document.getElementById('progress').textContent = gameState.completedWords;
+            document.getElementById('completed').textContent = gameState.completedWords;
+            document.getElementById('percent-complete').textContent = Math.round((gameState.completedWords / 50) * 100);
+            updateProgressBar();
+            
+            const leftColumn = document.getElementById('column-left');
+            const rightColumn = document.getElementById('column-right');
+            leftColumn.innerHTML = '';
+            rightColumn.innerHTML = '';
+            
+            gameState.currentRound.leftColumn.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = `card ${item.type === 'emoji' ? 'emoji-card' : 'word-card'}`;
+                card.dataset.pairId = item.pairId;
+                card.dataset.type = item.type;
+                card.textContent = item.value;
+                card.tabIndex = gameState.currentRound.matchedPairs.includes(item.pairId) ? -1 : 0;
+                card.setAttribute('role', 'button');
+                card.setAttribute('aria-label', `Select card: ${item.value}`);
+                if (gameState.currentRound.matchedPairs.includes(item.pairId)) {
+                    card.classList.add('matched');
+                }
+                
+                card.addEventListener('click', () => handleCardClick('left', item.pairId, index));
+                card.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') handleCardClick('left', item.pairId, index);
+                });
+                
+                leftColumn.appendChild(card);
+                console.log(`Rendered left card: pairId=${item.pairId}, type=${item.type}, value=${item.value}, index=${index}`);
+            });
+            
+            gameState.currentRound.rightColumn.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = `card ${item.type === 'emoji' ? 'emoji-card' : 'word-card'}`;
+                card.dataset.pairId = item.pairId;
+                card.dataset.type = item.type;
+                card.textContent = item.value;
+                card.tabIndex = gameState.currentRound.matchedPairs.includes(item.pairId) ? -1 : 0;
+                card.setAttribute('role', 'button');
+                card.setAttribute('aria-label', `Select card: ${item.value}`);
+                if (gameState.currentRound.matchedPairs.includes(item.pairId)) {
+                    card.classList.add('matched');
+                }
+                
+                card.addEventListener('click', () => handleCardClick('right', item.pairId, index));
+                card.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') handleCardClick('right', item.pairId, index);
+                });
+                
+                rightColumn.appendChild(card);
+                console.log(`Rendered right card: pairId=${item.pairId}, type=${item.type}, value=${item.value}, index=${index}`);
+            });
+            
+            if (gameState.currentRound.matchedPairs.length === 5) {
+                console.log('All pairs matched, ending round');
+                endRound();
+            }
+        }
+
+        function updateProgressBar() {
+            const progressBar = document.querySelector('.progress-bar');
+            const percent = Math.min(100, (gameState.completedWords / 50) * 100);
+            progressBar.style.width = `${percent}%`;
+        }
+
+        function handleCardClick(column, pairId, index) {
+            if (isProcessingClick || gameState.currentRound.matchedPairs.includes(pairId)) {
+                console.log(`Skipped click: isProcessing=${isProcessingClick}, pairId=${pairId}, matched=${gameState.currentRound.matchedPairs.includes(pairId)}`);
+                return;
+            }
+            isProcessingClick = true;
+            
+            const columnData = column === 'left' ? gameState.currentRound.leftColumn : gameState.currentRound.rightColumn;
+            const item = columnData[index];
+            if (!item || item.pairId !== pairId) {
+                console.error(`Item mismatch: pairId=${pairId}, index=${index}, column=${column}, found=${!!item}`);
+                isProcessingClick = false;
+                showError("Oops! Something went wrong. Try again!");
+                return;
+            }
+            
+            const card = document.querySelector(`.card[data-pair-id="${pairId}"][data-type="${item.type}"]`);
+            if (!card || card.classList.contains('matched')) {
+                console.error(`Invalid card: pairId=${pairId}, type=${item.type}, column=${column}, found=${!!card}`);
+                isProcessingClick = false;
+                showError("Oops! Something went wrong. Try again!");
+                return;
+            }
+            
+            if (gameState.mode !== 'hard' && column === 'left') {
+                const pair = gameState.currentRound.pairs.find(p => p.pairId === pairId);
+                if (pair) {
+                    const now = Date.now();
+                    if (now - lastTTSTime >= ttsDebounce) {
+                        speakWord(pair.word);
+                        lastTTSTime = now;
+                        console.log(`TTS triggered: word=${pair.word}`);
+                    }
+                }
+            }
+            
+            if (column === 'left') {
+                if (gameState.currentRound.selectedLeft) {
+                    const prevCard = document.querySelector(`.card[data-pair-id="${gameState.currentRound.selectedLeft}"]`);
+                    if (prevCard) prevCard.classList.remove('selected');
+                }
+                gameState.currentRound.selectedLeft = pairId;
+                card.classList.add('selected');
+            } else {
+                if (gameState.currentRound.selectedRight) {
+                    const prevCard = document.querySelector(`.card[data-pair-id="${gameState.currentRound.selectedRight}"]`);
+                    if (prevCard) prevCard.classList.remove('selected');
+                }
+                gameState.currentRound.selectedRight = pairId;
+                card.classList.add('selected');
+            }
+            
+            console.log(`Selected: left=${gameState.currentRound.selectedLeft}, right=${gameState.currentRound.selectedRight}`);
+            
+            if (gameState.currentRound.selectedLeft && gameState.currentRound.selectedRight) {
+                checkMatch();
+            } else {
+                isProcessingClick = false;
+            }
+        }
+
+        function checkMatch() {
+            const leftId = gameState.currentRound.selectedLeft;
+            const rightId = gameState.currentRound.selectedRight;
+            
+            console.log(`Checking match: leftId=${leftId}, rightId=${rightId}, matchedPairs=${gameState.currentRound.matchedPairs.length}`);
+            
+            const leftCard = document.querySelector(`.card[data-pair-id="${leftId}"]`);
+            const rightCard = document.querySelector(`.card[data-pair-id="${rightId}"]`);
+            
+            if (!leftCard || !rightCard) {
+                console.error(`Cards not found in checkMatch: leftCard=${leftCard}, rightCard=${rightCard}, leftId=${leftId}, rightId=${rightId}`);
+                resetSelections();
+                showError("Oops! Something went wrong. Try again!");
+                return;
+            }
+            
+            if (leftId === rightId) {
+                leftCard.classList.add('correct');
+                rightCard.classList.add('correct');
+                playSound('correct');
+                
+                gameState.player.points += 10;
+                gameState.streak++;
+                gameState.currentRound.roundPoints += 10;
+                
+                const pair = gameState.currentRound.pairs.find(p => p.pairId === leftId);
+                if (pair) {
+                    gameState.wordProgress[pair.word] = (gameState.wordProgress[pair.word] || 0) + 1;
+                    if (gameState.wordProgress[pair.word] === 3) {
+                        gameState.completedWords++;
+                        checkMilestone();
+                        checkModeCompletion();
+                    }
+                }
+                
+                gameState.currentRound.matchedPairs.push(leftId);
+                console.log(`Match successful, matchedPairs=${gameState.currentRound.matchedPairs.length}`);
+                
+                if (gameState.streak % 10 === 0) {
+                    gameState.player.points += 50;
+                    showNotification('Streak Bonus: +50 Points!');
+                }
+                
+                checkEmojiPurchase();
+                
+                setTimeout(() => {
+                    leftCard.classList.remove('correct');
+                    rightCard.classList.remove('correct');
+                    leftCard.classList.add('matched');
+                    rightCard.classList.add('matched');
+                    leftCard.tabIndex = -1;
+                    rightCard.tabIndex = -1;
+                    gameState.currentRound.selectedLeft = null;
+                    gameState.currentRound.selectedRight = null;
+                    isProcessingClick = false;
+                    
+                    if (gameState.currentRound.matchedPairs.length === 5) {
+                        console.log('All pairs matched, ending round');
+                        endRound();
+                    } else {
+                        updateGameUI();
+                    }
+                }, 500);
+            } else {
+                leftCard.classList.add('incorrect');
+                rightCard.classList.add('incorrect');
+                playSound('incorrect');
+                
+                gameState.streak = 0;
+                
+                setTimeout(() => {
+                    leftCard.classList.remove('selected', 'incorrect');
+                    rightCard.classList.remove('selected', 'incorrect');
+                    gameState.currentRound.selectedLeft = null;
+                    gameState.currentRound.selectedRight = null;
+                    isProcessingClick = false;
+                    updateGameUI();
+                }, 1000);
+            }
+            
+            savePlayerProgress();
+        }
+
+        function resetSelections() {
+            gameState.currentRound.selectedLeft = null;
+            gameState.currentRound.selectedRight = null;
+            document.querySelectorAll('.card.selected').forEach(card => card.classList.remove('selected'));
+            isProcessingClick = false;
+            updateGameUI();
+        }
+
+        function checkMilestone() {
+            const previousWords = gameState.completedWords - 1;
+            const currentWords = gameState.completedWords;
+            if (milestones.includes(currentWords) && !milestones.includes(previousWords)) {
+                showNotification(`Milestone: ${currentWords}/50 Words Mastered!`);
+                createConfetti(document.getElementById('game-screen'), 20);
+            }
+        }
+
+        function checkModeCompletion() {
+            if (gameState.completedWords >= 50) {
+                const modeRewards = gameState.player.rewards[gameState.mode];
+                modeRewards.medals++;
+                showNotification(`🎖️ ${gameState.mode.charAt(0).toUpperCase() + gameState.mode.slice(1)} Medal Earned!`);
+                createConfetti(document.getElementById('game-screen'), 20);
+                
+                if (modeRewards.medals >= 10) {
+                    modeRewards.medals = 0;
+                    modeRewards.trophies++;
+                    showNotification(`🏆 ${gameState.mode.charAt(0).toUpperCase() + gameState.mode.slice(1)} Trophy Earned!`);
+                    createConfetti(document.getElementById('game-screen'), 20);
+                }
+                
+                if (modeRewards.trophies >= 10) {
+                    modeRewards.trophies = 0;
+                    modeRewards.crowns++;
+                    showNotification(`👑 ${gameState.mode.charAt(0).toUpperCase() + gameState.mode.slice(1)} Crown Earned!`);
+                    createConfetti(document.getElementById('game-screen'), 20);
+                }
+                
+                savePlayerProgress();
+            }
+        }
+
+        function checkEmojiPurchase() {
+            const affordableEmojis = emojiStore.filter(item => !gameState.player.purchasedEmojis.includes(item.emoji) && gameState.player.points >= item.points);
+            if (affordableEmojis.length > 0) {
+                const emoji = affordableEmojis[0];
+                gameState.player.purchasedEmojis.push(emoji.emoji);
+                gameState.player.emoji = emoji.emoji;
+                gameState.player.points -= emoji.points;
+                showNotification(`Purchased ${emoji.name} Emoji ${emoji.emoji}!`);
+                updatePlayerUI();
+                savePlayerProgress();
+            }
+        }
+
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'milestone-notification';
+            notification.textContent = message;
+            document.getElementById('game-container').appendChild(notification);
+            setTimeout(() => notification.remove(), 3000);
+        }
+
+        function endRound() {
+            if (gameState.currentRound.roundPoints === 50) {
+                gameState.player.points += 50;
+                showNotification('Perfect Round: +50 Points!');
+            }
+            
+            document.getElementById('round-score').textContent = gameState.currentRound.roundPoints;
+            document.getElementById('total-score').textContent = gameState.player.points;
+            document.getElementById('progress-count').textContent = gameState.completedWords;
+            document.getElementById('progress-streak').textContent = gameState.streak;
+            
+            updateTrophyDisplay(document.getElementById('trophy-display'));
+            
+            savePlayerProgress();
+            checkEmojiPurchase();
+            
+            setTimeout(() => {
+                createConfetti(document.getElementById('round-complete-screen'), 20);
+                showScreen('roundComplete');
+            }, 1000);
+            
+            if (gameState.completedWords >= 50) {
+                endGame();
+            }
+        }
+
+        function showTrophyRoom() {
+            const trophyList = document.getElementById('trophy-list');
+            updateTrophyDisplay(trophyList);
+            showScreen('trophyRoom');
+        }
+
+        function updateTrophyDisplay(container) {
+            container.innerHTML = '';
+            const modes = ['easy', 'medium', 'hard'];
+            modes.forEach(mode => {
+                const rewards = gameState.player.rewards[mode];
+                const modeName = mode.charAt(0).toUpperCase() + mode.slice(1);
+                if (rewards.medals > 0) {
+                    const medalDiv = document.createElement('div');
+                    medalDiv.className = 'trophy-item';
+                    medalDiv.textContent = mode === 'easy' ? '🥉' : mode === 'medium' ? '🥈' : '🥇';
+                    medalDiv.title = `${rewards.medals} ${modeName} Medals`;
+                    container.appendChild(medalDiv);
+                }
+                if (rewards.trophies > 0) {
+                    const trophyDiv = document.createElement('div');
+                    trophyDiv.className = 'trophy-item';
+                    trophyDiv.textContent = '🏆';
+                    trophyDiv.title = `${rewards.trophies} ${modeName} Trophies`;
+                    container.appendChild(trophyDiv);
+                }
+                if (rewards.crowns > 0) {
+                    const crownDiv = document.createElement('div');
+                    crownDiv.className = 'trophy-item';
+                    crownDiv.textContent = '👑';
+                    crownDiv.title = `${rewards.crowns} ${modeName} Crowns`;
+                    container.appendChild(crownDiv);
+                }
+            });
+            if (container.innerHTML === '') {
+                container.textContent = 'No rewards yet! Keep playing!';
+            }
+        }
+
+        function showEmojiStore() {
+            const emojiList = document.getElementById('emoji-list');
+            emojiList.innerHTML = '';
+            document.getElementById('store-points').textContent = gameState.player.points;
+            
+            emojiStore.forEach(item => {
+                const div = document.createElement('div');
+                div.className = `emoji-item ${gameState.player.purchasedEmojis.includes(item.emoji) ? 'purchased' : ''}`;
+                div.innerHTML = `${item.emoji} ${item.name} (${item.points} Points)`;
+                div.setAttribute('role', 'button');
+                div.setAttribute('aria-label', `Select ${item.name} emoji`);
+                if (!gameState.player.purchasedEmojis.includes(item.emoji) && gameState.player.points >= item.points) {
+                    div.addEventListener('click', () => {
+                        gameState.player.purchasedEmojis.push(item.emoji);
+                        gameState.player.emoji = item.emoji;
+                        gameState.player.points -= item.points;
+                        savePlayerProgress();
+                        showEmojiStore();
+                        updatePlayerUI();
+                        showNotification(`Purchased ${item.name} Emoji ${item.emoji}!`);
+                    });
+                }
+                emojiList.appendChild(div);
+            });
+            
+            showScreen('emojiStore');
+        }
+
+        function endGame() {
+            gameState.leaderboard.push({
+                name: gameState.player.name,
+                avatar: gameState.player.avatar,
+                score: gameState.player.points,
+                date: new Date().toISOString()
+            });
+            
+            gameState.leaderboard.sort((a, b) => b.score - a.score);
+            gameState.leaderboard = gameState.leaderboard.slice(0, 20);
+            
+            try {
+                localStorage.setItem('vocabBonanzaLeaderboard', JSON.stringify(gameState.leaderboard));
+            } catch (e) {
+                console.warn("Error saving leaderboard:", e);
+                showError("Couldn't save leaderboard. Try again!");
+            }
+            
+            document.getElementById('final-score').textContent = gameState.player.points;
+            updateTrophyDisplay(document.getElementById('final-trophy-display'));
+            showScreen('gameOver');
+        }
+
+        function quitToMainMenu() {
+            showScreen('start');
+            populateUserSelect();
+        }
+
+        function showScreen(screenName) {
+            Object.values(screens).forEach(screen => screen.classList.remove('active'));
+            screens[screenName].classList.add('active');
+            gameState.currentScreen = screenName;
+        }
+
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        function playSound(type) {
+            if (!window.AudioContext && !window.webkitAudioContext) {
+                console.warn("Web Audio API not supported.");
+                return;
+            }
+            
+            try {
+                const context = new (window.AudioContext || window.webkitAudioContext)();
+                if (context.state === 'suspended') {
+                    context.resume().then(() => {
+                        createSound(context, type);
+                    });
+                } else {
+                    createSound(context, type);
+                }
+                console.log(`Playing sound: ${type}`);
+            } catch (e) {
+                console.warn("Error playing sound:", e);
+            }
+        }
+
+        function createSound(context, type) {
+            const oscillator = context.createOscillator();
+            const gainNode = context.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(context.destination);
+            
+            if (type === 'correct') {
+                oscillator.type = 'sine';
+                oscillator.frequency.setValueAtTime(523.25, context.currentTime);
+                gainNode.gain.setValueAtTime(0.3, context.currentTime);
+                oscillator.frequency.exponentialRampToValueAtTime(1046.50, context.currentTime + 0.2);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, context.currentTime + 0.3);
+            } else if (type === 'incorrect') {
+                oscillator.type = 'square';
+                oscillator.frequency.setValueAtTime(220, context.currentTime);
+                gainNode.gain.setValueAtTime(0.3, context.currentTime);
+                oscillator.frequency.exponentialRampToValueAtTime(110, context.currentTime + 0.1);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, context.currentTime + 0.2);
+            }
+            
+            oscillator.start();
+            oscillator.stop(context.currentTime + 0.3);
+        }
+
+        function createConfetti(container, count) {
+            const colors = ['#ff5722', '#4caf50', '#ffc107', '#2196f3', '#9c27b0', '#e91e63'];
+            
+            for (let i = 0; i < Math.min(count, 20); i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = `${Math.random() * 100}%`;
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDuration = `${Math.random() * 1 + 1}s`;
+                confetti.style.width = `${Math.random() * 6 + 4}px`;
+                confetti.style.height = `${Math.random() * 6 + 4}px`;
+                container.appendChild(confetti);
+                
+                setTimeout(() => confetti.remove(), 2000);
+            }
+        }
+
+        function speakWord(word) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(word);
+                utterance.lang = 'en-GB'; // British English
+                utterance.rate = 0.8;
+                speechSynthesis.speak(utterance);
+            } else {
+                console.warn("SpeechSynthesis not supported.");
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', initGame);
+    </script>
+</body>
+</html>
