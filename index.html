@@ -367,40 +367,44 @@
         }
         
         .card {
-            background: rgba(30, 40, 70, 0.8);
-            border-radius: 15px;
-            padding: 20px;
+            padding: 25px 10px;
             text-align: center;
+            font-size: 2.5rem;
+            background: rgba(30, 40, 70, 0.8);
+            border: 2px solid var(--secondary);
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 150px;
+            border-radius: 15px;
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
-            border: 3px solid rgba(100, 100, 200, 0.3);
+            position: relative;
+            overflow: hidden;
         }
         
         .card:hover {
             transform: translateY(-5px);
             background: rgba(40, 50, 90, 0.9);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
-            border-color: rgba(100, 200, 255, 0.5);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            border-color: #ffc107;
         }
         
         .card.selected {
-            background: rgba(100, 200, 255, 0.3);
-            box-shadow: 0 0 20px rgba(100, 200, 255, 0.6);
-            border: 3px solid rgba(100, 200, 255, 0.7);
+            border-color: #ffc107;
+            box-shadow: 0 0 20px rgba(255, 193, 7, 0.6);
         }
         
         .card.correct {
             background: rgba(100, 255, 100, 0.3);
+            border-color: #4caf50;
             animation: pulse 0.5s ease;
         }
         
         .card.incorrect {
             background: rgba(255, 100, 100, 0.3);
+            border-color: #f44336;
             animation: shake 0.5s ease;
         }
         
@@ -1004,7 +1008,7 @@
             } else {
                 document.getElementById('username-input').style.display = 'block';
                 gameState.player.name = 'Guest';
-                gameState.player.avatar = '🏰';
+                gameState.player.avatar = '�';
                 gameState.player.theme = 'blue';
                 gameState.player.emoji = '';
                 gameState.player.points = 0;
@@ -1737,3 +1741,4 @@
     </script>
 </body>
 </html>
+�
