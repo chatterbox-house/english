@@ -1690,26 +1690,37 @@ function initGame() {
     updateLanguage(); // Set initial language - this will call updateProgressTracker
     
     // Set initial part of speech (verbs)
-setCurrentPartOfSpeech('verb'); // Start with verbs
+    setCurrentPartOfSpeech('verb');
 }
 
 function setCurrentPartOfSpeech(part) {
     currentPartOfSpeech = part;
     currentPartWords = [...vocabByPart[part]];
-    
-    // Initialize word progress tracking for this part if it doesn't exist
-    currentPartWords.forEach(word => {
-        if (!gameState.wordProgress[word.word]) {
-            gameState.wordProgress[word.word] = 0;
-        }
-    });
-    
     updatePartOfSpeechDisplay();
-    updateProgressTracker();
     
-    // Show notification about current learning focus
-    const lang = translations[currentLanguage];
-    showNotification(`${lang.partsOfSpeech[currentPartOfSpeech]}: ${currentPartWords.length} ${currentLanguage === 'ja' ? '単語学習中' : 'words to learn'}`);
+    // Also update the translations to include all parts
+    translations.ja.partsOfSpeech = {
+        verb: "動詞",
+        noun: "名詞",
+        pronoun: "代名詞",
+        adjective: "形容詞",
+        adverb: "副詞",
+        preposition: "前置詞",
+        conjunction: "接続詞",
+        auxiliary: "助動詞",
+        interjection: "感嘆詞"
+    };
+    translations.en.partsOfSpeech = {
+        verb: "Verb",
+        noun: "Noun",
+        pronoun: "Pronoun",
+        adjective: "Adjective",
+        adverb: "Adverb",
+        preposition: "Preposition",
+        conjunction: "Conjunction",
+        auxiliary: "Auxiliary",
+        interjection: "Interjection"
+    };
 }
 
 function updatePartOfSpeechDisplay() {
@@ -1727,19 +1738,15 @@ function updateProgressTracker() {
     const medalsTracker = document.getElementById('medals-tracker');
     const trophiesTracker = document.getElementById('trophies-tracker');
     
-    // Calculate mastered words in current part of speech
-    const masteredInCurrentPart = currentPartWords.filter(word => 
-        gameState.wordProgress[word.word] >= 3
-    ).length;
+    // Only update elements if they exist
+    if (masteredEl) masteredEl.textContent = gameState.player.rewards.totalWordsMastered;
+    if (totalEl) totalEl.textContent = totalWords;
     
-    // Update display with current part progress
-    if (masteredEl) masteredEl.textContent = `${masteredInCurrentPart}/${currentPartWords.length}`;
-    if (totalEl) totalEl.textContent = gameState.player.rewards.totalWordsMastered;
-    
-    // Show medals/trophies if earned
+    // Only show medals/trophies if earned and elements exist
     if (medalsTracker) {
         if (gameState.player.rewards.medals > 0) {
-            document.getElementById('medals-count').textContent = gameState.player.rewards.medals;
+            const medalsCount = document.getElementById('medals-count');
+            if (medalsCount) medalsCount.textContent = gameState.player.rewards.medals;
             medalsTracker.style.display = 'flex';
         } else {
             medalsTracker.style.display = 'none';
@@ -1748,17 +1755,13 @@ function updateProgressTracker() {
     
     if (trophiesTracker) {
         if (gameState.player.rewards.trophies > 0) {
-            document.getElementById('trophies-count').textContent = gameState.player.rewards.trophies;
+            const trophiesCount = document.getElementById('trophies-count');
+            if (trophiesCount) trophiesCount.textContent = gameState.player.rewards.trophies;
             trophiesTracker.style.display = 'flex';
         } else {
             trophiesTracker.style.display = 'none';
         }
     }
-    
-    // Update progress bar for current part
-    const progressPercent = Math.round((masteredInCurrentPart / currentPartWords.length) * 100);
-    document.querySelector('.progress-bar').style.width = `${progressPercent}%`;
-    document.getElementById('percent-complete').textContent = progressPercent;
 }
 
 function populateUserSelect() {
@@ -2331,14 +2334,11 @@ function updateGameUI() {
     if (streakElement) streakElement.textContent = gameState.streak;
     
     // Safely update progress display if it exists
-const progressElement = document.getElementById('progress');
-if (progressElement) {
-    const masteredInCurrentPart = currentPartWords.filter(word => 
-        gameState.wordProgress[word.word] >= 3
-    ).length;
-    progressElement.textContent = 
-        `${masteredInCurrentPart}/${currentPartWords.length} (${gameState.player.rewards.totalWordsMastered} total)`;
-}
+    const progressElement = document.getElementById('progress');
+    if (progressElement) {
+        progressElement.textContent = 
+            `${gameState.completedWords}/10 (Total: ${gameState.player.rewards.totalWordsMastered})`;
+    }
     
     // Safely update percent complete if it exists
     const percentElement = document.getElementById('percent-complete');
@@ -3064,13 +3064,13 @@ function checkMilestone() {
 }
 
 function checkPartOfSpeechCompletion() {
-    // Calculate mastered words in current part
-    const masteredWordsInPart = currentPartWords.filter(word => 
-        gameState.wordProgress[word.word] >= 3
+    // Check if we've completed all words in current part of speech
+    const masteredWordsInPart = Object.keys(gameState.wordProgress).filter(word => 
+        gameState.wordProgress[word] >= 3 && 
+        currentPartWords.some(item => item.word === word)
     ).length;
     
-    // Check if all words in current part are mastered
-    if (masteredWordsInPart >= currentPartWords.length) {
+    if (masteredWordsInPart >= 10) {
         // Move to next part of speech
         const parts = Object.keys(vocabByPart);
         const currentIndex = parts.indexOf(currentPartOfSpeech);
@@ -3078,14 +3078,14 @@ function checkPartOfSpeechCompletion() {
         const nextPart = parts[nextIndex];
         
         setCurrentPartOfSpeech(nextPart);
+        gameState.completedWords = 0; // Reset counter for new part
         
-        // Show completion message
-        const lang = translations[currentLanguage];
-        showNotification(`${lang.partsOfSpeech[currentPartOfSpeech]} ${currentLanguage === 'ja' ? 'マスター！' : 'mastered!'}`);
-        createConfetti(document.getElementById('game-screen'), 30);
+        showNotification(currentLanguage === 'ja' ? 
+            `新しい品詞: ${translations.ja.partsOfSpeech[nextPart]}` : 
+            `New part of speech: ${translations.en.partsOfSpeech[nextPart]}`);
     }
     
-    // Award medals for every 50 words mastered (across all parts)
+    // Award medals for every 50 words
     if (gameState.player.rewards.totalWordsMastered > 0 && 
         gameState.player.rewards.totalWordsMastered % 50 === 0) {
         
@@ -3098,13 +3098,12 @@ function checkPartOfSpeechCompletion() {
             gameState.player.rewards.medals = 0;
             gameState.player.rewards.trophies++;
             showNotification(currentLanguage === 'ja' ? `🏆 トロフィー獲得！` : `🏆 Trophy earned!`);
-            createConfetti(document.getElementById('game-screen'), 30);
+            createConfetti(document.getElementById('game-screen'), 20);
         }
         
         savePlayerProgress();
+        updateProgressTracker();
     }
-    
-    updateProgressTracker();
 }
 
 function endRound() {
