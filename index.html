@@ -1,18 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Big Ben's Vocab Bonanza</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bangers&family=Short+Stack&display=swap">
-    <!-- PWA: Link to manifest.json -->
-    <link rel="manifest" href="manifest.json">
-    <!-- PWA: Apple Touch Icon -->
-    <link rel="apple-touch-icon" href="icons/apple-icon-180.png">
-    <!-- PWA: Theme color for address bar -->
-    <meta name="theme-color" content="#1a237e">
+    <title>NANDOmode Eigo - Learn English Vocabulary</title>
+    <meta name="theme-color" content="#1a1a2e">
+    <meta name="description" content="楽しい絵文字マッチングゲームで英語を学びましょう！">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap">
     <style>
-        /* General styling */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -20,8 +16,8 @@
         }
         
         body {
-            font-family: 'Short Stack', cursive;
-            background: linear-gradient(135deg, #1a237e, #0d47a1);
+            font-family: 'Comic Neue', cursive, 'Press Start 2P', cursive;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
             color: #fff;
             line-height: 1.6;
             min-height: 100vh;
@@ -29,17 +25,18 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
+            touch-action: manipulation;
         }
         
         #game-container {
             max-width: 900px;
             width: 100%;
-            background: rgba(13, 71, 161, 0.9);
+            background: rgba(10, 15, 30, 0.85);
             border-radius: 20px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
             overflow: hidden;
             position: relative;
-            border: 6px solid #ffc107;
+            border: 6px solid #4a4a8a;
         }
         
         .screen {
@@ -61,38 +58,37 @@
         }
         
         h1 {
-            font-family: 'Bangers', cursive;
-            font-size: 3.5rem;
+            font-size: 2.8rem;
             margin: 25px 0 15px;
             letter-spacing: 4px;
-            color: #ffc107;
+            color: #f8f8f8;
             text-transform: uppercase;
-            background: linear-gradient(90deg, #ff5722, #ffc107, #4caf50);
+            background: linear-gradient(90deg, #ff6b6b, #4ecdc4, #ffe66d);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 15px rgba(255, 193, 7, 0.5);
+            text-shadow: 0 0 15px rgba(78, 205, 196, 0.5);
         }
         
         h2 {
-            font-size: 2.5rem;
+            font-size: 2rem;
             margin: 20px 0;
-            color: #ffc107;
+            color: #ffe66d;
         }
         
         h3 {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             margin: 15px 0;
-            color: #4caf50;
+            color: #4ecdc4;
         }
         
         button {
-            background: linear-gradient(145deg, #ff5722, #ff7043);
+            background: linear-gradient(145deg, #ff6b6b, #ff8e8e);
             color: white;
             border: none;
             border-radius: 15px;
-            padding: 18px 35px;
+            padding: 18px 30px;
             font-size: 1.5rem;
-            font-family: 'Bangers', cursive;
+            font-family: 'Comic Neue', cursive;
             cursor: pointer;
             margin: 15px;
             transition: all 0.2s;
@@ -100,13 +96,16 @@
             text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.6);
             position: relative;
             overflow: hidden;
-            border: 3px solid #e64a19;
-            letter-spacing: 1px;
+            border: 3px solid #ff4757;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
         
         button:hover {
-            transform: translateY(-4px);
-            background: linear-gradient(145deg, #ff7043, #ff5722);
+            transform: translateY(-4px) scale(1.05);
+            background: linear-gradient(145deg, #ff8e8e, #ff6b6b);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
         }
         
@@ -126,25 +125,50 @@
             min-width: 220px;
             margin: 12px;
             padding: 20px;
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             border-radius: 20px;
         }
         
         .mode-btn.easy { 
-            background: linear-gradient(145deg, #4caf50, #8bc34a); 
-            border: 3px solid #2e7d32;
+            background: linear-gradient(145deg, #3a7, #4bc); 
+            border: 3px solid #2aa;
         }
         .mode-btn.medium { 
-            background: linear-gradient(145deg, #2196f3, #42a5f5); 
-            border: 3px solid #1565c0;
+            background: linear-gradient(145deg, #47a, #58c); 
+            border: 3px solid #36b;
         }
         .mode-btn.hard { 
-            background: linear-gradient(145deg, #f44336, #ef5350); 
-            border: 3px solid #c62828;
+            background: linear-gradient(145deg, #a54, #d66); 
+            border: 3px solid #c33;
         }
-        
+
+    /* Add this to your existing CSS */
+#close-bonus-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 5px 8px;
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    color: white;
+    font-size: 14px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2001;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+#close-bonus-btn:hover {
+    background: rgba(255, 100, 100, 0.7);
+    transform: scale(1.1);
+}    
         #start-screen {
-            background: radial-gradient(circle at center, #1a237e, #0d47a1);
+            background: radial-gradient(circle at center, #1e3a5f, #132238);
             text-align: center;
         }
         
@@ -154,16 +178,16 @@
             padding: 20px;
             background: rgba(0, 0, 0, 0.3);
             border-radius: 15px;
-            border: 3px solid #4caf50;
+            border: 3px solid #4ecdc4;
         }
         
         #username-input {
             width: 100%;
-            padding: 18px;
-            font-size: 1.5rem;
+            padding: 15px;
+            font-size: 1.3rem;
             font-family: inherit;
-            border: 3px solid #ff5722;
-            border-radius: 15px;
+            border: 3px solid #ff6b6b;
+            border-radius: 10px;
             background: rgba(0, 0, 0, 0.5);
             color: white;
             text-align: center;
@@ -172,44 +196,14 @@
         
         #user-select {
             width: 100%;
-            padding: 18px;
-            font-size: 1.5rem;
+            padding: 15px;
+            font-size: 1.3rem;
             font-family: inherit;
-            border: 3px solid #ff5722;
-            border-radius: 15px;
+            border: 3px solid #ff6b6b;
+            border-radius: 10px;
             background: rgba(0, 0, 0, 0.5);
             color: white;
             margin: 15px 0;
-        }
-        
-        .language-selector {
-            margin: 20px auto;
-            padding: 15px;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 15px;
-            border: 3px solid #ffc107;
-            max-width: 500px;
-        }
-        
-        .language-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 10px;
-        }
-        
-        .language-btn {
-            padding: 10px 20px;
-            font-size: 1.2rem;
-            border-radius: 10px;
-            background: #2196f3;
-            border: 2px solid #0d47a1;
-        }
-        
-        .language-btn.selected {
-            background: #ffc107;
-            color: #000;
-            border: 2px solid #ff9800;
         }
         
         .avatar-container {
@@ -242,7 +236,7 @@
             transform: scale(1.25);
             background: rgba(255, 255, 255, 0.2);
             box-shadow: 0 0 25px rgba(255, 255, 255, 0.8);
-            border: 3px solid #ffc107;
+            border: 3px solid #ffe66d;
             animation: none;
         }
         
@@ -281,7 +275,7 @@
         }
         
         #game-screen {
-            background: radial-gradient(circle at center, #1a237e, #0d47a1);
+            background: radial-gradient(circle at center, #1a2a3a, #0d1b2a);
         }
         
         .game-header {
@@ -292,16 +286,16 @@
             background: rgba(0, 0, 0, 0.4);
             border-radius: 12px;
             margin-bottom: 20px;
-            border: 3px solid #ffc107;
+            border: 3px solid #4a4a8a;
         }
         
         .game-header div {
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             text-align: center;
             padding: 10px 5px;
             background: rgba(0, 0, 0, 0.6);
             border-radius: 10px;
-            border: 2px solid #4caf50;
+            border: 2px solid #4ecdc4;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -315,7 +309,7 @@
         }
         
         .player-avatar {
-            font-size: 2.5rem;
+            font-size: 2rem;
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
         }
         
@@ -325,16 +319,16 @@
             margin: 10px 0 0;
             background: rgba(0, 0, 0, 0.5);
             border-radius: 10px;
-            height: 35px;
-            border: 2px solid #ffc107;
+            height: 30px;
+            border: 2px solid #4a4a8a;
             overflow: hidden;
             padding: 0;
-            box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+            box-shadow: 0 0 10px rgba(78, 205, 196, 0.5);
         }
         
         .progress-bar {
             height: 100%;
-            background: linear-gradient(90deg, #ff5722, #ffc107, #4caf50);
+            background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
             width: 0%;
             transition: width 0.5s ease;
             position: relative;
@@ -345,9 +339,42 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 1.2rem;
+            font-size: 1rem;
             color: white;
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+        }
+        
+/* Progress Tracker - Now part of game header */
+.progress-tracker {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 10px;
+    border-radius: 10px;
+    border: 2px solid #4ecdc4;
+    font-size: 0.9rem;
+    text-align: center;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+        
+        .progress-tracker-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 100px;
+        }
+        
+        .progress-tracker-label {
+            font-size: 0.8rem;
+            margin-bottom: 5px;
+        }
+        
+        .progress-tracker-value {
+            font-weight: bold;
+            font-size: 1.1rem;
         }
         
         .game-board {
@@ -367,50 +394,46 @@
         }
         
         .card {
-            padding: 25px 10px;
-            text-align: center;
-            font-size: 2.5rem;
             background: rgba(30, 40, 70, 0.8);
-            border: 2px solid var(--secondary);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 150px;
-            border-radius: 15px;
+            height: 140px;
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
-            position: relative;
-            overflow: hidden;
+            border: 3px solid rgba(100, 100, 200, 0.3);
         }
         
         .card:hover {
             transform: translateY(-5px);
             background: rgba(40, 50, 90, 0.9);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-            border-color: #ffc107;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+            border-color: rgba(100, 200, 255, 0.5);
         }
         
         .card.selected {
-            border-color: #ffc107;
-            box-shadow: 0 0 20px rgba(255, 193, 7, 0.6);
+            background: rgba(100, 200, 255, 0.3);
+            box-shadow: 0 0 20px rgba(100, 200, 255, 0.6);
+            border: 3px solid rgba(100, 200, 255, 0.7);
         }
         
         .card.correct {
             background: rgba(100, 255, 100, 0.3);
-            border-color: #4caf50;
             animation: pulse 0.5s ease;
         }
         
         .card.incorrect {
             background: rgba(255, 100, 100, 0.3);
-            border-color: #f44336;
             animation: shake 0.5s ease;
         }
         
         .card.matched {
             background: rgba(100, 255, 100, 0.5);
-            border: 3px solid #4caf50;
+            border: 3px solid #4ecdc4;
             box-shadow: 0 0 15px rgba(100, 255, 100, 0.8);
             pointer-events: none;
             cursor: default;
@@ -421,7 +444,7 @@
         }
         
         .word-card {
-            font-size: 2rem;
+            font-size: 1.8rem;
             word-wrap: break-word;
             overflow-wrap: break-word;
             padding: 15px;
@@ -438,7 +461,7 @@
             padding: 25px;
             background: rgba(0, 0, 0, 0.4);
             border-radius: 15px;
-            border: 3px solid #4caf50;
+            border: 3px solid #4ecdc4;
             max-width: 600px;
             margin: 30px auto;
         }
@@ -462,7 +485,7 @@
             background: rgba(0, 0, 0, 0.4);
             border-radius: 15px;
             padding: 25px;
-            border: 3px solid #4caf50;
+            border: 3px solid #4ecdc4;
         }
         
         .trophy-item {
@@ -470,34 +493,6 @@
             margin: 15px;
             display: inline-block;
             animation: trophySpin 2s infinite linear;
-        }
-        
-        #emoji-store-screen {
-            background: radial-gradient(circle at center, #2a2a3a, #1a1a2a);
-            text-align: center;
-        }
-        
-        .emoji-store-container {
-            max-width: 700px;
-            margin: 20px auto;
-            background: rgba(0, 0, 0, 0.4);
-            border-radius: 15px;
-            padding: 25px;
-            border: 3px solid #4caf50;
-        }
-        
-        .emoji-item {
-            display: inline-flex;
-            align-items: center;
-            margin: 10px;
-            padding: 10px;
-            background: rgba(30, 40, 70, 0.8);
-            border-radius: 10px;
-            cursor: pointer;
-        }
-        
-        .emoji-item.purchased {
-            background: rgba(100, 255, 100, 0.5);
         }
         
         #game-over-screen {
@@ -511,10 +506,10 @@
             left: 50%;
             transform: translateX(-50%);
             background: rgba(0, 0, 0, 0.8);
-            color: #ffc107;
+            color: #ffe66d;
             padding: 15px 30px;
             border-radius: 10px;
-            border: 3px solid #4caf50;
+            border: 3px solid #4ecdc4;
             font-size: 1.2rem;
             z-index: 1000;
             animation: fadeInOut 3s ease forwards;
@@ -534,10 +529,265 @@
             z-index: 1000;
             animation: fadeInOut 3s ease forwards;
         }
+
+        .success-notification {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(100, 255, 100, 0.8);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 10px;
+            border: 3px solid #4ecdc4;
+            font-size: 1.2rem;
+            z-index: 1000;
+            animation: fadeInOut 3s ease forwards;
+        }
+
+        .translation-display {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 1rem;
+            text-align: center;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            animation: fadeInOut 3s ease forwards;
+            pointer-events: none;
+            border: 2px solid #4ecdc4;
+        }
+
+        .translation-display span {
+            display: block;
+        }
+
+        .translation-display .word {
+            font-weight: bold;
+            color: #ffe66d;
+        }
+
+        .translation-display .translation {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .reward-path {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px auto;
+            max-width: 500px;
+        }
+        
+        .reward-step {
+            text-align: center;
+            opacity: 0.5;
+            transition: all 0.3s;
+            font-size: 2rem;
+        }
+        
+        .reward-step.earned {
+            opacity: 1;
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 5px gold);
+        }
+        
+        .reward-step.next {
+            opacity: 0.8;
+            text-shadow: 0 0 10px #ffe66d;
+        }
+        
+        .reward-label {
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+        
+        .word-mastery-1 { border-color: #4ecdc4 !important; }
+        .word-mastery-2 { border-color: silver !important; }
+        .word-mastery-3 { border-color: gold !important; animation: pulse 1s infinite; }
+        
+        .logout-btn {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(255, 100, 100, 0.7);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 15px;
+            font-size: 1rem;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+            border: 2px solid #ff4757;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .logout-btn:hover {
+            background: rgba(255, 100, 100, 0.9);
+            transform: translateY(-2px);
+        }
+        
+        /* Bonus Game Popup */
+        .bonus-game-popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+.bonus-game-content {
+    background: linear-gradient(145deg, #1a1a2e, #16213e);
+    padding: 25px;
+    border-radius: 15px;
+    border: 3px solid #ffe66d;
+    max-width: 80%;
+    text-align: center;
+    position: relative; /* Add this line */
+    min-height: 300px;
+}
+
+        .bonus-game-content h3 {
+            color: #ffe66d;
+            margin-bottom: 15px;
+        }
+
+        .bonus-game-content p {
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .bonus-game-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .bonus-game-buttons button {
+            padding: 12px 24px;
+            font-size: 1.2rem;
+        }
+
+        /* Fruit Machine Styles */
+        .fruit-machine {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .fruit-reel {
+            width: 80px;
+            height: 80px;
+            font-size: 3rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            border: 2px solid #4ecdc4;
+            overflow: hidden;
+        }
+
+        .fruit-reel-inner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Balloon Game Styles */
+        .balloon-game {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+.balloon {
+    width: 60px;
+    height: 80px;
+    background: #ff6b6b;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    color: white;
+    cursor: pointer;
+    position: absolute;
+    transition: transform 0.1s;
+    z-index: 10;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.balloon:after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    width: 2px;
+    height: 15px;
+    background: #ccc;
+    transform: translateX(-50%);
+}
+
+.balloon:hover {
+    transform: scale(1.1);
+}
+
+#target-letter {
+    text-shadow: 0 0 10px rgba(255,230,109,0.7);
+}
+
+.bonus-game-content {
+    position: relative;
+    min-height: 300px;
+}
+
+#close-bonus-btn {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid #ff6b6b;
+}
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Animations */
+        @keyframes fadeInOut {
+            0% { opacity: 0.3; transform: scale(0.9); }
+            100% { opacity: 1; transform: scale(1.1); }
+        }
+        
+        @keyframes fall {
+            to { transform: translateY(400px); }
+        }
         
         @keyframes pulse {
             0% { transform: scale(1); box-shadow: 0 0 0 rgba(100, 255, 100, 0.6); }
-            50% { transform: scale(1.1); box-shadow: 0 0 30px rgba(100, 255, 100, 0.8); }
+            50% { transform: scale(1.05); box-shadow: 0 0 20px rgba(100, 255, 100, 0.8); }
             100% { transform: scale(1); box-shadow: 0 0 0 rgba(100, 255, 100, 0.6); }
         }
         
@@ -549,27 +799,16 @@
             100% { transform: translateX(0); }
         }
         
-        @keyframes fall {
-            0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(800px) rotate(360deg); opacity: 0; }
-        }
-        
-        @keyframes fadeInOut {
-            0% { opacity: 0; transform: translate(-50%, -20px); }
-            10% { opacity: 1; transform: translate(-50%, 0); }
-            90% { opacity: 1; transform: translate(-50%, 0); }
-            100% { opacity: 0; transform: translate(-50%, -20px); }
-        }
-        
         @keyframes trophySpin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
         
+        /* Mobile Scaling */
         @media (max-width: 768px) {
-            h1 { font-size: 2.5rem; }
-            h2 { font-size: 2rem; }
-            h3 { font-size: 1.5rem; }
+            h1 { font-size: 2.2rem; }
+            h2 { font-size: 1.6rem; }
+            h3 { font-size: 1.2rem; }
             
             .game-header {
                 grid-template-columns: 1fr 1fr;
@@ -594,23 +833,44 @@
             }
             
             .card {
-                height: 130px;
+                height: 120px;
                 padding: 15px;
             }
             
-            .emoji-card { font-size: 3.5rem; }
-            .word-card { font-size: 1.8rem; }
+            .emoji-card { font-size: 2.8rem; }
+            .word-card { font-size: 1.4rem; }
             
-            button { padding: 15px 25px; font-size: 1.3rem; }
-            .mode-btn { min-width: 180px; padding: 18px; }
+            button { padding: 12px 20px; font-size: 1.1rem; }
+            .mode-btn { min-width: 160px; padding: 15px; }
             
-            .avatar { font-size: 4.5rem; margin: 8px; }
-            .player-avatar { font-size: 2rem; }
+            .avatar { font-size: 4rem; margin: 8px; }
+            .player-avatar { font-size: 1.5rem; }
+            
+            .logout-btn {
+                position: static;
+                margin: 10px auto;
+                width: 90%;
+            }
+            
+            .progress-tracker {
+                position: static;
+                margin: 10px auto;
+                width: 90%;
+                flex-direction: column;
+            }
+    /* Make close button bigger on mobile */
+    #close-bonus-btn {
+        padding: 15px 20px !important;
+        font-size: 1.2rem !important;
+        top: 10px !important;
+        right: 10px !important;
+    }
+}
         }
         
         @media (max-width: 480px) {
-            h1 { font-size: 2rem; letter-spacing: 2px; }
-            h2 { font-size: 1.6rem; }
+            h1 { font-size: 1.8rem; letter-spacing: 2px; }
+            h2 { font-size: 1.3rem; }
             
             .game-header {
                 grid-template-columns: 1fr 1fr;
@@ -619,7 +879,7 @@
             }
             
             .game-header div {
-                font-size: 1.2rem;
+                font-size: 1rem;
                 padding: 8px 5px;
             }
             
@@ -632,1113 +892,2361 @@
                 padding: 15px;
             }
             
-            .emoji-card { font-size: 3rem; }
-            .word-card { font-size: 1.5rem; }
+            .emoji-card { font-size: 2.5rem; }
+            .word-card { font-size: 1.2rem; }
             
-            .avatar { font-size: 4rem; }
-            .color-option { width: 60px; height: 60px; margin: 5px; }
-            .player-avatar { font-size: 1.8rem; }
+            .avatar { font-size: 3.5rem; }
+            .color-option { width: 50px; height: 50px; margin: 5px; }
+            .player-avatar { font-size: 1.2rem; }
+            
+            .reward-path {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .reward-step {
+                margin: 5px;
+                font-size: 1.5rem;
+            }
         }
         
         @media (max-width: 360px) {
-            h1 { font-size: 1.8rem; letter-spacing: 1px; }
-            h2 { font-size: 1.4rem; }
-            h3 { font-size: 1.2rem; }
-            .card { height: 110px; }
-            .emoji-card { font-size: 2.8rem; }
-            .word-card { font-size: 1.3rem; }
-            .mode-btn { min-width: 160px; padding: 15px; font-size: 1.2rem; }
-            .avatar { font-size: 3.5rem; }
-            .color-option { width: 55px; height: 55px; }
-            .player-avatar { font-size: 1.5rem; }
+            h1 { font-size: 1.5rem; letter-spacing: 1px; }
+            h2 { font-size: 1.1rem; }
+            h3 { font-size: 1rem; }
+            .card { height: 120px; }
+            .emoji-card { font-size: 2.2rem; }
+            .word-card { font-size: 1.1rem; }
+            .mode-btn { min-width: 140px; padding: 12px; font-size: 1rem; }
+            .avatar { font-size: 3rem; }
+            .color-option { width: 45px; height: 45px; }
+            .player-avatar { font-size: 1rem; }
         }
         
-        .theme-red { background: radial-gradient(circle at center, #3a1a1a, #2a0d0d); }
-        .theme-blue { background: radial-gradient(circle at center, #1a237e, #0d47a1); }
         .theme-green { background: radial-gradient(circle at center, #1a3a2a, #0d2a1a); }
+        .theme-blue { background: radial-gradient(circle at center, #1a2a3a, #0d1b2a); }
+        .theme-red { background: radial-gradient(circle at center, #3a1a1a, #2a0d0d); }
         .theme-purple { background: radial-gradient(circle at center, #3a1a3a, #2a0d2a); }
         .theme-orange { background: radial-gradient(circle at center, #3a2a1a, #2a1a0d); }
+        
+        /* Language Toggle Button */
+        .language-toggle {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 2px solid #4ecdc4;
+            border-radius: 10px;
+            padding: 8px 12px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            z-index: 1000;
+        }
+
+        .language-toggle:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        /* Part of Speech Indicator */
+        .part-of-speech {
+            position: fixed;
+            top: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            color: #ffe66d;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            z-index: 100;
+            border: 2px solid #4ecdc4;
+            text-align: center;
+        }
+/* Add these color classes to your CSS */
+.card.noun { background: rgba(78, 205, 196, 0.3); }
+.card.verb { background: rgba(255, 107, 107, 0.3); }
+.card.adjective { background: rgba(255, 230, 109, 0.3); }
+.card.adverb { background: rgba(160, 212, 104, 0.3); }
+.card.pronoun { background: rgba(153, 102, 255, 0.3); }
+.card.preposition { background: rgba(255, 159, 64, 0.3); }
+.card.conjunction { background: rgba(75, 192, 192, 0.3); }
+.card.auxiliary { background: rgba(54, 162, 235, 0.3); }
+.card.interjection { background: rgba(201, 203, 207, 0.3); }
     </style>
+<script src="vocab.js"></script>
 </head>
 <body>
-    <div id="game-container">
-        <div id="error-notification" class="error-notification" style="display: none;"></div>
+<div id="game-container">
+    <!-- Language toggle button -->
+    <button id="language-toggle" class="language-toggle">🌐 English</button>
+    
+    <div id="error-notification" class="error-notification" style="display: none;"></div>
+    <div id="success-notification" class="success-notification" style="display: none;"></div>
+    <div id="translation-display" class="translation-display" style="display: none;"></div>
+    <div id="part-of-speech" class="part-of-speech" style="display: none;"></div>
         
-        <div id="start-screen" class="screen active">
-            <h1>Big Ben's Vocab Bonanza</h1>
-            <h2>Learn English Words</h2>
-            
-            <div class="username-container">
-                <h3>Select or Enter Username:</h3>
-                <select id="user-select" aria-label="Select existing user">
-                    <option value="">New User</option>
-                </select>
-                <input type="text" id="username-input" placeholder="Type new username..." maxlength="20" aria-label="Enter new username">
-                <button id="save-username" aria-label="Save username and continue">Save & Continue</button>
+    <button id="logout-btn" class="logout-btn" style="display: none;">🚪 ログアウト</button>
+        
+        
+    <div id="start-screen" class="screen active">
+        <h1>NANDOmode Eigo</h1>
+        <h2>英語を楽しく学ぼう！</h2>
+        
+        <div class="username-container">
+            <h3>ユーザーを選択または作成:</h3>
+            <select id="user-select" aria-label="既存ユーザーを選択">
+                <option value="">新規ユーザー</option>
+            </select>
+            <input type="text" id="username-input" placeholder="新しい名前を入力..." maxlength="20" aria-label="新しい名前を入力">
+            <button id="save-username" aria-label="名前を保存して続行">💾 保存 & 続行</button>
+        </div>
+        
+        <div class="avatar-container">
+            <div class="avatar" data-avatar="👾" role="button" tabindex="0" aria-label="アバターを選択: エイリアン">👾</div>
+            <div class="avatar" data-avatar="🦊" role="button" tabindex="0" aria-label="アバターを選択: キツネ">🦊</div>
+            <div class="avatar selected" data-avatar="🐉" role="button" tabindex="0" aria-label="アバターを選択: ドラゴン">🐉</div>
+            <div class="avatar" data-avatar="🦄" role="button" tabindex="0" aria-label="アバターを選択: ユニコーン">🦄</div>
+        </div>
+        
+        <div class="color-picker">
+            <div class="color-option selected" style="background: #3a7;" data-color="green" role="button" tabindex="0" aria-label="緑のテーマを選択"></div>
+            <div class="color-option" style="background: #47a;" data-color="blue" role="button" tabindex="0" aria-label="青のテーマを選択"></div>
+            <div class="color-option" style="background: #a54;" data-color="red" role="button" tabindex="0" aria-label="赤のテーマを選択"></div>
+        </div>
+        
+        <div class="btn-group">
+            <button id="quick-play-btn" aria-label="ゲストとしてクイックプレイ">🎮 ゲストプレイ</button>
+        </div>
+        
+        <h3>ゲームモードを選択:</h3>
+        <div class="btn-group">
+            <button class="mode-btn easy" data-mode="easy" aria-label="イージーモードを開始">😊 イージーモード</button>
+            <button class="mode-btn medium" data-mode="medium" aria-label="ミディアムモードを開始">😃 ミディアムモード</button>
+            <button class="mode-btn hard" data-mode="hard" aria-label="ハードモードを開始">🤓 ハードモード (2倍ポイント)</button>
+        </div>
+    </div>
+    
+    <div id="game-screen" class="screen">
+        <div class="game-header">
+<!-- Progress Tracker - Moved inside game header -->
+<div class="progress-tracker">
+    <div class="progress-tracker-item">
+        <div class="progress-tracker-label">習得単語</div>
+        <div class="progress-tracker-value"><span id="mastered-words">0</span>/<span id="total-words">0</span></div>
+    </div>
+    <div class="progress-tracker-item" id="medals-tracker" style="display: none;">
+        <div class="progress-tracker-label">メダル</div>
+        <div class="progress-tracker-value"><span id="medals-count">0</span></div>
+    </div>
+    <div class="progress-tracker-item" id="trophies-tracker" style="display: none;">
+        <div class="progress-tracker-label">トロフィー</div>
+        <div class="progress-tracker-value"><span id="trophies-count">0</span></div>
+    </div>
+</div>
+            <div class="player-info">
+                <span class="player-avatar" id="player-avatar">🐉</span>
+                プレイヤー: <span id="player-name">ゲスト</span>
             </div>
-            
-            <div class="language-selector">
-                <h3>Select Language:</h3>
-                <div class="language-buttons">
-                    <button class="language-btn selected" data-lang="en">English</button>
-                    <button class="language-btn" data-lang="ja">日本語</button>
+            <div>ポイント: <span id="score">0</span></div>
+            <div>連続正解: <span id="streak">0</span></div>
+            <div>進捗: <span id="progress">0</span>/10</div>
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-text"><span id="percent-complete">0</span>%</div>
                 </div>
             </div>
-            
-            <div class="avatar-container">
-                <div class="avatar" data-avatar="👑" role="button" tabindex="0" aria-label="Select avatar: Crown">👑</div>
-                <div class="avatar" data-avatar="🦁" role="button" tabindex="0" aria-label="Select avatar: Lion">🦁</div>
-                <div class="avatar selected" data-avatar="🏰" role="button" tabindex="0" aria-label="Select avatar: Castle">🏰</div>
-                <div class="avatar" data-avatar="🚂" role="button" tabindex="0" aria-label="Select avatar: Train">🚂</div>
-                <div class="avatar" data-avatar="⚽" role="button" tabindex="0" aria-label="Select avatar: Football">⚽</div>
-                <div class="avatar" data-avatar="🫖" role="button" tabindex="0" aria-label="Select avatar: Teapot">🫖</div>
-                <div class="avatar" data-avatar="🎩" role="button" tabindex="0" aria-label="Select avatar: Top Hat">🎩</div>
-                <div class="avatar" data-avatar="🦄" role="button" tabindex="0" aria-label="Select avatar: Unicorn">🦄</div>
-            </div>
-            
-            <div class="color-picker">
-                <div class="color-option selected" style="background: #1a237e;" data-color="blue" role="button" tabindex="0" aria-label="Select blue theme"></div>
-                <div class="color-option" style="background: #c62828;" data-color="red" role="button" tabindex="0" aria-label="Select red theme"></div>
-                <div class="color-option" style="background: #2e7d32;" data-color="green" role="button" tabindex="0" aria-label="Select green theme"></div>
-                <div class="color-option" style="background: #6a1b9a;" data-color="purple" role="button" tabindex="0" aria-label="Select purple theme"></div>
-                <div class="color-option" style="background: #e65100;" data-color="orange" role="button" tabindex="0" aria-label="Select orange theme"></div>
-            </div>
-            
-            <div class="btn-group">
-                <button id="quick-play-btn" aria-label="Quick play as guest">Quick Play</button>
-                <button id="trophy-room-btn" aria-label="View trophy room">Trophy Room</button>
-                <button id="emoji-store-btn" aria-label="Visit emoji store">Emoji Store</button>
-            </div>
-            
-            <h3>Select Game Mode:</h3>
-            <div class="btn-group">
-                <button class="mode-btn easy" data-mode="easy" aria-label="Start easy mode">Easy Mode</button>
-                <button class="mode-btn medium" data-mode="medium" aria-label="Start medium mode">Medium Mode</button>
-                <button class="mode-btn hard" data-mode="hard" aria-label="Start hard mode">Hard Mode</button>
-            </div>
         </div>
         
-        <div id="game-screen" class="screen">
-            <div class="game-header">
-                <div class="player-info">
-                    <span class="player-avatar" id="player-avatar">🏰</span>
-                    Player: <span id="player-name">Guest</span>
+        <div class="game-board" id="game-board">
+            <!-- Dynamic content based on game mode -->
+        </div>
+        
+        <div class="btn-group">
+            <button id="quit-btn" aria-label="メインメニューに戻る">🏠 終了</button>
+        </div>
+    </div>
+    
+    <div id="round-complete-screen" class="screen">
+        <h2>よくできました！</h2>
+        <div class="round-result" role="alert">
+            ラウンドポイント: <span id="round-score">0</span><br>
+            合計ポイント: <span id="total-score">0</span><br>
+            習得単語: <span id="progress-count">0</span>/10<br>
+            現在の連続正解: <span id="progress-streak">0</span>
+        </div>
+        <div class="trophy-container">
+            <h3>獲得した報酬</h3>
+            <div id="trophy-display"></div>
+            <div class="reward-path" id="reward-path-display">
+                <div class="reward-step" data-step="medal">
+                    🎖️
+                    <div class="reward-label">メダル</div>
                 </div>
-                <div>Points: <span id="score">0</span></div>
-                <div>Streak: <span id="streak">0</span></div>
-                <div>Progress: <span id="progress">0</span>/50</div>
-                <div class="progress-container">
-                    <div class="progress-bar">
-                        <div class="progress-text"><span id="completed">0</span>/50 (<span id="percent-complete">0</span>%)</div>
-                    </div>
+                <div class="reward-step" data-step="trophy">
+                    🏆
+                    <div class="reward-label">トロフィー</div>
                 </div>
             </div>
-            
-            <div class="game-board">
-                <div class="column" id="column-left"></div>
-                <div class="column" id="column-right"></div>
-            </div>
-            
-            <div class="btn-group">
-                <button id="refresh-btn" aria-label="Refresh round">Refresh</button>
-                <button id="quit-btn" aria-label="Quit to main menu">Quit</button>
-            </div>
         </div>
-        
-        <div id="round-complete-screen" class="screen">
-            <h2>Brilliant!</h2>
-            <div class="round-result" role="alert">
-                Round Points: <span id="round-score">0</span><br>
-                Total Points: <span id="total-score">0</span><br>
-                Words Mastered: <span id="progress-count">0</span>/50<br>
-                Current Streak: <span id="progress-streak">0</span>
-            </div>
-            <div class="trophy-container">
-                <h3>Your Rewards</h3>
-                <div id="trophy-display"></div>
-            </div>
-            <div class="btn-group">
-                <button id="next-round-btn" aria-label="Continue to next round">Next Round</button>
-                <button id="quit-round-btn" aria-label="Quit to main menu">Quit</button>
-                <button id="trophy-room-btn-round" aria-label="View trophy room">Trophy Room</button>
-                <button id="emoji-store-btn-round" aria-label="Visit emoji store">Emoji Store</button>
-            </div>
+        <div class="btn-group">
+            <button id="next-round-btn" aria-label="次のラウンドに進む">⏭️ 次のラウンド</button>
+            <button id="quit-round-btn" aria-label="メインメニューに戻る">🏠 終了</button>
         </div>
-        
-        <div id="trophy-room-screen" class="screen">
-            <h2>Trophy Room</h2>
-            <div class="trophy-container">
-                <h3>Your Achievements</h3>
-                <div id="trophy-list"></div>
-            </div>
-            <div class="btn-group">
-                <button id="back-to-menu-btn" aria-label="Return to main menu">Main Menu</button>
-            </div>
+    </div>
+    
+    <div id="trophy-room-screen" class="screen">
+        <h2>トロフィールーム</h2>
+        <div class="trophy-container">
+            <h3>あなたの実績</h3>
+            <div id="trophy-list"></div>
         </div>
-        
-        <div id="emoji-store-screen" class="screen">
-            <h2>Emoji Store</h2>
-            <div class="emoji-store-container">
-                <h3>Your Points: <span id="store-points">0</span></h3>
-                <div id="emoji-list"></div>
-            </div>
-            <div class="btn-group">
-                <button id="back-to-menu-btn-store" aria-label="Return to main menu">Main Menu</button>
-            </div>
+        <div class="btn-group">
+            <button id="back-to-menu-btn" aria-label="メインメニューに戻る">🏠 メインメニュー</button>
         </div>
-        
-        <div id="game-over-screen" class="screen">
-            <h2>Game Complete!</h2>
-            <div class="round-result" role="alert">
-                Congratulations <span id="final-player">Player</span>!<br>
-                You've mastered 50 English words!<br>
-                Final Points: <span id="final-score">0</span>
+    </div>
+    
+    <div id="game-over-screen" class="screen">
+        <h2>おめでとう！</h2>
+        <div class="round-result" role="alert">
+            おめでとう <span id="final-player">プレイヤー</span>！<br>
+            10単語をマスターしました！<br>
+            最終ポイント: <span id="final-score">0</span>
+        </div>
+        <div class="trophy-container">
+            <h3>獲得した報酬</h3>
+            <div id="final-trophy-display"></div>
+        </div>
+        <div class="btn-group">
+            <button id="play-again-btn" aria-label="もう一度プレイ">🔄 もう一度</button>
+            <button id="main-menu-btn" aria-label="メインメニューに戻る">🏠 メインメニュー</button>
+        </div>
+    </div>
+    
+    <!-- Bonus Game Popup (hidden by default) -->
+    <div id="bonus-game-popup" class="bonus-game-popup" style="display: none;">
+        <div class="bonus-game-content">
+            <h3>ボーナスゲーム解放！</h3>
+            <p>15回連続で正解しました！ミニゲームで追加ポイントを獲得しましょう！</p>
+            <div class="fruit-machine" id="fruit-machine">
+                <div class="fruit-reel">
+                    <div class="fruit-reel-inner" id="fruit-reel-1">🍎</div>
+                </div>
+                <div class="fruit-reel">
+                    <div class="fruit-reel-inner" id="fruit-reel-2">🍊</div>
+                </div>
+                <div class="fruit-reel">
+                    <div class="fruit-reel-inner" id="fruit-reel-3">🍋</div>
+                </div>
             </div>
-            <div class="trophy-container">
-                <h3>Your Rewards</h3>
-                <div id="final-trophy-display"></div>
+            <div class="balloon-game" id="balloon-game" style="display: none;">
+                <!-- Balloons will be added dynamically -->
             </div>
-            <div class="btn-group">
-                <button id="play-again-btn" aria-label="Play again">Play Again</button>
-                <button id="main-menu-btn" aria-label="Return to main menu">Main Menu</button>
+            <div class="bonus-game-buttons">
+                <button id="play-bonus-game-btn" aria-label="今すぐボーナスゲームをプレイ">🎮 今すぐプレイ</button>
+                <button id="save-bonus-game-btn" aria-label="後でボーナスゲームをプレイ">💾 後でプレイ</button>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- The vocab.js is loaded here -->
-    <script src="vocab.js"></script>
+<script>
+// ===== GLOBAL VARIABLES =====
+let activeSounds = []; // Track active sound effects
+let activeNotifications = []; // Track active notifications
+let balloonGameIntervals = []; // Track balloon game intervals
+// ===== LANGUAGE SUPPORT =====
+const translations = {
+    ja: {
+        appName: "NANDOmode Eigo",
+        subtitle: "英語を楽しく学ぼう！",
+        selectUser: "ユーザーを選択または作成:",
+        newUser: "新規ユーザー",
+        usernamePlaceholder: "新しい名前を入力...",
+        saveContinue: "💾 保存 & 続行",
+        selectMode: "ゲームモードを選択:",
+        easyMode: "😊 イージーモード",
+        mediumMode: "😃 ミディアムモード",
+        hardMode: "🤓 ハードモード (2倍ポイント)",
+        quickPlay: "🎮 ゲストプレイ",
+        logout: "🚪 ログアウト",
+        quit: "🏠 終了",
+        nextRound: "⏭️ 次のラウンド",
+        playAgain: "🔄 もう一度",
+        mainMenu: "🏠 メインメニュー",
+        masteredWords: "習得単語",
+        medals: "メダル",
+        trophies: "トロフィー",
+        player: "プレイヤー",
+        score: "ポイント",
+        streak: "連続正解",
+        progress: "進捗",
+        roundComplete: "よくできました！",
+        roundScore: "ラウンドポイント",
+        totalScore: "合計ポイント",
+        progressCount: "習得単語",
+        progressStreak: "現在の連続正解",
+        yourRewards: "獲得した報酬",
+        medalLabel: "メダル",
+        trophyLabel: "トロフィー",
+        achievements: "あなたの実績",
+        gameOver: "おめでとう！",
+        finalPlayer: "おめでとう",
+        finalScore: "最終ポイント",
+        bonusGameTitle: "ボーナスゲーム解放！",
+        bonusGameText: "15回連続で正解しました！ミニゲームで追加ポイントを獲得しましょう！",
+        playNow: "🎮 今すぐプレイ",
+        saveForLater: "💾 後でプレイ",
+        partsOfSpeech: {
+            verb: "動詞",
+            noun: "名詞",
+            pronoun: "代名詞",
+            adjective: "形容詞",
+            adverb: "副詞",
+            preposition: "前置詞",
+            exclamation: "感嘆詞"
+        }
+    },
+    en: {
+        appName: "NANDOmode Eigo",
+        subtitle: "Learn English Vocabulary",
+        selectUser: "Select or Enter Name:",
+        newUser: "New User",
+        usernamePlaceholder: "Enter new name...",
+        saveContinue: "💾 Save & Continue",
+        selectMode: "Select Game Mode:",
+        easyMode: "😊 Easy Mode",
+        mediumMode: "😃 Medium Mode",
+        hardMode: "🤓 Hard Mode (2x points)",
+        quickPlay: "🎮 Quick Play",
+        logout: "🚪 Log Out",
+        quit: "🏠 Quit",
+        nextRound: "⏭️ Next Round",
+        playAgain: "🔄 Play Again",
+        mainMenu: "🏠 Main Menu",
+        masteredWords: "Mastered Words",
+        medals: "Medals",
+        trophies: "Trophies",
+        player: "Player",
+        score: "Score",
+        streak: "Streak",
+        progress: "Progress",
+        roundComplete: "Great Job!",
+        roundScore: "Round Score",
+        totalScore: "Total Score",
+        progressCount: "Words Mastered",
+        progressStreak: "Current Streak",
+        yourRewards: "Your Rewards",
+        medalLabel: "Medal",
+        trophyLabel: "Trophy",
+        achievements: "Your Achievements",
+        gameOver: "Congratulations!",
+        finalPlayer: "Congratulations",
+        finalScore: "Final Score",
+        bonusGameTitle: "Bonus Game Unlocked!",
+        bonusGameText: "You've completed 15 matches! Play a minigame to earn extra points.",
+        playNow: "🎮 Play Now",
+        saveForLater: "💾 Save for Later",
+        partsOfSpeech: {
+            verb: "Verb",
+            noun: "Noun",
+            pronoun: "Pronoun",
+            adjective: "Adjective",
+            adverb: "Adverb",
+            preposition: "Preposition",
+            exclamation: "Exclamation"
+        }
+    }
+};
+
+let currentLanguage = 'ja'; // Default to Japanese
+
+// Function to update all text elements
+function updateLanguage() {
+    const lang = translations[currentLanguage];
     
-    <script>
-        // Register the Service Worker
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('service-worker.js')
-                    .then(registration => {
-                        console.log('Service Worker registered! Scope:', registration.scope);
-                    })
-                    .catch(err => {
-                        console.log('Service Worker registration failed:', err);
-                    });
-            });
-        }
-
-        const isMobile = window.innerWidth <= 768;
-        let isProcessingClick = false;
-        let lastTTSTime = 0;
-        const ttsDebounce = 1000;
-        const milestones = [10, 25, 50];
-        let currentLanguage = 'en';
-        
-        const emojiStore = [
-            { emoji: '🇬🇧', points: 50, name: 'UK Flag' },
-            { emoji: '🏆', points: 100, name: 'Trophy' },
-            { emoji: '🚀', points: 200, name: 'Rocket' },
-            { emoji: '🦁', points: 500, name: 'Lion' },
-            { emoji: '👑', points: 1000, name: 'Crown' }
+    // Update UI elements
+    const languageToggle = document.getElementById('language-toggle');
+    if (languageToggle) languageToggle.textContent = currentLanguage === 'ja' ? '🌐 English' : '🌐 日本語';
+    
+    const h1 = document.querySelector('h1');
+    if (h1) h1.textContent = lang.appName;
+    
+    const h2 = document.querySelector('h2');
+    if (h2) h2.textContent = lang.subtitle;
+    
+    const usernameContainerH3 = document.querySelector('.username-container h3');
+    if (usernameContainerH3) usernameContainerH3.textContent = lang.selectUser;
+    
+    const userSelectOption = document.querySelector('#user-select option[value=""]');
+    if (userSelectOption) userSelectOption.textContent = lang.newUser;
+    
+    const usernameInput = document.getElementById('username-input');
+    if (usernameInput) usernameInput.placeholder = lang.usernamePlaceholder;
+    
+    const saveUsername = document.getElementById('save-username');
+    if (saveUsername) saveUsername.textContent = lang.saveContinue;
+    
+    const modeSelectH3 = document.querySelector('#start-screen h3:nth-of-type(2)');
+    if (modeSelectH3) modeSelectH3.textContent = lang.selectMode;
+    
+    const easyModeBtn = document.querySelector('.mode-btn.easy');
+    if (easyModeBtn) easyModeBtn.textContent = lang.easyMode;
+    
+    const mediumModeBtn = document.querySelector('.mode-btn.medium');
+    if (mediumModeBtn) mediumModeBtn.textContent = lang.mediumMode;
+    
+    const hardModeBtn = document.querySelector('.mode-btn.hard');
+    if (hardModeBtn) hardModeBtn.textContent = lang.hardMode;
+    
+    const quickPlayBtn = document.getElementById('quick-play-btn');
+    if (quickPlayBtn) quickPlayBtn.textContent = lang.quickPlay;
+    
+    const logoutBtn = document.getElementById('logout-btn');
+    if (logoutBtn) logoutBtn.textContent = lang.logout;
+    
+    const quitBtn = document.getElementById('quit-btn');
+    if (quitBtn) quitBtn.textContent = lang.quit;
+    
+    const nextRoundBtn = document.getElementById('next-round-btn');
+    if (nextRoundBtn) nextRoundBtn.textContent = lang.nextRound;
+    
+    const quitRoundBtn = document.getElementById('quit-round-btn');
+    if (quitRoundBtn) quitRoundBtn.textContent = lang.quit;
+    
+    const playAgainBtn = document.getElementById('play-again-btn');
+    if (playAgainBtn) playAgainBtn.textContent = lang.playAgain;
+    
+    const mainMenuBtn = document.getElementById('main-menu-btn');
+    if (mainMenuBtn) mainMenuBtn.textContent = lang.mainMenu;
+    
+    // Update progress tracker labels if they exist
+    const progressTrackerItems = document.querySelectorAll('.progress-tracker-item');
+    if (progressTrackerItems.length > 0) {
+        const labels = [
+            lang.masteredWords,
+            lang.medals,
+            lang.trophies
         ];
         
-        const defaultVocab = [
-            { word: 'cat', emoji: '🐱', type: 'noun' },
-            { word: 'dog', emoji: '🐶', type: 'noun' },
-            { word: 'sun', emoji: '☀️', type: 'noun' },
-            { word: 'moon', emoji: '🌙', type: 'noun' },
-            { word: 'house', emoji: '🏠', type: 'noun' }
-        ];
-
-        const gameState = {
-            currentScreen: 'start',
-            player: {
-                name: 'Guest',
-                avatar: '🏰',
-                theme: 'blue',
-                emoji: '',
-                points: 0,
-                purchasedEmojis: [],
-                rewards: { easy: { medals: 0, trophies: 0, crowns: 0 }, medium: { medals: 0, trophies: 0, crowns: 0 }, hard: { medals: 0, trophies: 0, crowns: 0 } }
-            },
-            mode: '',
-            streak: 0,
-            completedWords: 0,
-            wordProgress: {},
-            currentRound: { 
-                pairs: [], 
-                leftColumn: [], 
-                rightColumn: [], 
-                selectedLeft: null, 
-                selectedRight: null, 
-                matchedPairs: [], 
-                roundPoints: 0 
-            },
-            leaderboard: []
-        };
-
-        const screens = {
-            start: document.getElementById('start-screen'),
-            game: document.getElementById('game-screen'),
-            roundComplete: document.getElementById('round-complete-screen'),
-            trophyRoom: document.getElementById('trophy-room-screen'),
-            emojiStore: document.getElementById('emoji-store-screen'),
-            gameOver: document.getElementById('game-over-screen')
-        };
-
-        function showError(message) {
-            const notification = document.getElementById('error-notification');
-            notification.textContent = message;
-            notification.style.display = 'block';
-            setTimeout(() => notification.style.display = 'none', 3000);
-        }
-
-        function initGame() {
-            const vocab = window.vocab && window.vocab.length > 0 ? window.vocab : defaultVocab;
-            if (!window.vocab || window.vocab.length === 0) {
-                console.warn("vocab.js not loaded, using default vocab");
-                showError("Oops! Word list didn't load. Using backup words.");
+        progressTrackerItems.forEach((item, index) => {
+            const label = item.querySelector('.progress-tracker-label');
+            if (label && labels[index]) {
+                label.textContent = labels[index];
             }
-            
-            try {
-                const savedLeaderboard = localStorage.getItem('vocabBonanzaLeaderboard');
-                if (savedLeaderboard) {
-                    gameState.leaderboard = JSON.parse(savedLeaderboard);
+        });
+    }
+    
+    // Update game header if it exists
+    const gameHeader = document.querySelector('.game-header');
+    if (gameHeader) {
+        const playerInfo = gameHeader.querySelector('div:nth-child(1)');
+        if (playerInfo) {
+            playerInfo.innerHTML = `<span class="player-avatar" id="player-avatar">${gameState.player.avatar}</span> ${lang.player}: <span id="player-name">${gameState.player.name}</span>`;
+        }
+        
+        const scoreDiv = gameHeader.querySelector('div:nth-child(2)');
+        if (scoreDiv) scoreDiv.textContent = `${lang.score}: `;
+        
+        const streakDiv = gameHeader.querySelector('div:nth-child(3)');
+        if (streakDiv) streakDiv.textContent = `${lang.streak}: `;
+        
+        const progressDiv = gameHeader.querySelector('div:nth-child(4)');
+        if (progressDiv) progressDiv.textContent = `${lang.progress}: `;
+    }
+    
+    // Update round complete screen if it exists
+    const roundCompleteH2 = document.querySelector('#round-complete-screen h2');
+    if (roundCompleteH2) roundCompleteH2.textContent = lang.roundComplete;
+    
+    const trophyContainerH3 = document.querySelector('.trophy-container h3');
+    if (trophyContainerH3) trophyContainerH3.textContent = lang.yourRewards;
+    
+    const rewardLabels = document.querySelectorAll('.reward-label');
+    if (rewardLabels.length > 0) {
+        rewardLabels[0].textContent = lang.medalLabel;
+        rewardLabels[1].textContent = lang.trophyLabel;
+    }
+    
+    // Update trophy room screen if it exists
+    const trophyRoomH2 = document.querySelector('#trophy-room-screen h2');
+    if (trophyRoomH2) trophyRoomH2.textContent = lang.trophyRoom;
+    
+    const trophyRoomH3 = document.querySelector('#trophy-room-screen .trophy-container h3');
+    if (trophyRoomH3) trophyRoomH3.textContent = lang.achievements;
+    
+    // Update game over screen if it exists
+    const gameOverH2 = document.querySelector('#game-over-screen h2');
+    if (gameOverH2) gameOverH2.textContent = lang.gameOver;
+    
+    // Update bonus game popup if it exists
+    const bonusGameH3 = document.querySelector('#bonus-game-popup h3');
+    if (bonusGameH3) bonusGameH3.textContent = lang.bonusGameTitle;
+    
+    const bonusGameP = document.querySelector('#bonus-game-popup p');
+    if (bonusGameP) bonusGameP.textContent = lang.bonusGameText;
+    
+    const playBonusBtn = document.getElementById('play-bonus-game-btn');
+    if (playBonusBtn) playBonusBtn.textContent = lang.playNow;
+    
+    const saveBonusBtn = document.getElementById('save-bonus-game-btn');
+    if (saveBonusBtn) saveBonusBtn.textContent = lang.saveForLater;
+    
+    // Update dynamic text elements
+    updatePlayerUI();
+    updateProgressTracker();
+    updatePartOfSpeechDisplay();
+}
+
+// Game state variables
+const isMobile = window.innerWidth <= 768;
+let isProcessingClick = false;
+let lastTTSTime = 0;
+const ttsDebounce = 1000;
+let totalWords = 0;
+let milestones = [];
+let roundsPlayed = 0;
+let matchesCompleted = 0; // Track matches for bonus games
+let matchesInRound = 0; // Track matches in current 5-match round
+let perfectRound = true; // Track if all matches in round were correct
+let bonusGameAvailable = false;
+let currentPartOfSpeech = '';
+let currentPartWords = [];
+
+
+// Replace the existing vocabByPart with this:
+const vocabByPart = {
+    noun: window.vocab.filter(item => item.type === "noun"),
+    verb: window.vocab.filter(item => item.type === "verb"),
+    adjective: window.vocab.filter(item => item.type === "adjective"),
+    adverb: window.vocab.filter(item => item.type === "adverb"),
+    pronoun: window.vocab.filter(item => item.type === "pronoun"),
+    preposition: window.vocab.filter(item => item.type === "preposition"),
+    conjunction: window.vocab.filter(item => item.type === "conjunction"),
+    auxiliary: window.vocab.filter(item => item.type === "auxiliary verb"),
+    interjection: window.vocab.filter(item => item.type === "interjection")
+};
+
+// ===== SOUND MANAGEMENT =====
+function playSound(type) {
+    try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        activeSounds.push(audioCtx); // Track this sound
+        
+        let oscillator, gainNode;
+        
+        switch(type) {
+            case 'correct':
+                oscillator = audioCtx.createOscillator();
+                gainNode = audioCtx.createGain();
+                oscillator.type = 'sine';
+                oscillator.frequency.value = 880;
+                gainNode.gain.value = 0.1;
+                oscillator.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                oscillator.start();
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5);
+                oscillator.stop(audioCtx.currentTime + 0.5);
+                break;
+                
+            case 'win':
+                // Happy flourish sound
+                for (let i = 0; i < 3; i++) {
+                    setTimeout(() => {
+                        const osc = audioCtx.createOscillator();
+                        const gn = audioCtx.createGain();
+                        osc.type = 'triangle';
+                        osc.frequency.value = 440 + (i * 220);
+                        gn.gain.value = 0.1;
+                        osc.connect(gn);
+                        gn.connect(audioCtx.destination);
+                        osc.start();
+                        gn.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+                        osc.stop(audioCtx.currentTime + 0.3);
+                    }, i * 150);
                 }
-            } catch (e) {
-                console.warn("Error loading leaderboard:", e);
-                showError("Couldn't load leaderboard. Starting fresh!");
+                break;
+                
+            case 'flamenco':
+                // Guitar-like sound
+                for (let i = 0; i < 4; i++) {
+                    setTimeout(() => {
+                        const osc = audioCtx.createOscillator();
+                        const gn = audioCtx.createGain();
+                        osc.type = 'sine';
+                        osc.frequency.value = 330 + (i * 110);
+                        gn.gain.value = 0.1;
+                        osc.connect(gn);
+                        gn.connect(audioCtx.destination);
+                        osc.start();
+                        gn.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
+                        osc.stop(audioCtx.currentTime + 0.2);
+                    }, i * 100);
+                }
+                break;
+                
+            case 'pop':
+                // Balloon pop sound
+                const popOsc = audioCtx.createOscillator();
+                const popGn = audioCtx.createGain();
+                popOsc.type = 'square';
+                popOsc.frequency.value = 50;
+                popGn.gain.value = 0.2;
+                popOsc.connect(popGn);
+                popGn.connect(audioCtx.destination);
+                popOsc.start();
+                popOsc.frequency.exponentialRampToValueAtTime(10, audioCtx.currentTime + 0.1);
+                popGn.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+                popOsc.stop(audioCtx.currentTime + 0.1);
+                break;
+                
+            case 'fart':
+                // Funny fail sound
+                const fartOsc = audioCtx.createOscillator();
+                const fartGn = audioCtx.createGain();
+                fartOsc.type = 'sawtooth';
+                fartOsc.frequency.value = 80;
+                fartGn.gain.value = 0.1;
+                fartOsc.connect(fartGn);
+                fartGn.connect(audioCtx.destination);
+                fartOsc.start();
+                fartOsc.frequency.linearRampToValueAtTime(20, audioCtx.currentTime + 0.5);
+                fartGn.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.5);
+                fartOsc.stop(audioCtx.currentTime + 0.5);
+                break;
+                
+            case 'spin':
+                // Slot machine spin sound
+                const spinOsc = audioCtx.createOscillator();
+                const spinGn = audioCtx.createGain();
+                spinOsc.type = 'sine';
+                spinOsc.frequency.value = 100;
+                spinGn.gain.value = 0.1;
+                spinOsc.connect(spinGn);
+                spinGn.connect(audioCtx.destination);
+                spinOsc.start();
+                spinOsc.frequency.exponentialRampToValueAtTime(800, audioCtx.currentTime + 1);
+                spinGn.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 1);
+                spinOsc.stop(audioCtx.currentTime + 1);
+                break;
+               }
+        
+        // Automatically remove finished sounds
+        audioCtx.onstatechange = () => {
+            if (audioCtx.state === 'closed') {
+                activeSounds = activeSounds.filter(s => s !== audioCtx);
             }
-            
-            populateUserSelect();
-            loadPlayerProgress();
-            setupEventListeners();
-            updatePlayerUI();
-            updateProgressBar();
+        };
+    } catch (e) {
+        console.log("Audio error:", e);
+    }
+}
+function stopAllSounds() {
+    activeSounds.forEach(sound => {
+        try {
+            if (sound.close) {
+                sound.close();
+            }
+        } catch (e) {
+            console.log("Error stopping sound:", e);
         }
+    });
+    activeSounds = [];
+}
 
-        function populateUserSelect() {
-            const userSelect = document.getElementById('user-select');
-            userSelect.innerHTML = '<option value="">New User</option>';
-            Object.keys(localStorage).forEach(key => {
-                if (key.startsWith('vocabBonanzaProgress_')) {
-                    const username = key.replace('vocabBonanzaProgress_', '');
-                    const option = document.createElement('option');
-                    option.value = username;
-                    option.textContent = username;
-                    userSelect.appendChild(option);
-                }
-            });
-            const savedName = localStorage.getItem('vocabBonanzaCurrentPlayer');
-            if (savedName) userSelect.value = savedName;
+// Main game state
+const gameState = {
+    currentScreen: 'start',
+    player: {
+        name: 'ゲスト',
+        avatar: '🐉',
+        theme: 'green',
+        emoji: '',
+        points: 0,
+        rewards: { 
+            medals: 0,
+            trophies: 0,
+            totalWordsMastered: 0
+        },
+        unlockedStickers: [],
+        bonusGamesAvailable: 0
+    },
+    mode: '',
+    streak: 0,
+    completedWords: 0,
+    wordProgress: {},
+    currentRound: { 
+        pairs: [], 
+        leftColumn: [], 
+        rightColumn: [], 
+        selectedLeft: null, 
+        selectedRight: null, 
+        matchedPairs: [], 
+        roundPoints: 0 
+    },
+    leaderboard: []
+};
+
+function showSuccess(message) {
+    const notification = document.getElementById('success-notification');
+    notification.textContent = message;
+    notification.style.display = 'block';
+    setTimeout(() => {
+        notification.style.display = 'none';
+    }, 3000);
+}
+
+function showError(message) {
+    const notification = document.getElementById('error-notification');
+    notification.textContent = message;
+    notification.style.display = 'block';
+    setTimeout(() => {
+        notification.style.display = 'none';
+    }, 3000);
+}
+
+// ===== NOTIFICATION MANAGEMENT =====
+function showNotification(message) {
+    // Clear any existing notifications first
+    clearAllNotifications();
+    
+    const notification = document.createElement('div');
+    notification.className = 'milestone-notification';
+    notification.textContent = message;
+    document.getElementById('game-container').appendChild(notification);
+    activeNotifications.push(notification);
+    
+    setTimeout(() => {
+        notification.remove();
+        activeNotifications = activeNotifications.filter(n => n !== notification);
+    }, 3000);
+}
+
+function clearAllNotifications() {
+    activeNotifications.forEach(notification => {
+        notification.remove();
+    });
+    activeNotifications = [];
+}
+
+// Screen elements
+const screens = {
+    start: document.getElementById('start-screen'),
+    game: document.getElementById('game-screen'),
+    roundComplete: document.getElementById('round-complete-screen'),
+    trophyRoom: document.getElementById('trophy-room-screen'),
+    gameOver: document.getElementById('game-over-screen')
+};
+
+// Initialize the game
+window.addEventListener('DOMContentLoaded', () => {
+    initGame();
+});
+
+function initGame() {
+    try {
+        localStorage.setItem('test', 'test');
+        localStorage.removeItem('test');
+    } catch (e) {
+        console.error("LocalStorage not available:", e);
+        showError("ブラウザの設定により進捗を保存できません。localStorageを有効にしてください。");
+        return;
+    }
+    
+    // Calculate total words
+    totalWords = 0;
+    for (const part in vocabByPart) {
+        totalWords += vocabByPart[part].length;
+    }
+    
+    // Create milestones every 10 words (one part of speech)
+    milestones = [];
+    for (let i = 10; i <= totalWords; i += 10) {
+        milestones.push(i);
+    }
+    
+    try {
+        const savedLeaderboard = localStorage.getItem('nandomodeLeaderboard');
+        if (savedLeaderboard) {
+            gameState.leaderboard = JSON.parse(savedLeaderboard);
         }
+    } catch (e) {
+        console.warn("Error loading leaderboard:", e);
+        showError("リーダーボードを読み込めませんでした。最初からやり直します！");
+    }
+    
+    populateUserSelect();
+    loadPlayerProgress();
+    setupEventListeners();
+    updatePlayerUI();
+    updateProgressBar();
+    updateRewardPath();
+    updateLogoutButton();
+    updateLanguage(); // Set initial language - this will call updateProgressTracker
+    
+    // Set initial part of speech (verbs)
+    setCurrentPartOfSpeech('verb');
+}
 
-        function setupEventListeners() {
-            document.getElementById('save-username').addEventListener('click', saveUsername);
-            document.getElementById('user-select').addEventListener('change', loadSelectedUser);
-            document.getElementById('quick-play-btn').addEventListener('click', quickPlay);
-            document.getElementById('trophy-room-btn').addEventListener('click', showTrophyRoom);
-            document.getElementById('emoji-store-btn').addEventListener('click', showEmojiStore);
-            document.getElementById('trophy-room-btn-round').addEventListener('click', showTrophyRoom);
-            document.getElementById('emoji-store-btn-round').addEventListener('click', showEmojiStore);
-            document.getElementById('back-to-menu-btn').addEventListener('click', quitToMainMenu);
-            document.getElementById('back-to-menu-btn-store').addEventListener('click', quitToMainMenu);
-            
-            document.querySelectorAll('.avatar').forEach(avatar => {
-                avatar.addEventListener('click', selectAvatar.bind(null, avatar));
-                avatar.addEventListener('keypress', (e) => {
-                    if (e.key === 'Enter' || e.key === ' ') selectAvatar(avatar);
+function setCurrentPartOfSpeech(part) {
+    currentPartOfSpeech = part;
+    currentPartWords = [...vocabByPart[part]];
+    updatePartOfSpeechDisplay();
+    
+    // Also update the translations to include all parts
+    translations.ja.partsOfSpeech = {
+        verb: "動詞",
+        noun: "名詞",
+        pronoun: "代名詞",
+        adjective: "形容詞",
+        adverb: "副詞",
+        preposition: "前置詞",
+        conjunction: "接続詞",
+        auxiliary: "助動詞",
+        interjection: "感嘆詞"
+    };
+    translations.en.partsOfSpeech = {
+        verb: "Verb",
+        noun: "Noun",
+        pronoun: "Pronoun",
+        adjective: "Adjective",
+        adverb: "Adverb",
+        preposition: "Preposition",
+        conjunction: "Conjunction",
+        auxiliary: "Auxiliary",
+        interjection: "Interjection"
+    };
+}
+
+function updatePartOfSpeechDisplay() {
+    const partDisplay = document.getElementById('part-of-speech');
+    if (partDisplay) {
+        const lang = translations[currentLanguage];
+        partDisplay.textContent = `${lang.partsOfSpeech[currentPartOfSpeech]} (${currentLanguage === 'ja' ? '現在学習中' : 'Currently learning'})`;
+        partDisplay.style.display = 'block';
+    }
+}
+
+function updateProgressTracker() {
+    const masteredEl = document.getElementById('mastered-words');
+    const totalEl = document.getElementById('total-words');
+    const medalsTracker = document.getElementById('medals-tracker');
+    const trophiesTracker = document.getElementById('trophies-tracker');
+    
+    // Only update elements if they exist
+    if (masteredEl) masteredEl.textContent = gameState.player.rewards.totalWordsMastered;
+    if (totalEl) totalEl.textContent = totalWords;
+    
+    // Only show medals/trophies if earned and elements exist
+    if (medalsTracker) {
+        if (gameState.player.rewards.medals > 0) {
+            const medalsCount = document.getElementById('medals-count');
+            if (medalsCount) medalsCount.textContent = gameState.player.rewards.medals;
+            medalsTracker.style.display = 'flex';
+        } else {
+            medalsTracker.style.display = 'none';
+        }
+    }
+    
+    if (trophiesTracker) {
+        if (gameState.player.rewards.trophies > 0) {
+            const trophiesCount = document.getElementById('trophies-count');
+            if (trophiesCount) trophiesCount.textContent = gameState.player.rewards.trophies;
+            trophiesTracker.style.display = 'flex';
+        } else {
+            trophiesTracker.style.display = 'none';
+        }
+    }
+}
+
+function populateUserSelect() {
+    const userSelect = document.getElementById('user-select');
+    userSelect.innerHTML = '<option value="">新規ユーザー</option>';
+    
+    const keys = Object.keys(localStorage);
+    const users = [];
+    keys.forEach(key => {
+        if (key.startsWith('nandomodeProgress_')) {
+            const username = key.replace('nandomodeProgress_', '');
+            users.push(username);
+        }
+    });
+    
+    users.sort();
+    
+    users.forEach(username => {
+        const option = document.createElement('option');
+        option.value = username;
+        option.textContent = username;
+        userSelect.appendChild(option);
+    });
+    
+    const savedName = localStorage.getItem('nandomodeCurrentPlayer');
+    if (savedName && users.includes(savedName)) {
+        userSelect.value = savedName;
+        loadSelectedUser();
+    }
+}
+
+function setupEventListeners() {
+    document.getElementById('save-username').addEventListener('click', saveUsername);
+    document.getElementById('user-select').addEventListener('change', loadSelectedUser);
+    document.getElementById('quick-play-btn').addEventListener('click', quickPlay);
+    document.getElementById('back-to-menu-btn').addEventListener('click', quitToMainMenu);
+    document.getElementById('logout-btn').addEventListener('click', logout);
+    
+    document.querySelectorAll('.avatar').forEach(avatar => {
+        avatar.addEventListener('click', selectAvatar.bind(null, avatar));
+        avatar.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') selectAvatar(avatar);
+        });
+    });
+
+    document.querySelectorAll('.color-option').forEach(color => {
+        color.addEventListener('click', selectColor.bind(null, color));
+        color.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') selectColor(color);
+        });
+    });
+
+    document.querySelectorAll('.mode-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            gameState.mode = btn.dataset.mode;
+            startNewGame();
+        });
+    });
+
+    document.getElementById('quit-btn').addEventListener('click', quitToMainMenu);
+    document.getElementById('next-round-btn').addEventListener('click', startNewRound);
+    document.getElementById('quit-round-btn').addEventListener('click', quitToMainMenu);
+    document.getElementById('play-again-btn').addEventListener('click', startNewGame);
+    document.getElementById('main-menu-btn').addEventListener('click', quitToMainMenu);
+    
+    // Bonus game event listeners
+    document.getElementById('play-bonus-game-btn').addEventListener('click', playBonusGame);
+    document.getElementById('save-bonus-game-btn').addEventListener('click', saveBonusGame);
+    document.getElementById('language-toggle').addEventListener('click', toggleLanguage);       
+}
+
+function selectAvatar(avatar) {
+    document.querySelectorAll('.avatar').forEach(a => a.classList.remove('selected'));
+    avatar.classList.add('selected');
+    gameState.player.avatar = avatar.dataset.avatar;
+    updatePlayerUI();
+}
+
+function selectColor(color) {
+    document.querySelectorAll('.color-option').forEach(c => c.classList.remove('selected'));
+    color.classList.add('selected');
+    gameState.player.theme = color.dataset.color;
+    updatePlayerUI();
+}
+
+function updatePlayerUI() {
+    const displayName = gameState.player.emoji ? `${gameState.player.name} ${gameState.player.emoji}` : gameState.player.name;
+    document.getElementById('player-name').textContent = displayName;
+    document.getElementById('final-player').textContent = displayName;
+    const avatarElement = document.getElementById('player-avatar');
+    if (avatarElement) avatarElement.textContent = gameState.player.avatar;
+    
+    // Update the theme
+    document.getElementById('game-container').className = `theme-${gameState.player.theme}`;
+}
+
+function updateLogoutButton() {
+    const logoutBtn = document.getElementById('logout-btn');
+    if (gameState.player.name !== 'ゲスト') {
+        logoutBtn.style.display = 'block';
+    } else {
+        logoutBtn.style.display = 'none';
+    }
+}
+
+function toggleLanguage() {
+    currentLanguage = currentLanguage === 'ja' ? 'en' : 'ja';
+    updateLanguage();
+}
+
+function updateRewardPath() {
+    const steps = document.querySelectorAll('.reward-step');
+    
+    steps.forEach(step => {
+        step.classList.remove('earned', 'next');
+        const stepType = step.dataset.step;
+        
+        if (stepType === 'medal' && gameState.player.rewards.medals > 0) {
+            step.classList.add('earned');
+        } else if (stepType === 'trophy' && gameState.player.rewards.trophies > 0) {
+            step.classList.add('earned');
+        }
+    });
+    
+    if (gameState.player.rewards.medals < 10) {
+        document.querySelector('.reward-step[data-step="medal"]').classList.add('next');
+    } else if (gameState.player.rewards.trophies < 10) {
+        document.querySelector('.reward-step[data-step="trophy"]').classList.add('next');
+    }
+}
+
+function loadSelectedUser() {
+    const userSelect = document.getElementById('user-select');
+    const username = userSelect.value;
+    const usernameInput = document.getElementById('username-input');
+    
+    if (username) {
+        try {
+            const savedData = localStorage.getItem(`nandomodeProgress_${username}`);
+            if (savedData) {
+                const playerData = JSON.parse(savedData);
+                
+                // Always show the input field
+                usernameInput.style.display = 'block';
+                usernameInput.placeholder = `おかえりなさい、${username}さん！`;
+                
+                // Update game state
+                gameState.player = {
+                    name: username,
+                    avatar: playerData.avatar || '🐉',
+                    theme: playerData.theme || 'green',
+                    emoji: playerData.emoji || '',
+                    points: playerData.points || 0,
+                    rewards: playerData.rewards || { 
+                        medals: 0,
+                        trophies: 0,
+                        totalWordsMastered: 0
+                    },
+                    unlockedStickers: playerData.unlockedStickers || [],
+                    bonusGamesAvailable: playerData.bonusGamesAvailable || 0
+                };
+                
+                gameState.streak = playerData.streak || 0;
+                gameState.completedWords = playerData.completedWords || 0;
+                gameState.wordProgress = playerData.wordProgress || {};
+                
+                // Update UI
+                document.querySelectorAll('.avatar').forEach(avatar => {
+                    avatar.classList.toggle('selected', avatar.dataset.avatar === gameState.player.avatar);
                 });
-            });
-
-            document.querySelectorAll('.color-option').forEach(color => {
-                color.addEventListener('click', selectColor.bind(null, color));
-                color.addEventListener('keypress', (e) => {
-                    if (e.key === 'Enter' || e.key === ' ') selectColor(color);
+                
+                document.querySelectorAll('.color-option').forEach(color => {
+                    color.classList.toggle('selected', color.dataset.color === gameState.player.theme);
                 });
-            });
-
-            document.querySelectorAll('.mode-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    gameState.mode = btn.dataset.mode;
-                    startNewGame();
-                });
-            });
-
-            document.querySelectorAll('.language-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    document.querySelectorAll('.language-btn').forEach(b => b.classList.remove('selected'));
-                    btn.classList.add('selected');
-                    currentLanguage = btn.dataset.lang;
-                    // Here you would add language switching logic
-                });
-            });
-
-            document.getElementById('refresh-btn').addEventListener('click', startNewRound);
-            document.getElementById('quit-btn').addEventListener('click', quitToMainMenu);
-            document.getElementById('next-round-btn').addEventListener('click', startNewRound);
-            document.getElementById('quit-round-btn').addEventListener('click', quitToMainMenu);
-            document.getElementById('play-again-btn').addEventListener('click', startNewGame);
-            document.getElementById('main-menu-btn').addEventListener('click', quitToMainMenu);
-        }
-
-        function selectAvatar(avatar) {
-            document.querySelectorAll('.avatar').forEach(a => a.classList.remove('selected'));
-            avatar.classList.add('selected');
-            gameState.player.avatar = avatar.dataset.avatar;
-            updatePlayerUI();
-        }
-
-        function selectColor(color) {
-            document.querySelectorAll('.color-option').forEach(c => c.classList.remove('selected'));
-            color.classList.add('selected');
-            gameState.player.theme = color.dataset.color;
-        }
-
-        function updatePlayerUI() {
-            const displayName = gameState.player.emoji ? `${gameState.player.name} ${gameState.player.emoji}` : gameState.player.name;
-            document.getElementById('player-name').textContent = displayName;
-            document.getElementById('final-player').textContent = displayName;
-            const avatarElement = document.getElementById('player-avatar');
-            if (avatarElement) avatarElement.textContent = gameState.player.avatar;
-        }
-
-        function loadSelectedUser() {
-            const userSelect = document.getElementById('user-select');
-            const username = userSelect.value;
-            if (username) {
-                gameState.player.name = username;
-                loadPlayerProgress();
-                document.getElementById('username-input').style.display = 'none';
-            } else {
-                document.getElementById('username-input').style.display = 'block';
-                gameState.player.name = 'Guest';
-                gameState.player.avatar = '�';
-                gameState.player.theme = 'blue';
-                gameState.player.emoji = '';
-                gameState.player.points = 0;
-                gameState.player.purchasedEmojis = [];
-                gameState.player.rewards = { easy: { medals: 0, trophies: 0, crowns: 0 }, medium: { medals: 0, trophies: 0, crowns: 0 }, hard: { medals: 0, trophies: 0, crowns: 0 } };
-                gameState.streak = 0;
-                gameState.completedWords = 0;
-                gameState.wordProgress = {};
+                
                 updatePlayerUI();
+                updateLogoutButton();
+                updateProgressTracker();
+                showSuccess(`おかえりなさい、${username}さん！`);
+                return;
             }
+        } catch (e) {
+            console.error("Error loading user data:", e);
+            showError("ユーザーデータの読み込みエラー。最初からやり直します！");
         }
+    }
+    
+    // Default to showing input field for new users
+    usernameInput.style.display = 'block';
+    usernameInput.placeholder = '新しい名前を入力...';
+    gameState.player = {
+        name: 'ゲスト',
+        avatar: '🐉',
+        theme: 'green',
+        emoji: '',
+        points: 0,
+        rewards: { 
+            medals: 0,
+            trophies: 0,
+            totalWordsMastered: 0
+        },
+        unlockedStickers: [],
+        bonusGamesAvailable: 0
+    };
+    gameState.streak = 0;
+    gameState.completedWords = 0;
+    gameState.wordProgress = {};
+    
+    updatePlayerUI();
+    updateLogoutButton();
+    updateProgressTracker();
+}
 
-        function saveUsername() {
-            const usernameInput = document.getElementById('username-input');
-            const username = usernameInput.value.trim();
-            if (!username) return;
-            
-            const isNewUser = !localStorage.getItem(`vocabBonanzaProgress_${username}`);
-            gameState.player.name = username;
-            
-            if (isNewUser) {
-                gameState.player.points = 0;
-                gameState.player.purchasedEmojis = [];
-                gameState.player.rewards = { easy: { medals: 0, trophies: 0, crowns: 0 }, medium: { medals: 0, trophies: 0, crowns: 0 }, hard: { medals: 0, trophies: 0, crowns: 0 } };
-                gameState.streak = 0;
-                gameState.completedWords = 0;
-                gameState.wordProgress = {};
-                gameState.currentRound = { 
-                    pairs: [], 
-                    leftColumn: [], 
-                    rightColumn: [], 
-                    selectedLeft: null, 
-                    selectedRight: null, 
-                    matchedPairs: [], 
-                    roundPoints: 0 
-                };
-            } else {
-                loadPlayerProgress();
-            }
-            
-            updatePlayerUI();
-            savePlayerProgress();
-            usernameInput.value = '';
-            usernameInput.placeholder = `Welcome, ${username}!`;
-            
-            const btn = document.getElementById('save-username');
-            btn.textContent = isNewUser ? '✓ New User Created!' : '✓ Saved!';
-            setTimeout(() => btn.textContent = 'Save & Continue', 1500);
-            
-            populateUserSelect();
-        }
+function saveUsername() {
+    const usernameInput = document.getElementById('username-input');
+    const username = usernameInput.value.trim();
+    
+    if (!username) {
+        showError("ユーザー名を入力してください");
+        return;
+    }
+    
+    // Always show the input field
+    usernameInput.style.display = 'block';
+    
+    // Check if this is a new user or existing user
+    const isNewUser = !gameState.leaderboard.some(user => user.name === username);
+    
+    if (isNewUser) {
+        // Initialize new user data
+        gameState.player = {
+            name: username,
+            avatar: gameState.player.avatar || '🐉',
+            theme: gameState.player.theme || 'green',
+            emoji: '',
+            points: 0,
+            rewards: { 
+                medals: 0,
+                trophies: 0,
+                totalWordsMastered: 0
+            },
+            unlockedStickers: [],
+            bonusGamesAvailable: 0
+        };
+        
+        gameState.streak = 0;
+        gameState.completedWords = 0;
+        gameState.wordProgress = {};
+    }
+    
+    localStorage.setItem('nandomodeCurrentPlayer', username);
+    savePlayerProgress();
+    
+    updatePlayerUI();
+    updateLogoutButton();
+    updateProgressTracker();
+    
+    usernameInput.value = '';
+    usernameInput.placeholder = isNewUser ? `ようこそ、${username}さん！` : `おかえりなさい、${username}さん！`;
+    
+    const btn = document.getElementById('save-username');
+    btn.textContent = isNewUser ? '✓ 新規ユーザー作成！' : '✓ ユーザー読み込み！';
+    setTimeout(() => btn.textContent = '💾 保存 & 続行', 1500);
+    
+    populateUserSelect();
+    document.getElementById('user-select').value = username;
+    
+    showSuccess(isNewUser ? `${username}さんのアカウントを作成しました！` : `おかえりなさい${username}さん！`);
+}
 
-        function quickPlay() {
-            gameState.player.name = 'Guest';
-            gameState.player.avatar = '🏰';
-            gameState.player.theme = 'blue';
-            gameState.player.emoji = '';
-            gameState.player.points = 0;
-            gameState.player.purchasedEmojis = [];
-            gameState.player.rewards = { easy: { medals: 0, trophies: 0, crowns: 0 }, medium: { medals: 0, trophies: 0, crowns: 0 }, hard: { medals: 0, trophies: 0, crowns: 0 } };
-            gameState.streak = 0;
-            gameState.completedWords = 0;
-            gameState.wordProgress = {};
-            updatePlayerUI();
-            showScreen('start');
-        }
+function quickPlay() {
+    // Only set guest mode if no user is currently logged in
+    if (gameState.player.name === 'ゲスト') {
+        gameState.player = {
+            name: 'ゲスト',
+            avatar: '🐉',
+            theme: 'green',
+            emoji: '',
+            points: 0,
+            rewards: { 
+                medals: 0,
+                trophies: 0,
+                totalWordsMastered: 0
+            },
+            unlockedStickers: [],
+            bonusGamesAvailable: 0
+        };
+        gameState.streak = 0;
+        gameState.completedWords = 0;
+        gameState.wordProgress = {};
+        
+        updatePlayerUI();
+        updateLogoutButton();
+        updateProgressTracker();
+        showSuccess("ゲストとしてプレイ中。進捗は保存されません。");
+    }
+    showScreen('start');
+}
 
-        function savePlayerProgress() {
-            try {
-                const playerData = {
-                    name: gameState.player.name,
-                    avatar: gameState.player.avatar,
-                    theme: gameState.player.theme,
-                    emoji: gameState.player.emoji,
-                    points: gameState.player.points,
-                    purchasedEmojis: gameState.player.purchasedEmojis,
-                    rewards: gameState.player.rewards,
-                    wordProgress: gameState.wordProgress,
-                    completedWords: gameState.completedWords,
-                    streak: gameState.streak,
-                    lastActive: new Date().toISOString()
-                };
-                localStorage.setItem(`vocabBonanzaProgress_${gameState.player.name}`, JSON.stringify(playerData));
-                localStorage.setItem('vocabBonanzaCurrentPlayer', gameState.player.name);
-            } catch (e) {
-                console.warn("Error saving player progress:", e);
-                showError("Couldn't save progress. Try again!");
-            }
-        }
+function logout() {
+    gameState.player = {
+        name: 'ゲスト',
+        avatar: '🐉',
+        theme: 'green',
+        emoji: '',
+        points: 0,
+        rewards: { 
+            medals: 0,
+            trophies: 0,
+            totalWordsMastered: 0
+        },
+        unlockedStickers: [],
+        bonusGamesAvailable: 0
+    };
+    gameState.streak = 0;
+    gameState.completedWords = 0;
+    gameState.wordProgress = {};
+    
+    localStorage.removeItem('nandomodeCurrentPlayer');
+    
+    updatePlayerUI();
+    updateLogoutButton();
+    updateProgressTracker();
+    populateUserSelect();
+    
+    document.getElementById('username-input').style.display = 'block';
+    document.getElementById('username-input').placeholder = '新しい名前を入力...';
+    document.getElementById('user-select').value = '';
+    
+    showSuccess("ログアウトしました");
+    showScreen('start');
+}
 
-        function loadPlayerProgress() {
-            try {
-                const savedName = localStorage.getItem('vocabBonanzaCurrentPlayer');
-                if (savedName && savedName === gameState.player.name) {
-                    const savedData = localStorage.getItem(`vocabBonanzaProgress_${savedName}`);
-                    if (savedData) {
-                        const playerData = JSON.parse(savedData);
-                        gameState.player.name = playerData.name || 'Guest';
-                        gameState.player.avatar = playerData.avatar || '🏰';
-                        gameState.player.theme = playerData.theme || 'blue';
-                        gameState.player.emoji = playerData.emoji || '';
-                        gameState.player.points = playerData.points || 0;
-                        gameState.player.purchasedEmojis = playerData.purchasedEmojis || [];
-                        gameState.player.rewards = playerData.rewards || { easy: { medals: 0, trophies: 0, crowns: 0 }, medium: { medals: 0, trophies: 0, crowns: 0 }, hard: { medals: 0, trophies: 0, crowns: 0 } };
-                        gameState.wordProgress = playerData.wordProgress || {};
-                        gameState.completedWords = playerData.completedWords || 0;
-                        gameState.streak = playerData.streak || 0;
-                        
-                        document.getElementById('username-input').placeholder = `Welcome back, ${gameState.player.name}!`;
-                        document.querySelectorAll('.avatar').forEach(avatar => {
-                            avatar.classList.toggle('selected', avatar.dataset.avatar === gameState.player.avatar);
-                        });
-                        document.querySelectorAll('.color-option').forEach(color => {
-                            color.classList.toggle('selected', color.dataset.color === gameState.player.theme);
-                        });
-                        updatePlayerUI();
-                        return;
-                    }
-                }
-            } catch (e) {
-                console.warn("Error loading player progress:", e);
-                showError("Couldn't load your progress. Starting fresh!");
-            }
-            gameState.player.name = 'Guest';
-            gameState.player.avatar = '🏰';
-            gameState.player.theme = 'blue';
-            gameState.player.emoji = '';
-            gameState.player.points = 0;
-            gameState.player.purchasedEmojis = [];
-            gameState.player.rewards = { easy: { medals: 0, trophies: 0, crowns: 0 }, medium: { medals: 0, trophies: 0, crowns: 0 }, hard: { medals: 0, trophies: 0, crowns: 0 } };
-            gameState.streak = 0;
-            gameState.completedWords = 0;
-            gameState.wordProgress = {};
-            updatePlayerUI();
-        }
+function savePlayerProgress() {
+    if (gameState.player.name === 'ゲスト') {
+        console.log('Not saving progress for Guest user');
+        return;
+    }
+    
+    try {
+        const playerData = {
+            name: gameState.player.name,
+            avatar: gameState.player.avatar,
+            theme: gameState.player.theme,
+            emoji: gameState.player.emoji,
+            points: gameState.player.points,
+            rewards: gameState.player.rewards,
+            wordProgress: gameState.wordProgress,
+            completedWords: gameState.completedWords,
+            streak: gameState.streak,
+            unlockedStickers: gameState.player.unlockedStickers,
+            bonusGamesAvailable: gameState.player.bonusGamesAvailable,
+            lastActive: new Date().toISOString()
+        };
+        
+        localStorage.setItem(`nandomodeProgress_${gameState.player.name}`, JSON.stringify(playerData));
+        localStorage.setItem('nandomodeCurrentPlayer', gameState.player.name);
+        console.log('Progress saved for:', gameState.player.name);
+    } catch (e) {
+        console.error("Error saving player progress:", e);
+        showError("進捗を保存できませんでした。もう一度試してください！");
+    }
+}
 
-        function startNewGame() {
-            document.getElementById('game-container').className = `theme-${gameState.player.theme}`;
-            startNewRound();
-            savePlayerProgress();
-        }
-
-        function startNewRound() {
-            generateRoundData();
-            updateGameUI();
-            showScreen('game');
-            if (!isMobile) {
-                const roundWords = gameState.currentRound.pairs.map(p => p.word).join(', ');
-                showNotification(`Round Words: ${roundWords}`);
-            }
-        }
-
-        function sanitizePairId(word) {
-            return word.toLowerCase().replace(/[^a-z0-9]/g, '') + '_' + Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
-        }
-
-        function generateRoundData() {
-            gameState.currentRound = {
-                pairs: [],
-                leftColumn: [],
-                rightColumn: [],
-                selectedLeft: null,
-                selectedRight: null,
-                matchedPairs: [],
-                roundPoints: 0
-            };
-            
-            const vocab = window.vocab && window.vocab.length > 0 ? window.vocab : defaultVocab;
-            const newWords = getNewWords(3);
-            const reviewWords = getReviewWords(2);
-            const roundWords = shuffleArray([...newWords, ...reviewWords]);
-            
-            console.log(`Round words: ${roundWords.join(', ')}`);
-            
-            roundWords.forEach(word => {
-                const vocabItem = vocab.find(item => item.word === word);
-                if (vocabItem) {
-                    const pairId = sanitizePairId(word);
-                    gameState.currentRound.pairs.push({
-                        pairId,
-                        word: vocabItem.word,
-                        emoji: vocabItem.emoji,
-                        type: vocabItem.type
-                    });
-                }
-            });
-            
-            gameState.currentRound.pairs = shuffleArray([...gameState.currentRound.pairs]);
-            
-            const emojis = gameState.currentRound.pairs.map(pair => ({
-                pairId: pair.pairId,
-                type: 'emoji',
-                value: pair.emoji
-            }));
-            const words = gameState.currentRound.pairs.map(pair => ({
-                pairId: pair.pairId,
-                type: 'word',
-                value: pair.word
-            }));
-            
-            const shuffledEmojis = shuffleArray([...emojis]);
-            const shuffledWords = shuffleArray([...words]);
-            
-            if (gameState.mode === 'easy') {
-                gameState.currentRound.leftColumn = shuffledEmojis;
-                gameState.currentRound.rightColumn = shuffledWords;
-            } else {
-                gameState.currentRound.leftColumn = shuffledWords;
-                gameState.currentRound.rightColumn = shuffledEmojis;
-            }
-            
-            console.log('Generated pairs:', gameState.currentRound.pairs.map(p => `${p.word} (${p.pairId})`));
-            console.log('Left Column:', gameState.currentRound.leftColumn.map(item => `${item.value} (${item.pairId})`));
-            console.log('Right Column:', gameState.currentRound.rightColumn.map(item => `${item.value} (${item.pairId})`));
-        }
-
-        function getNewWords(count) {
-            const vocab = window.vocab && window.vocab.length > 0 ? window.vocab : defaultVocab;
-            const unseenWords = vocab
-                .filter(item => !gameState.wordProgress[item.word])
-                .map(item => item.word);
-            
-            if (unseenWords.length < count) {
-                const seenWords = Object.keys(gameState.wordProgress).filter(word => gameState.wordProgress[word] < 3);
-                const candidates = [...unseenWords, ...seenWords];
-                return shuffleArray(candidates).slice(0, count);
-            }
-            
-            return shuffleArray(unseenWords).slice(0, count);
-        }
-
-        function getReviewWords(count) {
-            const reviewCandidates = Object.keys(gameState.wordProgress)
-                .filter(word => gameState.wordProgress[word] > 0 && gameState.wordProgress[word] < 3);
-            
-            if (reviewCandidates.length < count) {
-                return getNewWords(count);
-            }
-            
-            return shuffleArray(reviewCandidates).slice(0, count);
-        }
-
-        function updateGameUI() {
-            document.getElementById('score').textContent = gameState.player.points;
-            document.getElementById('streak').textContent = gameState.streak;
-            document.getElementById('progress').textContent = gameState.completedWords;
-            document.getElementById('completed').textContent = gameState.completedWords;
-            document.getElementById('percent-complete').textContent = Math.round((gameState.completedWords / 50) * 100);
-            updateProgressBar();
-            
-            const leftColumn = document.getElementById('column-left');
-            const rightColumn = document.getElementById('column-right');
-            leftColumn.innerHTML = '';
-            rightColumn.innerHTML = '';
-            
-            gameState.currentRound.leftColumn.forEach((item, index) => {
-                const card = document.createElement('div');
-                card.className = `card ${item.type === 'emoji' ? 'emoji-card' : 'word-card'}`;
-                card.dataset.pairId = item.pairId;
-                card.dataset.type = item.type;
-                card.textContent = item.value;
-                card.tabIndex = gameState.currentRound.matchedPairs.includes(item.pairId) ? -1 : 0;
-                card.setAttribute('role', 'button');
-                card.setAttribute('aria-label', `Select card: ${item.value}`);
-                if (gameState.currentRound.matchedPairs.includes(item.pairId)) {
-                    card.classList.add('matched');
-                }
+function loadPlayerProgress() {
+    try {
+        const savedName = localStorage.getItem('nandomodeCurrentPlayer');
+        if (savedName) {
+            const savedData = localStorage.getItem(`nandomodeProgress_${savedName}`);
+            if (savedData) {
+                const playerData = JSON.parse(savedData);
                 
-                card.addEventListener('click', () => handleCardClick('left', item.pairId, index));
-                card.addEventListener('keypress', (e) => {
-                    if (e.key === 'Enter' || e.key === ' ') handleCardClick('left', item.pairId, index);
+                gameState.player = {
+                    name: savedName,
+                    avatar: playerData.avatar || '🐉',
+                    theme: playerData.theme || 'green',
+                    emoji: playerData.emoji || '',
+                    points: playerData.points || 0,
+                    rewards: playerData.rewards || { 
+                        medals: 0,
+                        trophies: 0,
+                        totalWordsMastered: 0
+                    },
+                    unlockedStickers: playerData.unlockedStickers || [],
+                    bonusGamesAvailable: playerData.bonusGamesAvailable || 0
+                };
+                
+                gameState.streak = playerData.streak || 0;
+                gameState.completedWords = playerData.completedWords || 0;
+                gameState.wordProgress = playerData.wordProgress || {};
+                
+                document.getElementById('username-input').placeholder = `おかえりなさい、${gameState.player.name}さん！`;
+                document.querySelectorAll('.avatar').forEach(avatar => {
+                    avatar.classList.toggle('selected', avatar.dataset.avatar === gameState.player.avatar);
+                });
+                document.querySelectorAll('.color-option').forEach(color => {
+                    color.classList.toggle('selected', color.dataset.color === gameState.player.theme);
                 });
                 
-                leftColumn.appendChild(card);
-                console.log(`Rendered left card: pairId=${item.pairId}, type=${item.type}, value=${item.value}, index=${index}`);
+                updatePlayerUI();
+                updateLogoutButton();
+                updateProgressTracker();
+                return;
+            }
+        }
+    } catch (e) {
+        console.warn("Error loading player progress:", e);
+        showError("進捗を読み込めませんでした。最初からやり直します！");
+    }
+    
+    gameState.player = {
+        name: 'ゲスト',
+        avatar: '🐉',
+        theme: 'green',
+        emoji: '',
+        points: 0,
+        rewards: { 
+            medals: 0,
+            trophies: 0,
+            totalWordsMastered: 0
+        },
+        unlockedStickers: [],
+        bonusGamesAvailable: 0
+    };
+    gameState.streak = 0;
+    gameState.completedWords = 0;
+    gameState.wordProgress = {};
+    
+    updatePlayerUI();
+    updateLogoutButton();
+    updateProgressTracker();
+}
+
+function startNewGame() {
+    document.getElementById('game-container').className = `theme-${gameState.player.theme}`;
+    startNewRound();
+    savePlayerProgress();
+}
+
+function startNewRound() {
+    roundsPlayed++;
+    setupClassicMode();
+    showScreen('game');
+}
+// Replace the existing generateRoundData function with this:
+
+function generateRoundData() {
+    gameState.currentRound = {
+        pairs: [],
+        leftColumn: [],
+        rightColumn: [],
+        selectedLeft: null,
+        selectedRight: null,
+        matchedPairs: [],
+        roundPoints: 0
+    };
+
+    // Get at least one abstract word (from pronouns, prepositions, conjunctions, auxiliary verbs, or interjections)
+    const abstractParts = ['pronoun', 'preposition', 'conjunction', 'auxiliary', 'interjection'];
+    const abstractPart = abstractParts[Math.floor(Math.random() * abstractParts.length)];
+    const abstractWord = getNewWord(abstractPart);
+    
+    // Get concrete words from different parts of speech
+    const concreteParts = ['noun', 'verb', 'adjective', 'adverb'].filter(p => p !== currentPartOfSpeech);
+    const concreteWords = [];
+    
+    // Ensure we have words from different parts of speech
+    while (concreteWords.length < 4) {
+        const part = concreteParts[Math.floor(Math.random() * concreteParts.length)];
+        const word = getNewWord(part);
+        if (word && !concreteWords.some(w => w.word === word.word)) {
+            concreteWords.push(word);
+        }
+    }
+
+    // Combine all words (1 abstract + 4 concrete)
+    const roundWords = [abstractWord, ...concreteWords];
+    
+    roundWords.forEach(vocabItem => {
+        if (vocabItem) {
+            const pairId = sanitizePairId(vocabItem.word);
+            // Use Japanese translation if no emoji exists
+            const displayValue = vocabItem.emoji || vocabItem.japanese;
+            gameState.currentRound.pairs.push({
+                pairId,
+                word: vocabItem.word,
+                emoji: displayValue,  // This will use either emoji or Japanese
+                type: vocabItem.type,
+                japanese: vocabItem.japanese,
+                category: vocabItem.category
             });
+        }
+    });
+
+    gameState.currentRound.pairs = shuffleArray([...gameState.currentRound.pairs]);
+
+    const emojis = gameState.currentRound.pairs.map(pair => ({
+        pairId: pair.pairId,
+        type: 'emoji',
+        value: pair.emoji,  // This will show either emoji or Japanese
+        wordType: pair.type
+    }));
+    const words = gameState.currentRound.pairs.map(pair => ({
+        pairId: pair.pairId,
+        type: 'word',
+        value: pair.word,
+        wordType: pair.type
+    }));
+
+    const shuffledEmojis = shuffleArray([...emojis]);
+    const shuffledWords = shuffleArray([...words]);
+
+    if (gameState.mode === 'easy') {
+        gameState.currentRound.leftColumn = shuffledEmojis;
+        gameState.currentRound.rightColumn = shuffledWords;
+    } else {
+        gameState.currentRound.leftColumn = shuffledWords;
+        gameState.currentRound.rightColumn = shuffledEmojis;
+    }
+}
+
+// Add this helper function to get a new word from a specific part of speech
+function getNewWord(part) {
+    const unseenWords = vocabByPart[part]
+        .filter(item => !gameState.wordProgress[item.word] || gameState.wordProgress[item.word] < 3);
+    
+    if (unseenWords.length === 0) {
+        const seenWords = Object.keys(gameState.wordProgress)
+            .filter(word => gameState.wordProgress[word] < 3)
+            .map(word => vocabByPart[part].find(item => item.word === word))
+            .filter(Boolean);
+        
+        if (seenWords.length === 0) return null;
+        return seenWords[Math.floor(Math.random() * seenWords.length)];
+    }
+    
+    return unseenWords[Math.floor(Math.random() * unseenWords.length)];
+}
+
+function setupClassicMode() {
+    generateRoundData();
+    const gameBoard = document.getElementById('game-board');
+    gameBoard.className = 'game-board';
+    
+    // Clear any existing columns
+    gameBoard.innerHTML = '';
+    
+    const leftColumn = document.createElement('div');
+    leftColumn.className = 'column';
+    leftColumn.id = 'column-left';
+    
+    const rightColumn = document.createElement('div');
+    rightColumn.className = 'column';
+    rightColumn.id = 'column-right';
+    
+    gameBoard.appendChild(leftColumn);
+    gameBoard.appendChild(rightColumn);
+    
+    // Now that columns exist, we can safely update the UI
+    updateGameUI();
+}
+
+function updateGameUI() {
+    // Safely update score display if it exists
+    const scoreElement = document.getElementById('score');
+    if (scoreElement) scoreElement.textContent = gameState.player.points;
+    
+    // Safely update streak display if it exists
+    const streakElement = document.getElementById('streak');
+    if (streakElement) streakElement.textContent = gameState.streak;
+    
+    // Safely update progress display if it exists
+    const progressElement = document.getElementById('progress');
+    if (progressElement) {
+        progressElement.textContent = 
+            `${gameState.completedWords}/10 (Total: ${gameState.player.rewards.totalWordsMastered})`;
+    }
+    
+    // Safely update percent complete if it exists
+    const percentElement = document.getElementById('percent-complete');
+    if (percentElement) {
+        percentElement.textContent = Math.round((gameState.completedWords / 10) * 100);
+    }
+    
+    updateProgressBar();
+    updateRewardPath();
+    updateProgressTracker();
+    updatePartOfSpeechDisplay();
             
-            gameState.currentRound.rightColumn.forEach((item, index) => {
-                const card = document.createElement('div');
-                card.className = `card ${item.type === 'emoji' ? 'emoji-card' : 'word-card'}`;
-                card.dataset.pairId = item.pairId;
-                card.dataset.type = item.type;
-                card.textContent = item.value;
-                card.tabIndex = gameState.currentRound.matchedPairs.includes(item.pairId) ? -1 : 0;
-                card.setAttribute('role', 'button');
-                card.setAttribute('aria-label', `Select card: ${item.value}`);
-                if (gameState.currentRound.matchedPairs.includes(item.pairId)) {
-                    card.classList.add('matched');
-                }
-                
-                card.addEventListener('click', () => handleCardClick('right', item.pairId, index));
-                card.addEventListener('keypress', (e) => {
-                    if (e.key === 'Enter' || e.key === ' ') handleCardClick('right', item.pairId, index);
-                });
-                
-                rightColumn.appendChild(card);
-                console.log(`Rendered right card: pairId=${item.pairId}, type=${item.type}, value=${item.value}, index=${index}`);
-            });
+    const leftColumn = document.getElementById('column-left');
+    const rightColumn = document.getElementById('column-right');
+    
+    // Only proceed if both columns exist
+    if (!leftColumn || !rightColumn) return;
+    
+    leftColumn.innerHTML = '';
+    rightColumn.innerHTML = '';
             
-            if (gameState.currentRound.matchedPairs.length === 5) {
-                console.log('All pairs matched, ending round');
-                endRound();
+    gameState.currentRound.leftColumn.forEach((item, index) => {
+const card = document.createElement('div');
+card.className = `card ${item.type === 'emoji' ? 'emoji-card' : 'word-card'} ${item.wordType}`;
+        card.dataset.pairId = item.pairId;
+        card.dataset.type = item.type;
+        card.textContent = item.value;
+        card.tabIndex = gameState.currentRound.matchedPairs.includes(item.pairId) ? -1 : 0;
+        card.setAttribute('role', 'button');
+        card.setAttribute('aria-label', `カードを選択: ${item.value}`);
+        
+        if (gameState.currentRound.matchedPairs.includes(item.pairId)) {
+            card.classList.add('matched');
+        }
+        
+        const pair = gameState.currentRound.pairs.find(p => p.pairId === item.pairId);
+        if (pair && gameState.wordProgress[pair.word]) {
+            card.classList.add(`word-mastery-${Math.min(3, gameState.wordProgress[pair.word])}`);
+        }
+        
+        card.addEventListener('click', () => handleCardClick('left', item.pairId, index));
+        card.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') handleCardClick('left', item.pairId, index);
+        });
+        
+        leftColumn.appendChild(card);
+    });
+    
+    gameState.currentRound.rightColumn.forEach((item, index) => {
+        const card = document.createElement('div');
+        card.className = `card ${item.type === 'emoji' ? 'emoji-card' : 'word-card'}`;
+        card.dataset.pairId = item.pairId;
+        card.dataset.type = item.type;
+        card.textContent = item.value;
+        card.tabIndex = gameState.currentRound.matchedPairs.includes(item.pairId) ? -1 : 0;
+        card.setAttribute('role', 'button');
+        card.setAttribute('aria-label', `カードを選択: ${item.value}`);
+        
+        if (gameState.currentRound.matchedPairs.includes(item.pairId)) {
+            card.classList.add('matched');
+        }
+        
+        const pair = gameState.currentRound.pairs.find(p => p.pairId === item.pairId);
+        if (pair && gameState.wordProgress[pair.word]) {
+            card.classList.add(`word-mastery-${Math.min(3, gameState.wordProgress[pair.word])}`);
+        }
+        
+        card.addEventListener('click', () => handleCardClick('right', item.pairId, index));
+        card.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') handleCardClick('right', item.pairId, index);
+        });
+        
+        rightColumn.appendChild(card);
+    });
+    
+    if (gameState.currentRound.matchedPairs.length === gameState.currentRound.pairs.length) {
+        console.log('All pairs matched, ending round');
+        endRound();
+    }
+}
+
+function updateProgressBar() {
+    const progressBar = document.querySelector('.progress-bar');
+    const percent = Math.min(100, (gameState.completedWords / 10) * 100);
+    progressBar.style.width = `${percent}%`;
+}
+
+function handleCardClick(column, pairId, index) {
+    if (isProcessingClick || gameState.currentRound.matchedPairs.includes(pairId)) {
+        console.log(`Skipped click: isProcessing=${isProcessingClick}, pairId=${pairId}, matched=${gameState.currentRound.matchedPairs.includes(pairId)}`);
+        return;
+    }
+    isProcessingClick = true;
+    
+    const columnData = column === 'left' ? gameState.currentRound.leftColumn : gameState.currentRound.rightColumn;
+    const item = columnData[index];
+    if (!item || item.pairId !== pairId) {
+        console.error(`Item mismatch: pairId=${pairId}, index=${index}, column=${column}, found=${!!item}`);
+        isProcessingClick = false;
+        showError("エラーが発生しました。もう一度試してください！");
+        return;
+    }
+    
+    const card = document.querySelector(`.card[data-pair-id="${pairId}"][data-type="${item.type}"]`);
+    if (!card || card.classList.contains('matched')) {
+        console.error(`Invalid card: pairId=${pairId}, type=${item.type}, column=${column}, found=${!!card}`);
+        isProcessingClick = false;
+        showError("エラーが発生しました。もう一度試してください！");
+        return;
+    }
+    
+    if ((gameState.mode === 'easy' && column === 'left') || 
+        (gameState.mode === 'medium' && column === 'left' && item.type === 'word')) {
+        const pair = gameState.currentRound.pairs.find(p => p.pairId === pairId);
+        if (pair) {
+            const now = Date.now();
+            if (now - lastTTSTime >= ttsDebounce) {
+                speakWord(pair.word);
+                lastTTSTime = now;
+                console.log(`TTS triggered: word=${pair.word}`);
             }
         }
-
-        function updateProgressBar() {
-            const progressBar = document.querySelector('.progress-bar');
-            const percent = Math.min(100, (gameState.completedWords / 50) * 100);
-            progressBar.style.width = `${percent}%`;
+    }
+    
+    if (column === 'left') {
+        if (gameState.currentRound.selectedLeft) {
+            const prevCard = document.querySelector(`.card[data-pair-id="${gameState.currentRound.selectedLeft}"]`);
+            if (prevCard) prevCard.classList.remove('selected');
         }
-
-        function handleCardClick(column, pairId, index) {
-            if (isProcessingClick || gameState.currentRound.matchedPairs.includes(pairId)) {
-                console.log(`Skipped click: isProcessing=${isProcessingClick}, pairId=${pairId}, matched=${gameState.currentRound.matchedPairs.includes(pairId)}`);
-                return;
-            }
-            isProcessingClick = true;
-            
-            const columnData = column === 'left' ? gameState.currentRound.leftColumn : gameState.currentRound.rightColumn;
-            const item = columnData[index];
-            if (!item || item.pairId !== pairId) {
-                console.error(`Item mismatch: pairId=${pairId}, index=${index}, column=${column}, found=${!!item}`);
-                isProcessingClick = false;
-                showError("Oops! Something went wrong. Try again!");
-                return;
-            }
-            
-            const card = document.querySelector(`.card[data-pair-id="${pairId}"][data-type="${item.type}"]`);
-            if (!card || card.classList.contains('matched')) {
-                console.error(`Invalid card: pairId=${pairId}, type=${item.type}, column=${column}, found=${!!card}`);
-                isProcessingClick = false;
-                showError("Oops! Something went wrong. Try again!");
-                return;
-            }
-            
-            if (gameState.mode !== 'hard' && column === 'left') {
-                const pair = gameState.currentRound.pairs.find(p => p.pairId === pairId);
-                if (pair) {
-                    const now = Date.now();
-                    if (now - lastTTSTime >= ttsDebounce) {
-                        speakWord(pair.word);
-                        lastTTSTime = now;
-                        console.log(`TTS triggered: word=${pair.word}`);
-                    }
-                }
-            }
-            
-            if (column === 'left') {
-                if (gameState.currentRound.selectedLeft) {
-                    const prevCard = document.querySelector(`.card[data-pair-id="${gameState.currentRound.selectedLeft}"]`);
-                    if (prevCard) prevCard.classList.remove('selected');
-                }
-                gameState.currentRound.selectedLeft = pairId;
-                card.classList.add('selected');
-            } else {
-                if (gameState.currentRound.selectedRight) {
-                    const prevCard = document.querySelector(`.card[data-pair-id="${gameState.currentRound.selectedRight}"]`);
-                    if (prevCard) prevCard.classList.remove('selected');
-                }
-                gameState.currentRound.selectedRight = pairId;
-                card.classList.add('selected');
-            }
-            
-            console.log(`Selected: left=${gameState.currentRound.selectedLeft}, right=${gameState.currentRound.selectedRight}`);
-            
-            if (gameState.currentRound.selectedLeft && gameState.currentRound.selectedRight) {
-                checkMatch();
-            } else {
-                isProcessingClick = false;
-            }
+        gameState.currentRound.selectedLeft = pairId;
+        card.classList.add('selected');
+    } else {
+        if (gameState.currentRound.selectedRight) {
+            const prevCard = document.querySelector(`.card[data-pair-id="${gameState.currentRound.selectedRight}"]`);
+            if (prevCard) prevCard.classList.remove('selected');
         }
+        gameState.currentRound.selectedRight = pairId;
+        card.classList.add('selected');
+    }
+    
+    console.log(`Selected: left=${gameState.currentRound.selectedLeft}, right=${gameState.currentRound.selectedRight}`);
+    
+    if (gameState.currentRound.selectedLeft && gameState.currentRound.selectedRight) {
+        checkMatch();
+    } else {
+        isProcessingClick = false;
+    }
+}
 
-        function checkMatch() {
-            const leftId = gameState.currentRound.selectedLeft;
-            const rightId = gameState.currentRound.selectedRight;
-            
-            console.log(`Checking match: leftId=${leftId}, rightId=${rightId}, matchedPairs=${gameState.currentRound.matchedPairs.length}`);
-            
-            const leftCard = document.querySelector(`.card[data-pair-id="${leftId}"]`);
-            const rightCard = document.querySelector(`.card[data-pair-id="${rightId}"]`);
-            
-            if (!leftCard || !rightCard) {
-                console.error(`Cards not found in checkMatch: leftCard=${leftCard}, rightCard=${rightCard}, leftId=${leftId}, rightId=${rightId}`);
-                resetSelections();
-                showError("Oops! Something went wrong. Try again!");
-                return;
-            }
-            
-            if (leftId === rightId) {
-                leftCard.classList.add('correct');
-                rightCard.classList.add('correct');
-                playSound('correct');
-                
-                gameState.player.points += 10;
-                gameState.streak++;
-                gameState.currentRound.roundPoints += 10;
-                
-                const pair = gameState.currentRound.pairs.find(p => p.pairId === leftId);
-                if (pair) {
-                    gameState.wordProgress[pair.word] = (gameState.wordProgress[pair.word] || 0) + 1;
-                    if (gameState.wordProgress[pair.word] === 3) {
-                        gameState.completedWords++;
-                        checkMilestone();
-                        checkModeCompletion();
-                    }
-                }
-                
-                gameState.currentRound.matchedPairs.push(leftId);
-                console.log(`Match successful, matchedPairs=${gameState.currentRound.matchedPairs.length}`);
-                
-                if (gameState.streak % 10 === 0) {
-                    gameState.player.points += 50;
-                    showNotification('Streak Bonus: +50 Points!');
-                }
-                
-                checkEmojiPurchase();
-                
-                setTimeout(() => {
-                    leftCard.classList.remove('correct');
-                    rightCard.classList.remove('correct');
-                    leftCard.classList.add('matched');
-                    rightCard.classList.add('matched');
-                    leftCard.tabIndex = -1;
-                    rightCard.tabIndex = -1;
-                    gameState.currentRound.selectedLeft = null;
-                    gameState.currentRound.selectedRight = null;
-                    isProcessingClick = false;
-                    
-                    if (gameState.currentRound.matchedPairs.length === 5) {
-                        console.log('All pairs matched, ending round');
-                        endRound();
-                    } else {
-                        updateGameUI();
-                    }
-                }, 500);
-            } else {
-                leftCard.classList.add('incorrect');
-                rightCard.classList.add('incorrect');
-                playSound('incorrect');
-                
-                gameState.streak = 0;
-                
-                setTimeout(() => {
-                    leftCard.classList.remove('selected', 'incorrect');
-                    rightCard.classList.remove('selected', 'incorrect');
-                    gameState.currentRound.selectedLeft = null;
-                    gameState.currentRound.selectedRight = null;
-                    isProcessingClick = false;
-                    updateGameUI();
-                }, 1000);
-            }
-            
-            savePlayerProgress();
+function checkMatch() {
+    const leftId = gameState.currentRound.selectedLeft;
+    const rightId = gameState.currentRound.selectedRight;
+    
+    console.log(`Checking match: leftId=${leftId}, rightId=${rightId}, matchedPairs=${gameState.currentRound.matchedPairs.length}`);
+    
+    const leftCard = document.querySelector(`.card[data-pair-id="${leftId}"]`);
+    const rightCard = document.querySelector(`.card[data-pair-id="${rightId}"]`);
+    
+    if (!leftCard || !rightCard) {
+        console.error(`Cards not found in checkMatch: leftCard=${leftCard}, rightCard=${rightCard}, leftId=${leftId}, rightId=${rightId}`);
+        resetSelections();
+        showError("エラーが発生しました。もう一度試してください！");
+        return;
+    }
+    
+    if (leftId === rightId) {
+        // Correct match
+        playSound('correct');
+        
+        // Calculate points - double for hard mode
+        const basePoints = gameState.mode === 'hard' ? 20 : 10;
+        gameState.player.points += basePoints;
+        gameState.streak++;
+        gameState.currentRound.roundPoints += basePoints;
+        matchesCompleted++;
+        matchesInRound++;
+        
+// Check for bonus game every 5 matches, but only after round is complete
+if (matchesInRound >= 5) {
+    matchesInRound = 0;
+    
+    // Only show bonus if all pairs are matched (round is complete)
+    if (gameState.currentRound.matchedPairs.length === gameState.currentRound.pairs.length) {
+        showBonusGamePopup();
+        
+        // Play musical flourish if perfect round
+        if (perfectRound) {
+            playSound('win');
+            createConfetti(document.getElementById('game-screen'), 30);
+            showNotification("パーフェクトラウンド！5/5正解！");
+        } else {
+            playSound('flamenco');
         }
-
-        function resetSelections() {
+    }
+    
+    perfectRound = true; // Reset for next round
+}
+        
+        const pair = gameState.currentRound.pairs.find(p => p.pairId === leftId);
+        if (pair) {
+            gameState.wordProgress[pair.word] = (gameState.wordProgress[pair.word] || 0) + 1;
+            if (gameState.wordProgress[pair.word] === 3) {
+                gameState.completedWords++;
+                gameState.player.rewards.totalWordsMastered++;
+                checkMilestone();
+                checkPartOfSpeechCompletion();
+            }
+            
+            // Show Japanese translations for matched cards
+            const translationDisplay = document.getElementById('translation-display');
+if (pair.japanese) {
+    translationDisplay.innerHTML = `
+        <span class="word">${pair.word}</span>
+        <span class="translation">${pair.japanese}</span>
+    `;
+    translationDisplay.style.display = 'block';
+    setTimeout(() => {
+        translationDisplay.style.display = 'none';
+    }, 3000);
+}
+        }
+        
+        gameState.currentRound.matchedPairs.push(leftId);
+        console.log(`Match successful, matchedPairs=${gameState.currentRound.matchedPairs.length}`);
+        
+        if (gameState.streak % 5 === 0) {
+            const bonus = gameState.streak * 2;
+            gameState.player.points += bonus;
+            showNotification(`連続正解ボーナス: +${bonus}ポイント！`);
+            playSound('flamenco'); // Flamenco flourish for streak bonus
+        }
+        
+        leftCard.classList.add('correct');
+        rightCard.classList.add('correct');
+        
+        setTimeout(() => {
+            leftCard.classList.remove('correct');
+            rightCard.classList.remove('correct');
+            leftCard.classList.add('matched');
+            rightCard.classList.add('matched');
+            leftCard.tabIndex = -1;
+            rightCard.tabIndex = -1;
             gameState.currentRound.selectedLeft = null;
             gameState.currentRound.selectedRight = null;
-            document.querySelectorAll('.card.selected').forEach(card => card.classList.remove('selected'));
+            isProcessingClick = false;
+            
+            if (gameState.currentRound.matchedPairs.length === gameState.currentRound.pairs.length) {
+                console.log('All pairs matched, ending round');
+                endRound();
+            } else {
+                updateGameUI();
+            }
+        }, 500);
+    } else {
+        // Incorrect match
+        playSound('incorrect');
+        gameState.streak = 0;
+        perfectRound = false;
+        matchesInRound++;
+        
+        leftCard.classList.add('incorrect');
+        rightCard.classList.add('incorrect');
+        
+        setTimeout(() => {
+            leftCard.classList.remove('selected', 'incorrect');
+            rightCard.classList.remove('selected', 'incorrect');
+            gameState.currentRound.selectedLeft = null;
+            gameState.currentRound.selectedRight = null;
             isProcessingClick = false;
             updateGameUI();
-        }
+        }, 1000);
+    }
+    savePlayerProgress();
+}
 
-        function checkMilestone() {
-            const previousWords = gameState.completedWords - 1;
-            const currentWords = gameState.completedWords;
-            if (milestones.includes(currentWords) && !milestones.includes(previousWords)) {
-                showNotification(`Milestone: ${currentWords}/50 Words Mastered!`);
-                createConfetti(document.getElementById('game-screen'), 20);
-            }
-        }
 
-        function checkModeCompletion() {
-            if (gameState.completedWords >= 50) {
-                const modeRewards = gameState.player.rewards[gameState.mode];
-                modeRewards.medals++;
-                showNotification(`🎖️ ${gameState.mode.charAt(0).toUpperCase() + gameState.mode.slice(1)} Medal Earned!`);
-                createConfetti(document.getElementById('game-screen'), 20);
-                
-                if (modeRewards.medals >= 10) {
-                    modeRewards.medals = 0;
-                    modeRewards.trophies++;
-                    showNotification(`🏆 ${gameState.mode.charAt(0).toUpperCase() + gameState.mode.slice(1)} Trophy Earned!`);
-                    createConfetti(document.getElementById('game-screen'), 20);
-                }
-                
-                if (modeRewards.trophies >= 10) {
-                    modeRewards.trophies = 0;
-                    modeRewards.crowns++;
-                    showNotification(`👑 ${gameState.mode.charAt(0).toUpperCase() + gameState.mode.slice(1)} Crown Earned!`);
-                    createConfetti(document.getElementById('game-screen'), 20);
-                }
-                
-                savePlayerProgress();
-            }
-        }
+// ===== BONUS GAME IMPROVEMENTS =====
+function showBonusGamePopup() {
+    // Clear any existing game state
+    endBonusGame();
+    
+    document.getElementById('bonus-game-popup').style.display = 'flex';
+    document.getElementById('fruit-machine').style.display = 'flex';
+    document.getElementById('balloon-game').style.display = 'none';
+}
 
-        function checkEmojiPurchase() {
-            const affordableEmojis = emojiStore.filter(item => !gameState.player.purchasedEmojis.includes(item.emoji) && gameState.player.points >= item.points);
-            if (affordableEmojis.length > 0) {
-                const emoji = affordableEmojis[0];
-                gameState.player.purchasedEmojis.push(emoji.emoji);
-                gameState.player.emoji = emoji.emoji;
-                gameState.player.points -= emoji.points;
-                showNotification(`Purchased ${emoji.name} Emoji ${emoji.emoji}!`);
-                updatePlayerUI();
-                savePlayerProgress();
-            }
-        }
+function endBonusGame() {
+    // Stop all sounds
+    stopAllSounds();
+    
+    // Clear all notifications
+    clearAllNotifications();
+    
+    // Clear balloon game intervals
+    balloonGameIntervals.forEach(interval => clearInterval(interval));
+    balloonGameIntervals = [];
+    
+    // Reset game displays
+    document.getElementById('fruit-machine').style.display = 'none';
+    document.getElementById('balloon-game').style.display = 'none';
+    
+    // Show buttons again
+    document.querySelector('.bonus-game-buttons').style.display = 'flex';
+    
+    // Remove close button if it exists
+    const closeButton = document.getElementById('close-bonus-btn');
+    if (closeButton) {
+        closeButton.remove();
+    }
+    
+    // Hide the popup
+    document.getElementById('bonus-game-popup').style.display = 'none';
+}
 
-        function showNotification(message) {
-            const notification = document.createElement('div');
-            notification.className = 'milestone-notification';
-            notification.textContent = message;
-            document.getElementById('game-container').appendChild(notification);
-            setTimeout(() => notification.remove(), 3000);
-        }
+function playBonusGame() {
+    // Keep the popup visible
+    document.getElementById('bonus-game-popup').style.display = 'flex';
+    
+    // Show fruit machine and hide balloon game
+    document.getElementById('fruit-machine').style.display = 'flex';
+    document.getElementById('balloon-game').style.display = 'none';
+    
+    // Hide the buttons since we're playing now
+    document.querySelector('.bonus-game-buttons').style.display = 'none';
+    
+    // Create or update close button
+    let closeButton = document.getElementById('close-bonus-btn');
+    if (!closeButton) {
+        closeButton = document.createElement('button');
+        closeButton.id = 'close-bonus-btn';
+        closeButton.textContent = currentLanguage === 'ja' ? '✖ 閉じる' : '✖ Close';
+closeButton.style.position = 'absolute';
+closeButton.style.top = '10px';
+closeButton.style.right = '10px';
+closeButton.style.padding = '5px 8px';
+closeButton.style.background = 'rgba(255, 255, 255, 0.2)';
+closeButton.style.border = '1px solid rgba(255, 255, 255, 0.5)';
+closeButton.style.borderRadius = '50%';
+closeButton.style.color = 'white';
+closeButton.style.fontSize = '14px';
+closeButton.style.width = '30px';
+closeButton.style.height = '30px';
+closeButton.style.display = 'flex';
+closeButton.style.alignItems = 'center';
+closeButton.style.justifyContent = 'center';
+closeButton.style.zIndex = '2001';
+closeButton.style.cursor = 'pointer';
+closeButton.style.transition = 'all 0.2s';
 
-        function endRound() {
-            if (gameState.currentRound.roundPoints === 50) {
-                gameState.player.points += 50;
-                showNotification('Perfect Round: +50 Points!');
-            }
+// Add hover effect
+closeButton.addEventListener('mouseover', () => {
+    closeButton.style.background = 'rgba(255, 100, 100, 0.7)';
+    closeButton.style.transform = 'scale(1.1)';
+});
+closeButton.addEventListener('mouseout', () => {
+    closeButton.style.background = 'rgba(255, 255, 255, 0.2)';
+    closeButton.style.transform = 'scale(1)';
+});
+        closeButton.addEventListener('click', () => {
+            endBonusGame();
+            document.querySelector('.bonus-game-buttons').style.display = 'flex';
+        });
+        
+        document.getElementById('bonus-game-popup').appendChild(closeButton);
+    }
+    
+    // Start the fruit machine game
+    playFruitMachine();
+}
+
+function saveBonusGame() {
+   endBonusGame();
+    // Hide the popup
+    document.getElementById('bonus-game-popup').style.display = 'none';
+    
+    // Save the bonus game for later
+    gameState.player.bonusGamesAvailable++;
+    showSuccess(`ボーナスゲームを保存しました！現在 ${gameState.player.bonusGamesAvailable} ゲーム利用可能です。`);
+    
+    // Update UI
+    savePlayerProgress();
+}
+
+function playFruitMachine() {
+    const fruits = ['🍎', '🍊', '🍋', '🥑'];
+    const reels = [
+        document.getElementById('fruit-reel-1'),
+        document.getElementById('fruit-reel-2'),
+        document.getElementById('fruit-reel-3')
+    ];
+    
+    // Disable play button during spin
+    const playBtn = document.getElementById('play-bonus-game-btn');
+    if (playBtn) playBtn.disabled = true;
+    
+    // Play spin sound
+    playSound('spin');
+    
+    // Spin each reel with different durations
+    const spinDurations = [1000, 1500, 2000];
+    const results = [];
+    
+    reels.forEach((reel, index) => {
+        const startTime = Date.now();
+        const spinInterval = setInterval(() => {
+            reel.textContent = fruits[Math.floor(Math.random() * fruits.length)];
+        }, 100);
+        
+        setTimeout(() => {
+            clearInterval(spinInterval);
+            // 33% chance all reels show the same fruit
+            const shouldWin = Math.random() < 0.33;
+            let result;
             
-            document.getElementById('round-score').textContent = gameState.currentRound.roundPoints;
-            document.getElementById('total-score').textContent = gameState.player.points;
-            document.getElementById('progress-count').textContent = gameState.completedWords;
-            document.getElementById('progress-streak').textContent = gameState.streak;
-            
-            updateTrophyDisplay(document.getElementById('trophy-display'));
-            
-            savePlayerProgress();
-            checkEmojiPurchase();
-            
-            setTimeout(() => {
-                createConfetti(document.getElementById('round-complete-screen'), 20);
-                showScreen('roundComplete');
-            }, 1000);
-            
-            if (gameState.completedWords >= 50) {
-                endGame();
-            }
-        }
-
-        function showTrophyRoom() {
-            const trophyList = document.getElementById('trophy-list');
-            updateTrophyDisplay(trophyList);
-            showScreen('trophyRoom');
-        }
-
-        function updateTrophyDisplay(container) {
-            container.innerHTML = '';
-            const modes = ['easy', 'medium', 'hard'];
-            modes.forEach(mode => {
-                const rewards = gameState.player.rewards[mode];
-                const modeName = mode.charAt(0).toUpperCase() + mode.slice(1);
-                if (rewards.medals > 0) {
-                    const medalDiv = document.createElement('div');
-                    medalDiv.className = 'trophy-item';
-                    medalDiv.textContent = mode === 'easy' ? '🥉' : mode === 'medium' ? '🥈' : '🥇';
-                    medalDiv.title = `${rewards.medals} ${modeName} Medals`;
-                    container.appendChild(medalDiv);
-                }
-                if (rewards.trophies > 0) {
-                    const trophyDiv = document.createElement('div');
-                    trophyDiv.className = 'trophy-item';
-                    trophyDiv.textContent = '🏆';
-                    trophyDiv.title = `${rewards.trophies} ${modeName} Trophies`;
-                    container.appendChild(trophyDiv);
-                }
-                if (rewards.crowns > 0) {
-                    const crownDiv = document.createElement('div');
-                    crownDiv.className = 'trophy-item';
-                    crownDiv.textContent = '👑';
-                    crownDiv.title = `${rewards.crowns} ${modeName} Crowns`;
-                    container.appendChild(crownDiv);
-                }
-            });
-            if (container.innerHTML === '') {
-                container.textContent = 'No rewards yet! Keep playing!';
-            }
-        }
-
-        function showEmojiStore() {
-            const emojiList = document.getElementById('emoji-list');
-            emojiList.innerHTML = '';
-            document.getElementById('store-points').textContent = gameState.player.points;
-            
-            emojiStore.forEach(item => {
-                const div = document.createElement('div');
-                div.className = `emoji-item ${gameState.player.purchasedEmojis.includes(item.emoji) ? 'purchased' : ''}`;
-                div.innerHTML = `${item.emoji} ${item.name} (${item.points} Points)`;
-                div.setAttribute('role', 'button');
-                div.setAttribute('aria-label', `Select ${item.name} emoji`);
-                if (!gameState.player.purchasedEmojis.includes(item.emoji) && gameState.player.points >= item.points) {
-                    div.addEventListener('click', () => {
-                        gameState.player.purchasedEmojis.push(item.emoji);
-                        gameState.player.emoji = item.emoji;
-                        gameState.player.points -= item.points;
-                        savePlayerProgress();
-                        showEmojiStore();
-                        updatePlayerUI();
-                        showNotification(`Purchased ${item.name} Emoji ${item.emoji}!`);
-                    });
-                }
-                emojiList.appendChild(div);
-            });
-            
-            showScreen('emojiStore');
-        }
-
-        function endGame() {
-            gameState.leaderboard.push({
-                name: gameState.player.name,
-                avatar: gameState.player.avatar,
-                score: gameState.player.points,
-                date: new Date().toISOString()
-            });
-            
-            gameState.leaderboard.sort((a, b) => b.score - a.score);
-            gameState.leaderboard = gameState.leaderboard.slice(0, 20);
-            
-            try {
-                localStorage.setItem('vocabBonanzaLeaderboard', JSON.stringify(gameState.leaderboard));
-            } catch (e) {
-                console.warn("Error saving leaderboard:", e);
-                showError("Couldn't save leaderboard. Try again!");
-            }
-            
-            document.getElementById('final-score').textContent = gameState.player.points;
-            updateTrophyDisplay(document.getElementById('final-trophy-display'));
-            showScreen('gameOver');
-        }
-
-        function quitToMainMenu() {
-            showScreen('start');
-            populateUserSelect();
-        }
-
-        function showScreen(screenName) {
-            Object.values(screens).forEach(screen => screen.classList.remove('active'));
-            screens[screenName].classList.add('active');
-            gameState.currentScreen = screenName;
-        }
-
-        function shuffleArray(array) {
-            const shuffled = [...array];
-            for (let i = shuffled.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-            }
-            return shuffled;
-        }
-
-        function playSound(type) {
-            if (!window.AudioContext && !window.webkitAudioContext) {
-                console.warn("Web Audio API not supported.");
-                return;
-            }
-            
-            try {
-                const context = new (window.AudioContext || window.webkitAudioContext)();
-                if (context.state === 'suspended') {
-                    context.resume().then(() => {
-                        createSound(context, type);
-                    });
-                } else {
-                    createSound(context, type);
-                }
-                console.log(`Playing sound: ${type}`);
-            } catch (e) {
-                console.warn("Error playing sound:", e);
-            }
-        }
-
-        function createSound(context, type) {
-            const oscillator = context.createOscillator();
-            const gainNode = context.createGain();
-            
-            oscillator.connect(gainNode);
-            gainNode.connect(context.destination);
-            
-            if (type === 'correct') {
-                oscillator.type = 'sine';
-                oscillator.frequency.setValueAtTime(523.25, context.currentTime);
-                gainNode.gain.setValueAtTime(0.3, context.currentTime);
-                oscillator.frequency.exponentialRampToValueAtTime(1046.50, context.currentTime + 0.2);
-                gainNode.gain.exponentialRampToValueAtTime(0.01, context.currentTime + 0.3);
-            } else if (type === 'incorrect') {
-                oscillator.type = 'square';
-                oscillator.frequency.setValueAtTime(220, context.currentTime);
-                gainNode.gain.setValueAtTime(0.3, context.currentTime);
-                oscillator.frequency.exponentialRampToValueAtTime(110, context.currentTime + 0.1);
-                gainNode.gain.exponentialRampToValueAtTime(0.01, context.currentTime + 0.2);
-            }
-            
-            oscillator.start();
-            oscillator.stop(context.currentTime + 0.3);
-        }
-
-        function createConfetti(container, count) {
-            const colors = ['#ff5722', '#4caf50', '#ffc107', '#2196f3', '#9c27b0', '#e91e63'];
-            
-            for (let i = 0; i < Math.min(count, 20); i++) {
-                const confetti = document.createElement('div');
-                confetti.className = 'confetti';
-                confetti.style.left = `${Math.random() * 100}%`;
-                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                confetti.style.animationDuration = `${Math.random() * 1 + 1}s`;
-                confetti.style.width = `${Math.random() * 6 + 4}px`;
-                confetti.style.height = `${Math.random() * 6 + 4}px`;
-                container.appendChild(confetti);
-                
-                setTimeout(() => confetti.remove(), 2000);
-            }
-        }
-
-        function speakWord(word) {
-            if ('speechSynthesis' in window) {
-                const utterance = new SpeechSynthesisUtterance(word);
-                utterance.lang = 'en-GB'; // British English
-                utterance.rate = 0.8;
-                speechSynthesis.speak(utterance);
+            if (shouldWin && index > 0) {
+                // Force same result as first reel for a win
+                result = results[0];
             } else {
-                console.warn("SpeechSynthesis not supported.");
+                result = fruits[Math.floor(Math.random() * fruits.length)];
             }
-        }
+            
+            reel.textContent = result;
+            results.push(result);
+            
+            // Visual feedback when reel stops
+            reel.style.transform = 'scale(1.2)';
+            reel.style.backgroundColor = 'rgba(255,255,255,0.2)';
+            setTimeout(() => {
+                reel.style.transform = 'scale(1)';
+                reel.style.backgroundColor = 'transparent';
+            }, 300);
+            
+            // Check if all reels have stopped
+            if (results.length === 3) {
+                if (playBtn) playBtn.disabled = false;
+                
+                // Add a slight delay before checking result
+                setTimeout(() => {
+                    checkFruitMachineResult(results);
+                }, 500);
+            }
+        }, spinDurations[index]);
+    });
+}
 
-        window.addEventListener('DOMContentLoaded', initGame);
-    </script>
+function checkFruitMachineResult(results) {
+    // Check for win (all fruits the same)
+    if (results[0] === results[1] && results[1] === results[2]) {
+        playSound('win');
+        showSuccess(currentLanguage === 'ja' ? "フルーツマシンで勝利！次は風船ゲームです！" : "You won the fruit machine! Now to the balloon game!");
+        setTimeout(startBalloonGame, 1500);
+    } else {
+        showError(currentLanguage === 'ja' ? "残念！次回はもっと運がいいかも！" : "Almost! Maybe next time!");
+    }
+}
+
+// Balloon Game State
+let balloonGameState = {
+    currentTarget: '',
+    score: 0,
+    highScore: 0,
+    speedLevel: 1,
+    balloons: [],
+    timer: null,
+    timeLeft: 30,
+    correctCount: 0
+};
+
+// ===== BALLOON GAME IMPROVEMENTS =====
+function startBalloonGame() {
+    // Clear previous state
+    endBonusGame();
+    
+    const balloonGame = document.getElementById('balloon-game');
+    balloonGame.innerHTML = '';
+    balloonGame.style.display = 'flex';
+
+    // Reset game state
+    balloonGameState = {
+        ...balloonGameState,
+        currentTarget: '',
+        score: 0,
+        balloons: [],
+        timeLeft: 30,
+        correctCount: 0
+    };
+    
+    // Create English alphabet balloons
+    const englishAlphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 
+                           'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+    
+    // Shuffle and take 10 random letters
+    const shuffledLetters = shuffleArray([...englishAlphabet]).slice(0, 10);
+    
+    // Create target display
+    const targetDisplay = document.createElement('div');
+    targetDisplay.id = 'target-letter';
+    targetDisplay.style.textAlign = 'center';
+    targetDisplay.style.width = '100%';
+    targetDisplay.style.fontSize = '2rem';
+    targetDisplay.style.margin = '10px 0';
+    targetDisplay.style.fontWeight = 'bold';
+    targetDisplay.style.color = '#ffe66d';
+    balloonGame.appendChild(targetDisplay);
+    
+    // Create score display
+    const scoreDisplay = document.createElement('div');
+    scoreDisplay.id = 'balloon-score';
+    scoreDisplay.style.textAlign = 'center';
+    scoreDisplay.style.width = '100%';
+    scoreDisplay.style.fontSize = '1.5rem';
+    scoreDisplay.style.margin = '5px 0';
+    scoreDisplay.textContent = currentLanguage === 'ja' ? 
+        `ポイント: 0 | 最高記録: ${balloonGameState.highScore} | レベル: ${balloonGameState.speedLevel}` :
+        `Points: 0 | High Score: ${balloonGameState.highScore} | Level: ${balloonGameState.speedLevel}`;
+    balloonGame.appendChild(scoreDisplay);
+    
+    // Create timer display
+    const timerDisplay = document.createElement('div');
+    timerDisplay.id = 'balloon-timer';
+    timerDisplay.style.textAlign = 'center';
+    timerDisplay.style.width = '100%';
+    timerDisplay.style.fontSize = '1.5rem';
+    timerDisplay.style.margin = '5px 0';
+    timerDisplay.textContent = currentLanguage === 'ja' ? `時間: 30秒` : `Time: 30s`;
+    balloonGame.appendChild(timerDisplay);
+    
+    // Create balloons container
+    const balloonsContainer = document.createElement('div');
+    balloonsContainer.id = 'balloons-container';
+    balloonsContainer.style.display = 'flex';
+    balloonsContainer.style.flexWrap = 'wrap';
+    balloonsContainer.style.justifyContent = 'center';
+    balloonsContainer.style.gap = '10px';
+    balloonsContainer.style.width = '100%';
+    balloonsContainer.style.position = 'relative';
+    balloonsContainer.style.height = '300px';
+    balloonGame.appendChild(balloonsContainer);
+    
+    // Create balloons with random positions and movements
+    shuffledLetters.forEach(letter => {
+        const balloon = document.createElement('div');
+        balloon.className = 'balloon';
+        balloon.textContent = letter;
+        balloon.dataset.letter = letter;
+        
+        // Random starting position
+        const startLeft = Math.random() * 80;
+        const startTop = Math.random() * 60;
+        
+        balloon.style.left = `${startLeft}%`;
+        balloon.style.top = `${startTop}%`;
+        balloon.style.position = 'absolute';
+        
+        // Random movement direction and speed (based on speedLevel)
+        balloon.dataset.speedX = (Math.random() > 0.5 ? 1 : -1) * (0.5 + balloonGameState.speedLevel * 0.2);
+        balloon.dataset.speedY = (Math.random() > 0.5 ? 1 : -1) * (0.5 + balloonGameState.speedLevel * 0.2);
+        
+        balloon.addEventListener('click', () => popBalloon(balloon, letter));
+        balloonsContainer.appendChild(balloon);
+        
+        balloonGameState.balloons.push({
+            element: balloon,
+            x: startLeft,
+            y: startTop
+        });
+    });
+    
+    // Set new target letter every 3 seconds
+    const targetInterval = setInterval(setNewTarget, 3000);
+    balloonGameIntervals.push(targetInterval);
+    
+    // Update balloon positions
+    const moveInterval = setInterval(moveBalloons, 50);
+    balloonGameIntervals.push(moveInterval);
+    
+    // Set 30-second timer
+    const gameTimer = setInterval(() => {
+        balloonGameState.timeLeft--;
+        document.getElementById('balloon-timer').textContent = 
+            currentLanguage === 'ja' ? `時間: ${balloonGameState.timeLeft}秒` : `Time: ${balloonGameState.timeLeft}s`;
+        
+        if (balloonGameState.timeLeft <= 0) {
+            endBalloonGame();
+        }
+    }, 1000);
+    balloonGameIntervals.push(gameTimer);
+}
+
+function setNewTarget() {
+    if (balloonGameState.balloons.length === 0) return;
+    
+    // Choose random balloon as target
+    const randomIndex = Math.floor(Math.random() * balloonGameState.balloons.length);
+    const targetBalloon = balloonGameState.balloons[randomIndex];
+    balloonGameState.currentTarget = targetBalloon.element.dataset.letter;
+    
+    document.getElementById('target-letter').textContent = 
+        currentLanguage === 'ja' ? 
+        `破裂させて: ${balloonGameState.currentTarget}!` : 
+        `Pop: ${balloonGameState.currentTarget}!`;
+    
+    // Speak the target letter
+    if ('speechSynthesis' in window) {
+        const utterance = new SpeechSynthesisUtterance(balloonGameState.currentTarget);
+        utterance.lang = 'en-GB';
+        utterance.rate = 0.8;
+        speechSynthesis.speak(utterance);
+    }
+}
+
+function moveBalloons() {
+    balloonGameState.balloons.forEach(balloonObj => {
+        const balloon = balloonObj.element;
+        
+        // Update position
+        balloonObj.x += parseFloat(balloon.dataset.speedX);
+        balloonObj.y += parseFloat(balloon.dataset.speedY);
+        
+        // Bounce off edges
+        if (balloonObj.x <= 0 || balloonObj.x >= 90) {
+            balloon.dataset.speedX = -parseFloat(balloon.dataset.speedX);
+        }
+        if (balloonObj.y <= 0 || balloonObj.y >= 70) {
+            balloon.dataset.speedY = -parseFloat(balloon.dataset.speedY);
+        }
+        
+        // Apply new position
+        balloon.style.left = `${balloonObj.x}%`;
+        balloon.style.top = `${balloonObj.y}%`;
+    });
+}
+
+function popBalloon(balloon, letter) {
+    if (letter === balloonGameState.currentTarget) {
+        // Correct balloon
+        playSound('pop');
+        balloonGameState.score += 10 * balloonGameState.speedLevel;
+        balloonGameState.correctCount++;
+        
+        // Remove balloon
+        balloon.remove();
+        balloonGameState.balloons = balloonGameState.balloons.filter(b => b.element !== balloon);
+        
+        // Update score display
+        document.getElementById('balloon-score').textContent = 
+            currentLanguage === 'ja' ?
+            `ポイント: ${balloonGameState.score} | 最高記録: ${balloonGameState.highScore} | レベル: ${balloonGameState.speedLevel}` :
+            `Points: ${balloonGameState.score} | High Score: ${balloonGameState.highScore} | Level: ${balloonGameState.speedLevel}`;
+        
+        // If all balloons are popped, create new ones
+        if (balloonGameState.balloons.length === 0) {
+            setTimeout(startBalloonGame, 1000);
+        }
+    } else {
+        // Wrong balloon
+        playSound('fart');
+        balloonGameState.score = Math.max(0, balloonGameState.score - 5);
+        document.getElementById('balloon-score').textContent = 
+            currentLanguage === 'ja' ?
+            `ポイント: ${balloonGameState.score} | 最高記録: ${balloonGameState.highScore} | レベル: ${balloonGameState.speedLevel}` :
+            `Points: ${balloonGameState.score} | High Score: ${balloonGameState.highScore} | Level: ${balloonGameState.speedLevel}`;
+    }
+}
+
+function endBalloonGame() {
+    // Clear intervals
+    balloonGameIntervals.forEach(interval => clearInterval(interval));
+    balloonGameIntervals = [];
+    document.getElementById('balloon-game').style.display = 'none';
+    
+    // Update high score
+    if (balloonGameState.score > balloonGameState.highScore) {
+        balloonGameState.highScore = balloonGameState.score;
+        showSuccess(currentLanguage === 'ja' ? 
+            `新しい最高記録！${balloonGameState.score}ポイント` : 
+            `New high score! ${balloonGameState.score} points`);
+    } else {
+        showSuccess(currentLanguage === 'ja' ? 
+            `最終ポイント: ${balloonGameState.score}` : 
+            `Final points: ${balloonGameState.score}`);
+    }
+    
+    // Adjust difficulty for next time
+    if (balloonGameState.correctCount >= 10) {
+        balloonGameState.speedLevel = Math.min(5, balloonGameState.speedLevel + 1);
+        showNotification(currentLanguage === 'ja' ? 
+            `レベルアップ！${balloonGameState.speedLevel}になった！` : 
+            `Level increased to ${balloonGameState.speedLevel}!`);
+    } else if (balloonGameState.correctCount < 5) {
+        balloonGameState.speedLevel = Math.max(1, balloonGameState.speedLevel - 1);
+        showNotification(currentLanguage === 'ja' ? 
+            `レベルダウン！${balloonGameState.speedLevel}になった！` : 
+            `Level decreased to ${balloonGameState.speedLevel}!`);
+    }
+    
+    // Award points
+    const bonusPoints = Math.floor(balloonGameState.score / 5);
+    gameState.player.points += bonusPoints;
+    
+    showSuccess(currentLanguage === 'ja' ? 
+        `ボーナス ${bonusPoints}ポイント獲得！` : 
+        `You earned ${bonusPoints} bonus points!`);
+    savePlayerProgress();
+}
+
+function resetSelections() {
+    gameState.currentRound.selectedLeft = null;
+    gameState.currentRound.selectedRight = null;
+    document.querySelectorAll('.card.selected').forEach(card => card.classList.remove('selected'));
+    isProcessingClick = false;
+    updateGameUI();
+}
+
+function checkMilestone() {
+    const previousWords = gameState.completedWords - 1;
+    const currentWords = gameState.completedWords;
+    if (milestones.includes(currentWords) && !milestones.includes(previousWords)) {
+        showNotification(currentLanguage === 'ja' ? 
+            `達成！${currentWords}/10単語習得` : 
+            `Milestone! ${currentWords}/10 words mastered`);
+    }
+}
+
+function checkPartOfSpeechCompletion() {
+    // Check if we've completed all words in current part of speech
+    const masteredWordsInPart = Object.keys(gameState.wordProgress).filter(word => 
+        gameState.wordProgress[word] >= 3 && 
+        currentPartWords.some(item => item.word === word)
+    ).length;
+    
+    if (masteredWordsInPart >= 10) {
+        // Move to next part of speech
+        const parts = Object.keys(vocabByPart);
+        const currentIndex = parts.indexOf(currentPartOfSpeech);
+        const nextIndex = (currentIndex + 1) % parts.length;
+        const nextPart = parts[nextIndex];
+        
+        setCurrentPartOfSpeech(nextPart);
+        gameState.completedWords = 0; // Reset counter for new part
+        
+        showNotification(currentLanguage === 'ja' ? 
+            `新しい品詞: ${translations.ja.partsOfSpeech[nextPart]}` : 
+            `New part of speech: ${translations.en.partsOfSpeech[nextPart]}`);
+    }
+    
+    // Award medals for every 50 words
+    if (gameState.player.rewards.totalWordsMastered > 0 && 
+        gameState.player.rewards.totalWordsMastered % 50 === 0) {
+        
+        gameState.player.rewards.medals++;
+        showNotification(currentLanguage === 'ja' ? `🎖️ メダル獲得！` : `🎖️ Medal earned!`);
+        createConfetti(document.getElementById('game-screen'), 20);
+        
+        // Award trophies for every 500 words (10 medals)
+        if (gameState.player.rewards.medals >= 10) {
+            gameState.player.rewards.medals = 0;
+            gameState.player.rewards.trophies++;
+            showNotification(currentLanguage === 'ja' ? `🏆 トロフィー獲得！` : `🏆 Trophy earned!`);
+            createConfetti(document.getElementById('game-screen'), 20);
+        }
+        
+        savePlayerProgress();
+        updateProgressTracker();
+    }
+}
+
+function endRound() {
+    playSound('win'); // Add this line
+    
+    document.getElementById('round-score').textContent = gameState.currentRound.roundPoints;
+    document.getElementById('total-score').textContent = gameState.player.points;
+    
+    // Update to show both current and total progress
+    document.getElementById('progress-count').textContent = 
+        `${gameState.completedWords}/10 (Total: ${gameState.player.rewards.totalWordsMastered})`;
+    
+    document.getElementById('progress-streak').textContent = gameState.streak;
+    
+    updateTrophyDisplay(document.getElementById('trophy-display'));
+    updateRewardPath();
+    updateProgressTracker();
+    
+    savePlayerProgress();
+    
+    setTimeout(() => {
+        createConfetti(document.getElementById('round-complete-screen'), 20);
+        showScreen('roundComplete');
+        
+        // Check for level up milestone
+        if (milestones.includes(gameState.completedWords)) {
+            setTimeout(() => {
+                showNotification(currentLanguage === 'ja' ? 
+                    `レベルアップ！${gameState.completedWords}単語習得` : 
+                    `Level up! ${gameState.completedWords} words mastered`);
+                createConfetti(document.getElementById('round-complete-screen'), 30);
+            }, 500);
+        }
+    }, 1000);
+}
+
+function updateTrophyDisplay(container) {
+    container.innerHTML = '';
+    
+    if (gameState.player.rewards.medals > 0) {
+        const medalDiv = document.createElement('div');
+        medalDiv.className = 'trophy-item';
+        medalDiv.textContent = '🎖️';
+        medalDiv.title = `${gameState.player.rewards.medals} ${currentLanguage === 'ja' ? 'メダル' : 'Medals'}`;
+        container.appendChild(medalDiv);
+    }
+    if (gameState.player.rewards.trophies > 0) {
+        const trophyDiv = document.createElement('div');
+        trophyDiv.className = 'trophy-item';
+        trophyDiv.textContent = '🏆';
+        trophyDiv.title = `${gameState.player.rewards.trophies} ${currentLanguage === 'ja' ? 'トロフィー' : 'Trophies'}`;
+        container.appendChild(trophyDiv);
+    }
+    
+    if (container.innerHTML === '') {
+        container.textContent = currentLanguage === 'ja' ? 
+            '単語を習得して報酬を獲得しましょう！' : 
+            'Master words to earn rewards!';
+    }
+}
+
+function showTrophyRoom() {
+    updateTrophyDisplay(document.getElementById('trophy-list'));
+    showScreen('trophyRoom');
+}
+
+function endGame() {
+    gameState.leaderboard.push({
+        name: gameState.player.name,
+        avatar: gameState.player.avatar,
+        score: gameState.player.points,
+        date: new Date().toISOString()
+    });
+    
+    gameState.leaderboard.sort((a, b) => b.score - a.score);
+    gameState.leaderboard = gameState.leaderboard.slice(0, 20);
+    
+    try {
+        localStorage.setItem('nandomodeLeaderboard', JSON.stringify(gameState.leaderboard));
+    } catch (e) {
+        console.warn("Error saving leaderboard:", e);
+        showError(currentLanguage === 'ja' ? 
+            "リーダーボードを保存できませんでした。もう一度試してください！" : 
+            "Couldn't save leaderboard. Please try again!");
+    }
+    
+    document.getElementById('final-score').textContent = gameState.player.points;
+    updateTrophyDisplay(document.getElementById('final-trophy-display'));
+    
+    showScreen('gameOver');
+}
+
+function quitToMainMenu() {
+    showScreen('start');
+    populateUserSelect();
+}
+
+function showScreen(screenName) {
+    Object.values(screens).forEach(screen => screen.classList.remove('active'));
+    screens[screenName].classList.add('active');
+    gameState.currentScreen = screenName;
+}
+
+function shuffleArray(array) {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+}
+
+function createConfetti(container, count) {
+    const colors = ['#ff6b6b', '#4ecdc4', '#ffe66d', '#ffbe0b', '#fb5607', '#8338ec'];
+    
+    for (let i = 0; i < Math.min(count, 20); i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = `${Math.random() * 100}%`;
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.animationDuration = `${Math.random() * 1 + 1}s`;
+        confetti.style.width = `${Math.random() * 6 + 4}px`;
+        confetti.style.height = `${Math.random() * 6 + 4}px`;
+        container.appendChild(confetti);
+        
+        setTimeout(() => confetti.remove(), 2000);
+    }
+}
+
+function speakWord(word) {
+    if ('speechSynthesis' in window) {
+        const utterance = new SpeechSynthesisUtterance(word);
+        utterance.lang = 'en-GB';
+        utterance.rate = 0.8;
+        speechSynthesis.speak(utterance);
+    } else {
+        console.warn("SpeechSynthesis not supported.");
+    }
+}
+
+function sanitizePairId(word) {
+    return word.toLowerCase().replace(/[^a-z0-9]/g, '') + '_' + Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
+}
+</script>
 </body>
 </html>
-�
